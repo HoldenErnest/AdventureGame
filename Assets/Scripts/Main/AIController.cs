@@ -76,6 +76,12 @@ public class AIController : Controller {
             case 4:
                 dodging();
                 break;
+            case 5:
+                AttackHard();
+                break;
+            case 6:
+                AttackSoft();
+                break;
         }
     }
     //STATE PERFORMANCES::_____________________________________________________________________________________
@@ -143,6 +149,20 @@ public class AIController : Controller {
 
         //if no immediate threat (bullet moving away from player), move randomly?
     }
+    private void AttackHard() {
+        GameObject temp = getClosestEnemy();
+        if (!GameObject.ReferenceEquals(temp, null)) {
+            targetPos = temp.transform.position;
+            moveToAttackRange();
+        }
+    }
+    private void AttackSoft() {
+        GameObject temp = getClosestEnemy();
+        if (!GameObject.ReferenceEquals(temp, null)) {
+            targetPos = temp.transform.position;
+            moveToAttackRange();
+        }
+    }
 
     //END STATE PERFORMANCES::_________________________________________________________________________________
 
@@ -184,8 +204,6 @@ public class AIController : Controller {
             moveTowardsTarget(false);
         } else {
             stopMoving();
-            //if (!GameObject.ReferenceEquals(getClosestEnemy(), null))
-            //    skillAtWill();
         }
     }
     private bool reachedTarget() { // returns true when the user is at(close enough) to the target position.
@@ -281,7 +299,7 @@ public class AIController : Controller {
 
     private void rollTowardsVector(Vector2 v) { // only if skill minimum distance allows ??
         if (equipDash()) {
-            skillAtWill(v);
+            attackPosition(v);
             equipAttack(); // maybe put this in the attacking state instead>>>>>>>>>
         }
     }
@@ -291,16 +309,16 @@ public class AIController : Controller {
         anim.SetBool("buttonDown", false);
     }
 
-    public void skillAtWill() { // use currently equipped skill at will --- skill user not set before you are able to fire, fire before not loaded could damage yourself
-        skillAtWill(targetPos);
-    }
-    private void skillAtWill(Vector2 v) {
-        
-        if (!usingSkill.isReloading()) {
+    public void attackPosition(Vector2 v) {
+        if (equipAttack()) {
             Debug.Log("casting skill " + usingSkill.skillName + " at position: " + v);
             usingSkill.updateTargetPosition(v);
             usingSkill.useSkill();
         }
+    }
+
+    public void attack() {
+        attackPosition(targetPos);
     }
 
     public void attackInputs() {
@@ -376,7 +394,7 @@ public class AIController : Controller {
     private Vector2 getPos() {
         return this.gameObject.transform.position;
     }
-    private float getPrefCloseDistance() {
+    private float getPrefCloseDistance() { // prefered distances to the nearest opponent.
         return lowestSkillDistance;
     }
     private float getPrefFarDistance() {
