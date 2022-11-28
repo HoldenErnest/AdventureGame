@@ -1,0 +1,1 @@
+{"skillName":"Summon Friend","damageType":"physical","baseDamage":0,"manaCost":3,"reloadTime":3.0, "maxRange":3.0,"minRange":0.0,"attackArea":0.0,"levelReq":0,"user":{"instanceID":0},"animPrefab":{"instanceID":0},"setEffects":[],"prefabName":"friend","projectileSpeed":0.0,"pierce":1}

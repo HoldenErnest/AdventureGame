@@ -1,0 +1,5 @@
+{"sid":"generic_shirt","itemName":"A red shirt","ammount":1,
+"texture":"red_shirt",
+"itemType":"shirt","skillName":"",
+"damage":0,
+"armorStat":0,"weight":0,"speedStat":0,"constStat":0,"intelStat":0,"strengthStat":0,"evadeStat":0,"poisonResist":0,"necroResist":0,"psychResist":0}

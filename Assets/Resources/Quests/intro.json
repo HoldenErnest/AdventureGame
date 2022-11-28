@@ -1,0 +1,14 @@
+{
+    "isComplete":false,"rewardsCollected":false,"title":"An unnamed quest","desc":"Speak with the unnamed man",
+    "rewards":[{
+        "rewardName":"","rewardType":"xp","ammount":50
+    },{
+        "rewardName":"Sword of Durin","rewardType":"remove","ammount":1
+    }],"items":[{
+        "desc":"Exterminate 4 bats with the newly aquired power","type":"kill","objective":"bat","total":4,"isComplete":false
+    },{
+        "desc":"Collect the Sword of Duran for Bill","type":"collect","objective":"Sword of Duran","total":1,"isComplete":false
+    },{
+        "desc":"Give the sword to Bill","type":"talk","objective":"Bill","total":1,"isComplete":false
+    }]
+}

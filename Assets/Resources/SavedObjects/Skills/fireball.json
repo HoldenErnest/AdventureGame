@@ -1,0 +1,1 @@
+{"skillName":"Fireball","damageType":"magical","baseDamage":25,"manaCost":3,"reloadTime":1.5, "maxRange":7.0,"minRange":0.0,"attackArea":0.5,"levelReq":0,"user":{"instanceID":0},"animPrefab":{"instanceID":0},"setEffects":[],"prefabName": "fireball","projectileSpeed":0.0,"pierce":1}

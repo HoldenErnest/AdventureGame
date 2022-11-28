@@ -1,0 +1,1 @@
+{"skillName":"Magic2","damageType":"magical","baseDamage":10,"manaCost":3,"reloadTime":0.3, "maxRange":10.0,"minRange":0.0,"attackArea":0.0,"levelReq":0,"user":{"instanceID":0},"animPrefab":{"instanceID":0},"setEffects":["poison1"],"prefabName": "magic","projectileSpeed":6.0,"pierce":3}

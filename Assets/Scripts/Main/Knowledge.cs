@@ -1,0 +1,138 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using UnityEngine.U2D.Animation;
+
+//A class strictly for remembering the combinations for skills, Effects, ect.
+// Refrence this class when equipping any skill to a character
+public static class Knowledge {
+
+    public static Inventory inventory;
+    public static Character player;
+
+    public static readonly string skillsPath = "SavedObjects/Skills/";
+    public static readonly string effectsPath = "SavedObjects/Effects/";
+    public static readonly string itemsPath = "SavedObjects/Items/";
+    public static readonly string equipsPath = "SavedObjects/Equips/";
+    public static readonly string equipsTexturePath = "Textures/Equips/";
+    public static readonly string effectsIconPath = "Icons/Effects/";
+    public static readonly string itemsIconPath = "Icons/Items/";
+    public static readonly string skillsIconPath = "Icons/Skills/";
+    public static readonly string skillsPrefabPath = "Prefabs/Skills/";
+    public static readonly string questsPath = "Quests/";
+
+    //any __ToJson method will take an object and print it in json format
+    public static void skillToJson(Skill s) {
+        string json = JsonUtility.ToJson(s);
+        Debug.Log(json);
+    }
+    public static void questToJson(Quest s) {
+        string json = JsonUtility.ToJson(s);
+        Debug.Log(json);
+    }
+    public static void effectToJson(Effect e) {
+        string json = JsonUtility.ToJson(e);
+        Debug.Log(json);
+    }
+    public static void equipToJson(Equipable e) {
+        string json = JsonUtility.ToJson(e);
+        Debug.Log(json);
+    }
+    public static void itemToJson(Item i) {
+        string json = JsonUtility.ToJson(i);
+        Debug.Log(json);
+    }
+    public static void overwriteInventoryJson() {
+        string json = JsonUtility.ToJson(new Inventory());
+        Debug.Log(json);
+    }
+
+    // all get___ methods take a file based on a specified path and name and generates it as an object of that type
+    public static Skill getSkill(string skillName) {
+        Skill newSkill = new Skill();
+        try {
+            string json = Resources.Load<TextAsset>(skillsPath + skillName).text;
+            JsonUtility.FromJsonOverwrite(json, newSkill); // instead of rewriting a new Skill() try rewriting the skill currently in use
+        } catch {
+            Debug.Log("Skill \"" + skillName + ".json\" not found.");
+        }
+        return newSkill;
+    }
+    public static Quest getQuest(string questName) {
+        Quest newQuest = new Quest();
+        try {
+            string json = Resources.Load<TextAsset>(questsPath + questName).text;
+            JsonUtility.FromJsonOverwrite(json, newQuest); // instead of rewriting a new Skill() try rewriting the skill currently in use
+        } catch {
+            Debug.Log("Quest \"" + questName + ".json\" not found.");
+        }
+        return newQuest;
+    }
+    public static Effect getEffect(string effectName, int effectTier) {
+        Effect newEffect = new Effect();
+        try {
+            string json = Resources.Load<TextAsset>(effectsPath + effectName + effectTier).text;
+            JsonUtility.FromJsonOverwrite(json, newEffect);
+        } catch {
+            Debug.Log("Effect \"" + effectName + effectTier + ".json\" not found.");
+        }
+        return newEffect;
+    }
+    public static Equipable getEquipable(string equipName) {
+        Equipable newEquip = new Equipable();
+        try {
+            string json = Resources.Load<TextAsset>(equipsPath + equipName).text;
+            JsonUtility.FromJsonOverwrite(json, newEquip);
+        } catch {
+            Debug.Log("Equipable \"" + equipName + ".json\" not found.");
+        }
+        return newEquip;
+    }
+    public static Item getItem(string itemName) {
+        Item newItem = new Item();
+        try {
+            string json = Resources.Load<TextAsset>(itemsPath + itemName).text;
+            JsonUtility.FromJsonOverwrite(json, newItem);
+        } catch {
+            Debug.Log("Item \"" + itemName + ".json\" not found.");
+        }
+        return newItem;
+    }
+
+    public static Texture2D getEquipTexture(string s) {
+        try {
+            return Resources.Load<Texture2D>(equipsTexturePath + s);
+        } catch {
+            Debug.Log("Equip texture \"" + s + ".png\" not found.");
+        }
+        return null;
+    }
+
+    public static Texture2D getSkillIcon(string s) {
+        try {
+            return Resources.Load<Texture2D>(skillsIconPath + s);
+        } catch {
+            Debug.Log("Skill icon \"" + s + ".png\" not found.");
+        }
+        return null;
+    }
+    public static Texture2D getItemIcon(string s) { // Equips and Items both use this for Icons only
+        Texture2D temp = Resources.Load<Texture2D>(itemsIconPath + s);
+        if (temp != null) {
+            return temp;
+        } else {
+            Debug.Log("Item icon \"" + s + ".png\" not found.");
+        }
+        return Resources.Load<Texture2D>(itemsIconPath + "no_texture");
+    }
+
+    public static GameObject getPrefab(string s) {
+        try {
+            return Resources.Load<GameObject>(skillsPrefabPath + s);
+        } catch {
+            Debug.Log("Gameobject \"" + s + ".prefab\" not found.");
+        }
+        return null;
+    }
+}
