@@ -309,7 +309,7 @@ public class AIController : Controller {
         anim.SetBool("buttonDown", false);
     }
 
-    public void attackPosition(Vector2 v) {
+    public void attackPosition(Vector2 v) { // generic attack, if in range with any available attacks, use that skill 
         if (equipAttack()) {
             Debug.Log("casting skill " + usingSkill.skillName + " at position: " + v);
             usingSkill.updateTargetPosition(v);
