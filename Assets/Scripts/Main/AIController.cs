@@ -300,7 +300,7 @@ public class AIController : Controller {
     private void rollTowardsVector(Vector2 v) { // only if skill minimum distance allows ??
         if (equipDash()) {
             attackPosition(v);
-            equipAttack(); // maybe put this in the attacking state instead>>>>>>>>>
+            //equipAttack(); // maybe put this in the attacking state instead>>>>>>>>>
         }
     }
 
@@ -310,11 +310,11 @@ public class AIController : Controller {
     }
 
     public void attackPosition(Vector2 v) { // generic attack, if in range with any available attacks, use that skill 
-        if (equipAttack()) {
+        //if (equipAttack()) {
             Debug.Log("casting skill " + usingSkill.skillName + " at position: " + v);
             usingSkill.updateTargetPosition(v);
             usingSkill.useSkill();
-        }
+        //}
     }
 
     public void attack() {
