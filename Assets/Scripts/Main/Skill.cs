@@ -13,7 +13,7 @@ public class Skill : MonoBehaviour {
     //each skill has an animation that it plays
 
     public string skillName = "Unassigned Skill";
-    public string damageType = "physical";
+    public string damageType = "null";
     public int baseDamage;
     public int manaCost;
     public float reloadTime; // time to regenerate a stack
@@ -186,6 +186,12 @@ public class Skill : MonoBehaviour {
     }
     public bool isProjectile() { // its a projectile if ps isnt nothing, the projectile it explodes if the attackArea is also not nothing
         return projectileSpeed > 0f;
+    }
+    public bool dTypeEquals(string[] ss) { // if any string in the array = damageType
+        foreach (string s in ss) {
+            if (damageType.Equals(s)) return true;
+        }
+        return false;
     }
 
 

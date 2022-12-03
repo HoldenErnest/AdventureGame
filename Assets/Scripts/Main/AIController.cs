@@ -36,7 +36,7 @@ public class AIController : Controller {
         currentState = 4;
         speed = 1.1f;
         team = GetComponent<Team>().team;
-        setSkillToUse(); //TEMPORARYYYYYYYYYYYYYYYYYYYY!!!!!!!!!!!!!!!!!!!!!
+        usingSkill = user.usingSkills[0];
     }
     public override void FixedUpdate() {
         updatePrefDistances();
@@ -147,21 +147,34 @@ public class AIController : Controller {
             moveToAttackRange();
         }
 
-        //if no immediate threat (bullet moving away from player), move randomly?
+        if (!inDanger()) {
+            setState("Attack Hard");
+        } else {
+            setState("Attack Soft");
+        }
+        //if no immediate threat: no bullet, no player, wait for some time then set state to wander!
     }
     private void AttackHard() {
-        GameObject temp = getClosestEnemy();
+        GameObject temp = getClosestEnemy(); // the gameobject the user will be trying to hit
         if (!GameObject.ReferenceEquals(temp, null)) {
             targetPos = temp.transform.position;
-            moveToAttackRange();
+            //moveToAttackRange();
         }
+        if (equipAttack()) {
+            attack();
+        }
+        setState("Dodging");
     }
     private void AttackSoft() {
         GameObject temp = getClosestEnemy();
         if (!GameObject.ReferenceEquals(temp, null)) {
             targetPos = temp.transform.position;
-            moveToAttackRange();
+            //moveToAttackRange();
         }
+        if (equipAttack()) {
+            attack();
+        }
+        setState("Dodging");
     }
 
     //END STATE PERFORMANCES::_________________________________________________________________________________
@@ -172,7 +185,6 @@ public class AIController : Controller {
             Vector2 dir = -(getPos() - Vector2.MoveTowards(getPos(), target, 1));
             
             dir.Normalize();
-            Debug.Log(dir + "dir");
             rb.velocity = dir * Time.deltaTime * 140 * dashSpeed;
             if (getLineLength(getPosition(),target) <= 0.1f*dashSpeed) { // stop dash
                 moveOverride = false;
@@ -247,9 +259,6 @@ public class AIController : Controller {
         targetPos = new Vector2(targetPos.x + dx, targetPos.y + dy);
         //Debug.Log("target" + targetPos);
     }
-    public void setSkillToUse() { // select a skill to use - depending on the damage range ect of the skill
-        usingSkill = user.getSkill(0);
-    }
 
     public void moveTowardsTarget(bool towards) {
         moveTowardsVector(towards, targetPos);
@@ -272,9 +281,9 @@ public class AIController : Controller {
         if (!towards) {
             h *= -1;
             v *= -1;
-            if (Vector2.Distance(getPos(), tar) < getPrefFarDistance() || user.getHealthPercentage() <= 0.3) { // if youre too close or your health is low
+            if (Vector2.Distance(getPos(), tar) < getPrefFarDistance() || inDanger()) { // if youre too close or your health is low
                 Debug.Log("RUN AWAWY!!!!! x:"+h+" y:"+v);
-                rollTowardsVector(new Vector2(h,v)+ getPos()); // try to roll towards the target first
+                rollTowardsVector(new Vector2(h,v)+ getPos()); // try to roll away first
             }
         } else {
             if (Vector2.Distance(getPos(), tar) >= getPrefFarDistance()+5) {// if youre far enough away roll to go faster
@@ -310,11 +319,9 @@ public class AIController : Controller {
     }
 
     public void attackPosition(Vector2 v) { // generic attack, if in range with any available attacks, use that skill 
-        //if (equipAttack()) {
-            Debug.Log("casting skill " + usingSkill.skillName + " at position: " + v);
-            usingSkill.updateTargetPosition(v);
-            usingSkill.useSkill();
-        //}
+        Debug.Log("casting skill " + usingSkill.skillName + " at position: " + v);
+        usingSkill.updateTargetPosition(v);
+        usingSkill.useSkill();
     }
 
     public void attack() {
@@ -405,6 +412,9 @@ public class AIController : Controller {
         highestSkillDistance = user.getHighSkillDist();
         averageSkillDistance = user.getAvgSkillDist();
     }
+    private bool inDanger() { //low health ect, used to attack from distance or afar.
+        return user.getHealthPercentage() <= 0.5f;
+    }
     private bool equipDash() {
         foreach (Skill skl in user.usingSkills) {
             if (skl.damageType.Equals("movement"))
@@ -416,11 +426,15 @@ public class AIController : Controller {
         return false;
     }
     private bool equipAttack() {
+        string[] ss = {"physical", "magical", "bleed", "poison", "necro"};
         foreach (Skill skl in user.usingSkills) {
-            if (!skl.damageType.Equals("movement") && !skl.damageType.Equals("heal"))
+            
+            if (skl.dTypeEquals(ss)) {
                 if (!skl.isReloading()) {
-                usingSkill = skl;
-                return true;
+                    usingSkill = skl;
+                    Debug.Log("BLALLLLLLLLLL" + skl.skillName + skl.damageType);
+                    return true;
+                }
             }
         }
         return false;
