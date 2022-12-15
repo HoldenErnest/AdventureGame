@@ -44,7 +44,7 @@ public class Stats {
     public int getMaxHp(int oldMax) {
        return oldMax + (constitution * constMult) + (level * constMult);
     }
-    public float getSpeed() {
+    public float getSpeed() { // returns the float value for speed, not the stat int
         float val = (speed * speedMult) + (dexterity * dexSpeedMult);
 
         if (val == 0)

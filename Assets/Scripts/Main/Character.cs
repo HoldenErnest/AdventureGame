@@ -181,7 +181,10 @@ public class Character : MonoBehaviour
     }
     public void updateSpeed() {
         float val = userStats.getSpeed();
-        controls.setSpeed(val);
+        controls.updateSpeed();
+    }
+    public float getSpeed() {
+        return userStats.getSpeed();
     }
     public void updateHpSlider() {
         hpUI.updateSlider(hp, userStats.getMaxHp(baseMaxHp));

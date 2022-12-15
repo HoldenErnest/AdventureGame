@@ -144,8 +144,8 @@ public class Controller : MonoBehaviour
         escUI.SetActive(!escUI.activeSelf);
     }
 
-    public void setSpeed(float m) { // sets the player movementSpeed
-        speed = m;
+    public void updateSpeed() { // sets the player movementSpeed
+        speed = user.userStats.getSpeed();
         try {
             anim.SetFloat("animSpeed", speed);
         } catch (Exception e) {
@@ -153,6 +153,10 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public Vector2 getDirection() {
+        Debug.Log(rb.velocity);
+        return rb.velocity;
+    }
 
     public GameObject getRCMenu() {
         return invUI.GetComponent<InventoryUI>().rcItemMenu;

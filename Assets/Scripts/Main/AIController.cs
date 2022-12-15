@@ -41,7 +41,6 @@ public class AIController : Controller {
     public override void FixedUpdate() {
         updatePrefDistances();
         performStateActions();
-        
     }
     public override void Update() {
         //do nothing
@@ -325,6 +324,14 @@ public class AIController : Controller {
     }
 
     public void attack() {
+        attackPosition(targetPos);
+    }
+    public void attackUserWithPredict(Character theUser) {
+        Vector2 theDir = theUser.GetController().getDirection();
+        float theSpeed = theUser.getSpeed();
+        float projSpeed = usingSkill.projectileSpeed;
+
+        float distanceBetween = getLineLength(getPosition(), theUser.GetController().getPosition());
         attackPosition(targetPos);
     }
 
