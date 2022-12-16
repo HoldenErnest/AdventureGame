@@ -1,1 +1,1 @@
-{"skillName":"Magic","damageType":"magical","baseDamage":25,"manaCost":3,"reloadTime":0.7, "maxRange":7.0,"minRange":0.0,"attackArea":0.0,"levelReq":0,"user":{"instanceID":0},"animPrefab":{"instanceID":0},"setEffects":["poison1"],"prefabName": "magic","projectileSpeed":5.0,"pierce":3}
+{"skillName":"Magic","damageType":"magical","baseDamage":5,"manaCost":3,"reloadTime":0.7, "maxRange":7.0,"minRange":0.0,"attackArea":0.0,"levelReq":0,"user":{"instanceID":0},"animPrefab":{"instanceID":0},"setEffects":["poison1"],"prefabName": "magic","projectileSpeed":6.0,"pierce":3}

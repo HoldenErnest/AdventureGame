@@ -34,9 +34,9 @@ public class AIController : Controller {
 
     void Start() {
         currentState = 4;
-        speed = 1.1f;
         team = GetComponent<Team>().team;
         usingSkill = user.usingSkills[0];
+        Debug.Log(user.usingSkills[0].skillName);
     }
     public override void FixedUpdate() {
         updatePrefDistances();
@@ -160,7 +160,7 @@ public class AIController : Controller {
             //moveToAttackRange();
         }
         if (equipAttack()) {
-            attack();
+            attackUserWithPredict(temp.GetComponent<Character>());
         }
         setState("Dodging");
     }
@@ -171,7 +171,7 @@ public class AIController : Controller {
             //moveToAttackRange();
         }
         if (equipAttack()) {
-            attack();
+            attackUserWithPredict(temp.GetComponent<Character>());
         }
         setState("Dodging");
     }
@@ -198,10 +198,10 @@ public class AIController : Controller {
         }
         anim.SetBool("buttonDown", true);
 
-        if (Math.Abs(h) + Math.Abs(v) > 1f) { //if youre moving horizontal and vertical at the same time
+        if (Math.Abs(h) + Math.Abs(v) > 1.3f) { //if youre moving horizontal and vertical at the same time
             movement = new Vector2(h*0.71f,v*0.71f);
         } else movement = new Vector2(h,v);
-        rb.velocity = movement * speed*(140) * Time.fixedDeltaTime;
+        rb.velocity = movement * user.getSpeed()*(140) * Time.deltaTime;
 
         anim.SetFloat("horizontal", h);
         anim.SetFloat("vertical", v);
@@ -326,13 +326,27 @@ public class AIController : Controller {
     public void attack() {
         attackPosition(targetPos);
     }
-    public void attackUserWithPredict(Character theUser) {
-        Vector2 theDir = theUser.GetController().getDirection();
-        float theSpeed = theUser.getSpeed();
+    public void attackUserWithPredict(Character theUser) { // Attack a user based on their velocity and your projectile speed
         float projSpeed = usingSkill.projectileSpeed;
+        Vector2 theUserPos = theUser.GetController().getPosition();
 
-        float distanceBetween = getLineLength(getPosition(), theUser.GetController().getPosition());
-        attackPosition(targetPos);
+        Vector2 prediciton = theUserPos;
+
+        if (projSpeed != 0) { // there is actually something to predict.
+            
+            float distanceBetween = getLineLength(getPosition(), theUserPos);
+            
+            Vector2 theUserMag = theUser.GetController().getMagnitude();
+            float theSpeed = theUser.getSpeed();
+
+            float timeToImpact = distanceBetween / projSpeed; // find the time till inpact
+            prediciton = theUserPos + (theUserMag * (theSpeed * timeToImpact)); // how far will the target travel in that time? *(mag) and in which direction.
+
+            
+        }
+
+        attackPosition(prediciton);
+        
     }
 
     public void attackInputs() {
@@ -432,14 +446,13 @@ public class AIController : Controller {
         }
         return false;
     }
-    private bool equipAttack() {
+    private bool equipAttack() { // equip any attack >>> Eventually change to selective attacks like heavy or light attacks
         string[] ss = {"physical", "magical", "bleed", "poison", "necro"};
         foreach (Skill skl in user.usingSkills) {
             
             if (skl.dTypeEquals(ss)) {
                 if (!skl.isReloading()) {
                     usingSkill = skl;
-                    Debug.Log("BLALLLLLLLLLL" + skl.skillName + skl.damageType);
                     return true;
                 }
             }

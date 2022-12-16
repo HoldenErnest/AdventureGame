@@ -12,7 +12,6 @@ public class Controller : MonoBehaviour
     public Character user;
     public GameObject invUI;
     public Vector2 movement; // (-1, -1)||(1, 1), to multiply speed
-    public float speed = 1;
     public static int skillInUse = 0;
     public bool moveOverride = false;
     public Vector2 target;
@@ -23,8 +22,9 @@ public class Controller : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        anim.SetFloat("animSpeed", speed);
         user = GetComponent<Character>();
+        anim.SetFloat("animSpeed", user.getSpeed());
+        
     }
 
     public virtual void Update() {
@@ -83,7 +83,7 @@ public class Controller : MonoBehaviour
         anim.SetFloat("vertical", v);
     }
     public void move() {
-        rb.velocity = movement * speed * (140) * Time.fixedDeltaTime;
+        rb.velocity = movement * user.getSpeed() * (140) * Time.fixedDeltaTime;
     }
     public void dash(Vector2 targetPos, float spd) { // dash with - speed for - seconds
         if (spd == 0f) { // a teleport
@@ -145,17 +145,32 @@ public class Controller : MonoBehaviour
     }
 
     public void updateSpeed() { // sets the player movementSpeed
-        speed = user.userStats.getSpeed();
         try {
-            anim.SetFloat("animSpeed", speed);
+            anim.SetFloat("animSpeed", user.getSpeed());
         } catch (Exception e) {
             Debug.Log(e);
         }
     }
 
-    public Vector2 getDirection() {
-        Debug.Log(rb.velocity);
-        return rb.velocity;
+    public Vector2 getMagnitude() { // returns velocity in terms of 0 and 1
+        Vector2 mag;
+        float dirX = rb.velocity.x;
+        float dirY = rb.velocity.y;
+        if (Math.Abs(dirX) > Math.Abs(dirY)) {
+            if (dirX != 0)
+                dirX /= Math.Abs(dirX);
+            if (dirY != 0)
+                dirY /= Math.Abs(dirX);
+        } else {
+            if (dirX != 0)
+                dirX /= Math.Abs(dirY);
+            if (dirY != 0)
+                dirY /= Math.Abs(dirY);
+        }
+
+        mag = new Vector2(dirX, dirY);
+
+        return mag;
     }
 
     public GameObject getRCMenu() {

@@ -45,12 +45,9 @@ public class Stats {
        return oldMax + (constitution * constMult) + (level * constMult);
     }
     public float getSpeed() { // returns the float value for speed, not the stat int
-        float val = (speed * speedMult) + (dexterity * dexSpeedMult);
-
-        if (val == 0)
-            return 1;
-        else if (val < 0)
-            val = 1/Math.Abs(val); //negative speeds give you a fraction instead
+        float val = 1 + (speed * speedMult) + (dexterity * dexSpeedMult);
+        if (val < 1)
+            val = 1/Math.Abs(val-2); //negative speeds give you a fraction instead
 
         return val;
     }

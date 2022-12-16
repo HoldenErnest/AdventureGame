@@ -45,7 +45,8 @@ public class Character : MonoBehaviour
         setStartSkills();
         
         if (isPlayer()) {
-
+            userStats.speed = 80;
+            updateSpeed();
             updateHotbarIcons();
             Knowledge.player = this;
             Knowledge.inventory = new Inventory(); // set this to the old saved inventory from xml

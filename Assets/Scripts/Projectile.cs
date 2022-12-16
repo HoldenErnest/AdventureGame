@@ -105,7 +105,7 @@ public class Projectile : MonoBehaviour
             if (transform.position.Equals(target)) {
                 stop();
             }
-            Vector2 newPosition = Vector2.MoveTowards(transform.position, target, Time.deltaTime * speed * 20);
+            Vector2 newPosition = Vector2.MoveTowards(transform.position, target, (float)(speed / 20));
             rb.MovePosition(newPosition);
         }
     }

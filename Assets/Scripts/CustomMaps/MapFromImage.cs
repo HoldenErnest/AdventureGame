@@ -14,7 +14,6 @@ public class MapFromImage : MonoBehaviour
     void Start()
     {
         if (System.IO.File.Exists(Application.streamingAssetsPath + $"/custom{layer}.png")) {
-            Debug.Log("still doing thing");
             Texture2D tex = new Texture2D(2,2);
             byte[] a = System.IO.File.ReadAllBytes (Application.streamingAssetsPath + $"/custom{layer}.png");
             tex.LoadImage(a);
