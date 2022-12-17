@@ -35,8 +35,6 @@ public class AIController : Controller {
     void Start() {
         currentState = 4;
         team = GetComponent<Team>().team;
-        usingSkill = user.usingSkills[0];
-        Debug.Log(user.usingSkills[0].skillName);
     }
     public override void FixedUpdate() {
         updatePrefDistances();
@@ -158,9 +156,10 @@ public class AIController : Controller {
         if (!GameObject.ReferenceEquals(temp, null)) {
             targetPos = temp.transform.position;
             //moveToAttackRange();
-        }
+        
         if (equipAttack()) {
             attackUserWithPredict(temp.GetComponent<Character>());
+        }
         }
         setState("Dodging");
     }

@@ -73,8 +73,8 @@ public class Character : MonoBehaviour
             //Knowledge.effectToJson(new Effect());
             //Knowledge.skillToJson(new Skill());
             //Knowledge.questToJson(new Quest());
-            Knowledge.itemToJson(new Item());
-            Knowledge.equipToJson(new Equipable());
+            //Knowledge.itemToJson(new Item());
+            //Knowledge.equipToJson(new Equipable());
             Knowledge.overwriteInventoryJson();
         } else {
             equip(Knowledge.getEquipable("blue_pants"));
@@ -213,12 +213,24 @@ public class Character : MonoBehaviour
 
         equips.Add(e);
         e.equip();
-        if (e.hasTexture()) createCharacter();
+        if (e.hasTexture()) createCharacter(); // if the equipped item had a model texture, reload the character texture asset.
     }
     public void unequip(Equipable e) {
-        equips.Remove(e);
-        e.unequip();
-        if (e.hasTexture()) createCharacter();
+        int rIndex = indexFromList(equips, e);
+        if (rIndex != -1) {
+            equips.RemoveAt(rIndex);
+            e.unequip();
+            if (e.hasTexture()) createCharacter();
+        } else {
+            Debug.Log("CANNOT FIND THIS OBJECT IN THE LIST?");
+        }
+    }
+
+    private int indexFromList(List<Equipable> l, Equipable e) {
+        for (int i = 0; i < l.Count; i++) {
+            if (l[i].sid == e.sid && l[i].itemName == e.itemName) return i; // must be compared with the internal values rather than pointers or it will believe all Equippables are "e"
+        }
+        return -1;
     }
 
     //Timers
