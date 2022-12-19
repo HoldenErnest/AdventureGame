@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hoverhealthbar : Healthbar
+public class Hoverhealthbar : CustomSlider
 {
     public Vector3 offset;
 

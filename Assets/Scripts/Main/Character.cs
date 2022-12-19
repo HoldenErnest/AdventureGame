@@ -12,7 +12,9 @@ using UnityEngine.U2D.Animation;
 public class Character : MonoBehaviour
 {
     private Controller controls;
-    public Healthbar hpUI;
+    public GameObject statsUI; // empty gameobject encompasing the personal stats overlay (health and xp bars ect)
+    private CustomSlider hpUI;
+    private CustomSlider xpUI;
     public Hotbar[] hotbarItems;
     public GameObject otherHealthbar;
     public Texture2D bodyTexture;
@@ -30,22 +32,18 @@ public class Character : MonoBehaviour
     
     private int higherPlane = 0; // if you are on a higher plane than the ground floor (gets bouses like range and view // can shoot through the wall collision)
 
-    
+    private Character lastHitCharacter;
 
     void Start() {
         controls = GetComponent<Controller>();
         fullHealth();
         updateSpeed();
-        if (!isPlayer()) { // set the healthbars
-            GameObject newHp = Instantiate(otherHealthbar, transform);
-            hpUI = newHp.GetComponent<Healthbar>();
-        }
-        updateHpSlider();
+        setupUI();
         
         setStartSkills();
         
         if (isPlayer()) {
-            userStats.speed = 80;
+            userStats.speed = 10;
             updateSpeed();
             updateHotbarIcons();
             Knowledge.player = this;
@@ -78,6 +76,7 @@ public class Character : MonoBehaviour
             Knowledge.overwriteInventoryJson();
         } else {
             equip(Knowledge.getEquipable("blue_pants"));
+            addXp(500);
         }
 
         createCharacter(); // create character texture after getting previous equipped items.
@@ -132,9 +131,17 @@ public class Character : MonoBehaviour
     public void addHealth(int health) {
         hp += health;
     }
+    public void addXp(int amt) {
+        userStats.addXp(amt);
+        if (xpUI)
+        updateXpSlider();
+    }
     public void kill() {
         hp = 0;
         updateDeath();
+    }
+    public void setLastHit (Character c) {
+        lastHitCharacter = c;
     }
     public float getAvgSkillDist() {
         float total = 0;
@@ -190,12 +197,39 @@ public class Character : MonoBehaviour
     public void updateHpSlider() {
         hpUI.updateSlider(hp, userStats.getMaxHp(baseMaxHp));
     }
+    public void updateXpSlider() {
+        xpUI.updateSlider(userStats.getXp(), userStats.getMaxXp());
+    }
     private void updateDeath() {
         if (hp <= 0) {
+            giveXpToLastHit();
             Destroy(this.gameObject);
         }
     }
-    private void setStartSkills() {
+    private void giveXpToLastHit() {
+        if (lastHitCharacter) {
+            Debug.Log("addding xp: " + userStats.getOnKillXp());
+            lastHitCharacter.addXp(userStats.getOnKillXp());
+        }
+    }
+    private void setupUI() { // set the UI scripts based on the specified UI gameobjects
+        GameObject newHp;
+        if (!isPlayer()) { // if its an AI, create a floating healthbar
+            newHp = Instantiate(otherHealthbar, transform);
+            hpUI = newHp.GetComponent<CustomSlider>();
+        } else {
+            GameObject newXp;
+            newHp = statsUI.transform.GetChild(0).gameObject;
+            newXp = statsUI.transform.GetChild(1).gameObject;
+            hpUI = newHp.GetComponent<CustomSlider>();
+            xpUI = newXp.GetComponent<CustomSlider>();
+        }
+        if (hpUI)
+            updateHpSlider();
+        if (xpUI)
+            updateXpSlider();
+    }
+    private void setStartSkills() { // setup your hotbar of skills based on inputed "startingSkills"
         usingSkills = new Skill[5];
         for (int i = 0; i < startingSkills.Length; i++) {
             usingSkills[i] = Knowledge.getSkill(startingSkills[i]);
@@ -249,7 +283,7 @@ public class Character : MonoBehaviour
         //Debug.Log(e.effectType + e.effectTier + " damage with " + e.duration);
         yield return new WaitForSeconds(1);
         if (e.duration > 0 && e.isActive()) {
-            damageByType(e.getUser().attackByType(e.damage, e.effectType), e.effectType);
+            damageByType(e.getDamageAfterUser(), e.effectType);
             e.duration--;
             StartCoroutine(handleEffects(e));
         } else { // the effect is done -> stop and delete

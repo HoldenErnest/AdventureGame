@@ -39,6 +39,9 @@ public class Projectile : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (user == null) stop(); //!! FIX !! -- instead of destroying the projectile when the user is killed, keep moving until it needs to stop.
+        //this can be accomplished by not using "user" for the onTriggerEnter2D(), instead make local variables to store the info needed.
+
         moveForward(); // maybe change to frictionless rb.addforce so Update() isnt needed
     }
     void OnTriggerEnter2D(Collider2D col)
@@ -46,8 +49,8 @@ public class Projectile : MonoBehaviour
         if (isCharacter(col.gameObject)) {
             if (col.gameObject.GetComponent<Team>().getTeam() != user.GetComponent<Team>().getTeam()) {
                 Character target = col.gameObject.GetComponent<Character>();
-                target.damageByType(user.GetComponent<Character>().attackByType(damage, damageType), damageType);
-                addAllEffects(target);
+
+                damageUser(target);
                 pierce--;
             } else {
                 //Debug.Log("hit friendly");
@@ -70,8 +73,7 @@ public class Projectile : MonoBehaviour
                     //Debug.Log(user.name + " hit " + cols.gameObject.name);
                     Character target = cols.gameObject.GetComponent<Character>();
 
-                    target.damageByType(user.GetComponent<Character>().attackByType(damage, damageType), damageType);
-                    addAllEffects(target);
+                    damageUser(target);
                 }
             }
         }
@@ -108,6 +110,11 @@ public class Projectile : MonoBehaviour
             Vector2 newPosition = Vector2.MoveTowards(transform.position, target, (float)(speed / 20));
             rb.MovePosition(newPosition);
         }
+    }
+    private void damageUser(Character target) {
+        target.setLastHit(user.GetComponent<Character>());
+        target.damageByType(user.GetComponent<Character>().attackByType(damage, damageType), damageType);
+        addAllEffects(target);
     }
     public void explode() {
         if (areaDamage > 0f) { // if attackArea of skill is 0.0 then it isnt an exploding skill.

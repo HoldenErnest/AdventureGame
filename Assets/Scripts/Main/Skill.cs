@@ -82,9 +82,10 @@ public class Skill : MonoBehaviour {
         foreach (Collider2D cols in hitColliders) {
             if (isHittable(cols.gameObject)) {
                 if (cols.gameObject.GetComponent<Team>().getTeam() != getUserTeam()) {
-                    //Debug.Log(user.name + " hit " + cols.gameObject.name);
+                    Debug.Log(user.name + " hit " + cols.gameObject.name);
                     Character target = cols.gameObject.GetComponent<Character>();
-
+                    
+                    target.setLastHit(user.GetComponent<Character>());
                     target.damageByType(user.GetComponent<Character>().attackByType(baseDamage, damageType), damageType);
                     addAllEffects(target);
                 } else {

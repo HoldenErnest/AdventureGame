@@ -18,7 +18,6 @@ public class SpritemapAnimation : MonoBehaviour {
 
     void Start() {
         
-        
     }
     void Update() {
         if (catagory != lastC || index != lastI)

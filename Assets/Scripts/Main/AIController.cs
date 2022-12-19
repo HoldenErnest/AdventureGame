@@ -127,11 +127,13 @@ public class AIController : Controller {
         GameObject closestProj = getClosestEnemyProjectile();
         if (GameObject.ReferenceEquals(closestProj, null) && GameObject.ReferenceEquals(closestEnemy, null)) return; //nothing to dodge from
 
+        Vector2 enemyPos;
+
         if (!GameObject.ReferenceEquals(closestProj, null)) {
             Vector2 bulletPos = new Vector2(closestProj.transform.position.x, closestProj.transform.position.y);
 
             if (!GameObject.ReferenceEquals(closestEnemy, null)) {
-                Vector2 enemyPos = new Vector2(closestEnemy.transform.position.x, closestEnemy.transform.position.y);
+                enemyPos = new Vector2(closestEnemy.transform.position.x, closestEnemy.transform.position.y);
 
                 if(Vector2.Distance(getPos(), enemyPos) < 2f)
                     moveTowardsVector(false, enemyPos);
@@ -141,7 +143,13 @@ public class AIController : Controller {
                 moveTowardsVector(false, bulletPos);
             }
         } else if (!GameObject.ReferenceEquals(closestEnemy, null)) { // no projectile but an enemy
-            moveToAttackRange();
+            enemyPos = new Vector2(closestEnemy.transform.position.x, closestEnemy.transform.position.y);
+            if (!inDanger(closestEnemy.GetComponent<Character>()))
+                moveToAttackRange();
+            else {
+                Debug.Log("rather strafe than attack");
+                moveTowardsVector(false, enemyPos);
+            }
         }
 
         if (!inDanger()) {
@@ -389,6 +397,7 @@ public class AIController : Controller {
     public GameObject getClosestEnemyProjectile() { // collects any hit colliders within the attackArea
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(getPos(), noticeRange);
         GameObject closest = null;
+        if (hitColliders != null)
         foreach (Collider2D cols in hitColliders) {
             GameObject target = cols.gameObject;
             if (target.GetComponent<Projectile>() != null) {
@@ -432,8 +441,14 @@ public class AIController : Controller {
         highestSkillDistance = user.getHighSkillDist();
         averageSkillDistance = user.getAvgSkillDist();
     }
-    private bool inDanger() { //low health ect, used to attack from distance or afar.
-        return user.getHealthPercentage() <= 0.5f;
+    private bool inDanger(Character closestEnemy) { //low health ect, used to attack from distance or afar.
+        return user.getHealthPercentage() <= 0.33f && !morehpThan(closestEnemy);
+    }
+    private bool inDanger() { //the more parameters passed the more accurate it can be to sensing danger-------
+        return user.getHealthPercentage() <= 0.33f;
+    }
+    private bool morehpThan(Character c) { // your health is more than the specified characters
+        return user.getHealthPercentage() >= c.getHealthPercentage();
     }
     private bool equipDash() {
         foreach (Skill skl in user.usingSkills) {

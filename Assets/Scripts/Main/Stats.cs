@@ -16,7 +16,7 @@ public class Stats {
     public static readonly float intelMult = 0.15f;
     public static readonly float evadeMult = 0.05f;
     public static readonly float armorMult = 0.10f;
-    public static readonly float speedMult = 0.03f;
+    public static readonly float speedMult = 0.12f;
     public static readonly float resistMult = 0.05f; // resistance mult for everything
     public static readonly float necroMult = 1.5f; // how much worse necro is for everyone
 
@@ -32,7 +32,7 @@ public class Stats {
     public int poisonResist = 0;
     public int psychResist = 0;
 
-    public int xp = 0;
+    public int xp = 1; // total xp gathered
     public int level = 1; // + stat points, + BaseConstitution, + SmallStrength
     public int carriedWeight = 0;
 
@@ -41,8 +41,8 @@ public class Stats {
 
     }
 
-    public int getMaxHp(int oldMax) {
-       return oldMax + (constitution * constMult) + (level * constMult);
+    public int getMaxHp(int baseMax) {
+       return baseMax + (constitution * constMult) + (level * constMult);
     }
     public float getSpeed() { // returns the float value for speed, not the stat int
         float val = 1 + (speed * speedMult) + (dexterity * dexSpeedMult);
@@ -52,14 +52,29 @@ public class Stats {
         return val;
     }
 
-
+    public void setLevel(int l) { // set current xp based on a specified wanted level.
+        xp = (int)Math.Pow(l - 1, 3);
+    }
     public void addXp(int amt) {
         xp += amt;
-        level = (int)Math.Cbrt(xp);
-        Debug.Log("level: " + level + ", with " + xp + " xp!");
-        Debug.Log("xp till next level: " + (Math.Pow(level+1, 3) % xp));
+        level = (int)Math.Floor(Math.Cbrt(xp)) + 1; 
+        //Debug.Log("level: " + level + ", with " + xp + " xp!");
+        //Debug.Log("current XP: " + getXp() + " out of " + getMaxXp());
         
-
+    }
+    public int getXp() { // xp gained in the current level (!! NOT TOTAL XP !!)
+        return xp - (int)Math.Floor(Math.Pow(level - 1, 3));
+    }
+    public int getMaxXp() { // total xp getting to a new level would take
+        return (int)Math.Pow(level, 3) - (int)Math.Pow(level - 1, 3);
+    }
+    public int getNeededXp() { // xp currently needed to level up
+        return (int)Math.Pow(level, 3) - xp;
+    }
+    public int getOnKillXp() { // only used to represent how much xp someone gets for killing this character
+        int specifiedXp = (int)Mathf.Ceil(getMaxXp() / 10); // MIGHT NEED TO FIX THIS! kill avg of 20 guys the same level as you to level up or maybe 9 or so, 1 level up.
+        int addRandom = (int)rand.Next((int)Mathf.Floor(-specifiedXp / 5), (int)Mathf.Ceil(specifiedXp / 5));
+        return specifiedXp + addRandom;
     }
 
 
