@@ -36,10 +36,8 @@ public class Character : MonoBehaviour
 
     void Start() {
         controls = GetComponent<Controller>();
-        fullHealth();
         updateSpeed();
         setupUI();
-        
         setStartSkills();
         
         if (isPlayer()) {
@@ -76,9 +74,9 @@ public class Character : MonoBehaviour
             Knowledge.overwriteInventoryJson();
         } else {
             equip(Knowledge.getEquipable("blue_pants"));
-            addXp(500);
+            userStats.setLevel(10);
         }
-
+        fullHealth();
         createCharacter(); // create character texture after getting previous equipped items.
     }
 
@@ -119,11 +117,13 @@ public class Character : MonoBehaviour
         return gameObject.name.Equals("Player");
     }
     public float getHealthPercentage() {
+        //Debug.Log("current HP: " + hp + " and max is " + userStats.getMaxHp(baseMaxHp));
         return hp / userStats.getMaxHp(baseMaxHp);
     }
     //Health
     public void fullHealth() {
         hp = userStats.getMaxHp(baseMaxHp);
+        updateHpSlider();
     }
     public void loseHealth(int health) {
         hp -= health;
@@ -147,23 +147,25 @@ public class Character : MonoBehaviour
         float total = 0;
         int totSkls = 0;
         foreach (Skill s in usingSkills) {
-            if (s != null) {
+            if (s.baseDamage > 0) {
                 totSkls++;
                 total += s.minRange + s.maxRange;
             }
         }
-        return total / (totSkls * 2);
+        return total / (totSkls * 2); // * 2 for avg of minRange and maxRange
     }
-    public float getLowSkillDist() {
-        float lowest = 0;
+    public float getLowSkillDist() { // get the range for the smallest ranged skill the charcter has
+        float lowest = -1;
         foreach (Skill s in usingSkills) {
-            if (s.minRange < lowest) lowest = s.minRange;
+            if (s.baseDamage > 0)
+            if (s.minRange < lowest || lowest == -1) lowest = s.minRange;
         }
         return lowest;
     }
-    public float getHighSkillDist() {
-        float highest = 0;
+    public float getHighSkillDist() { // get the range for the highest ranged skill the charcter has
+        float highest = -1;
         foreach (Skill s in usingSkills) {
+            if (s.baseDamage > 0)
             if (s.maxRange > highest) highest = s.maxRange;
         }
         return highest;

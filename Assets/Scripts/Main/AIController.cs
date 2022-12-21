@@ -9,6 +9,7 @@ public class AIController : Controller {
     public float noticeRange = 1.0f; // maybe make a wits stat which affects this and things like dodging 
     public Vector2 homePosition; // default where the character goes back to when its done for the night.
     public Vector2 targetPos;
+    public Vector2 targetLastSeenPos;
     Skill usingSkill = null;
 
     private float averageSkillDistance; // used for perfered distance from nearest enemy.
@@ -43,8 +44,8 @@ public class AIController : Controller {
     public override void Update() {
         //do nothing
     }
-    //everything a character does while in a certain state
 
+    //everything a character does while in a certain state
 
     public void setState(string s) {
         for (int i = 0; i < states.Length; i++) {
@@ -135,7 +136,7 @@ public class AIController : Controller {
             if (!GameObject.ReferenceEquals(closestEnemy, null)) {
                 enemyPos = new Vector2(closestEnemy.transform.position.x, closestEnemy.transform.position.y);
 
-                if(Vector2.Distance(getPos(), enemyPos) < 2f)
+                if(getLineLength(getPos(), enemyPos) < 2f)
                     moveTowardsVector(false, enemyPos);
                 else
                     strafe(enemyPos, pointIsRightOfLine(getPos(), enemyPos, bulletPos), bulletPos);
@@ -169,24 +170,27 @@ public class AIController : Controller {
             attackUserWithPredict(temp.GetComponent<Character>());
         }
         }
-        setState("Dodging");
+        if (canSee(targetPos))
+            setState("Dodging");
+        else
+            moveTowardsVector(true, targetLastSeenPos);
     }
     private void AttackSoft() {
         GameObject temp = getClosestEnemy();
         if (!GameObject.ReferenceEquals(temp, null)) {
             targetPos = temp.transform.position;
             //moveToAttackRange();
+            if (equipAttack()) {
+                attackUserWithPredict(temp.GetComponent<Character>());
+            }
         }
-        if (equipAttack()) {
-            attackUserWithPredict(temp.GetComponent<Character>());
-        }
+        
         setState("Dodging");
     }
 
     //END STATE PERFORMANCES::_________________________________________________________________________________
 
     public void move(float h, float v) {
-
         if (moveOverride) {
             Vector2 dir = -(getPos() - Vector2.MoveTowards(getPos(), target, 1));
             
@@ -287,13 +291,12 @@ public class AIController : Controller {
         if (!towards) {
             h *= -1;
             v *= -1;
-            if (Vector2.Distance(getPos(), tar) < getPrefFarDistance() || inDanger()) { // if youre too close or your health is low
-                Debug.Log("RUN AWAWY!!!!! x:"+h+" y:"+v);
+            if (getLineLength(getPos(), tar) < getPrefCloseDistance() || inDanger()) { // if youre too close or your health is low
+                Debug.Log("rolling");
                 rollTowardsVector(new Vector2(h,v)+ getPos()); // try to roll away first
             }
         } else {
-            if (Vector2.Distance(getPos(), tar) >= getPrefFarDistance()+5) {// if youre far enough away roll to go faster
-                Debug.Log("THIS IS STUPID        x:"+h+" y:"+v);
+            if (getLineLength(getPos(), tar) >= getPrefCloseDistance()+4) {// if youre far enough away roll to go faster
                 rollTowardsVector(new Vector2(h,v)+ getPos()); // try to roll towards the target first
             }
         }
@@ -314,6 +317,7 @@ public class AIController : Controller {
 
     private void rollTowardsVector(Vector2 v) { // only if skill minimum distance allows ??
         if (equipDash()) {
+            Debug.Log("equipped a roll!");
             attackPosition(v);
             //equipAttack(); // maybe put this in the attacking state instead>>>>>>>>>
         }
@@ -324,7 +328,8 @@ public class AIController : Controller {
         anim.SetBool("buttonDown", false);
     }
 
-    public void attackPosition(Vector2 v) { // generic attack, if in range with any available attacks, use that skill 
+    public void attackPosition(Vector2 v) { // generic attack, if in range with any available attacks, use that skill
+        if (!canSee(targetPos)) return;
         Debug.Log("casting skill " + usingSkill.skillName + " at position: " + v);
         usingSkill.updateTargetPosition(v);
         usingSkill.useSkill();
@@ -336,20 +341,19 @@ public class AIController : Controller {
     public void attackUserWithPredict(Character theUser) { // Attack a user based on their velocity and your projectile speed
         float projSpeed = usingSkill.projectileSpeed;
         Vector2 theUserPos = theUser.GetController().getPosition();
-
+        float theSpeed = theUser.getSpeed();
         Vector2 prediciton = theUserPos;
 
-        if (projSpeed != 0) { // there is actually something to predict.
+        if (projSpeed != 0 || theSpeed == 0f) { // there is actually something to predict.
             
             float distanceBetween = getLineLength(getPosition(), theUserPos);
             
             Vector2 theUserMag = theUser.GetController().getMagnitude();
-            float theSpeed = theUser.getSpeed();
+            theSpeed = theUser.getSpeed();
 
             float timeToImpact = distanceBetween / projSpeed; // find the time till inpact
             prediciton = theUserPos + (theUserMag * (theSpeed * timeToImpact)); // how far will the target travel in that time? *(mag) and in which direction.
 
-            
         }
 
         attackPosition(prediciton);
@@ -359,16 +363,25 @@ public class AIController : Controller {
     public void attackInputs() {
         //override method
     }
-    public bool canSee(Vector2 trgt) {
-        RaycastHit2D hit = Physics2D.Raycast(getPos(), getDirection(trgt), noticeRange, LayerMask.GetMask("Collision"));
-        if (hit.collider != null) {
-            return false;
+    public bool canSee(Vector2 trgt) { // draws a ray to see if there is not objects between the user and the target destination
+        
+        //Debug.DrawRay(getPos(), getDirection(trgt), Color.blue, 0.2f);
+        float rayLength = getLineLength(getPos(), trgt);
+        if (rayLength > 1) {
+            rayLength -= 1;
+            RaycastHit2D hit = Physics2D.Raycast(getPos(), getDirection(trgt), rayLength, LayerMask.GetMask("Collision"));
+            
+            if (hit.collider != null) {
+                return false;
+            }
         }
+        targetLastSeenPos = trgt;
         return true;
     }
     private Vector2 getDirection(Vector2 v) {
-        return -(getPos() - v);
+        return (v - getPos());
     }
+    
 
     public GameObject getClosestEnemy() { // collects any hit colliders within the attackArea and sends out the damage( * user strength ect.)
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(getPos(), noticeRange);
@@ -452,10 +465,11 @@ public class AIController : Controller {
     }
     private bool equipDash() {
         foreach (Skill skl in user.usingSkills) {
-            if (skl.damageType.Equals("movement"))
+            if (skl.damageType.Equals("movement")) {
                 if (!skl.isReloading()) {
-                usingSkill = skl;
-                return true;
+                    usingSkill = skl;
+                    return true;
+                }
             }
         }
         return false;
@@ -506,6 +520,22 @@ public class AIController : Controller {
     }
     private float getLineLength(Vector2 v1, Vector2 v2) { // distance between 2 points
         return (float)Math.Sqrt(Math.Pow(v1.x-v2.x, 2) + Math.Pow(v1.y-v2.y, 2));
+    }
+    Vector2 normalizeVector(Vector2 v) {
+        float dirX = v.x;
+        float dirY = v.y;
+        if (Math.Abs(dirX) > Math.Abs(dirY)) {
+            if (dirX != 0)
+                dirX /= Math.Abs(dirX);
+            if (dirY != 0)
+                dirY /= Math.Abs(dirX);
+        } else {
+            if (dirX != 0)
+                dirX /= Math.Abs(dirY);
+            if (dirY != 0)
+                dirY /= Math.Abs(dirY);
+        }
+        return new Vector2(dirX, dirY);
     }
 
     //WAITINGS

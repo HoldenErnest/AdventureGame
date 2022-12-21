@@ -56,9 +56,8 @@ public class Controller : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
 
-        if (moveOverride) {
+        if (moveOverride) { // dash override
             Vector2 dir = -(getPosition() - Vector2.MoveTowards(getPosition(), target, 1));
-
             dir.Normalize();
             rb.velocity = dir * Time.deltaTime * 140 * dashSpeed;
             if (getLineLength(getPosition(),target) <= 0.1f*dashSpeed) { // stop dash
