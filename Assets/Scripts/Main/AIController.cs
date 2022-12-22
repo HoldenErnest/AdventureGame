@@ -596,11 +596,11 @@ public class AIController : Controller {
     //EVENTS
     void OnCollisionEnter2D(Collision2D col)
     {
-        //StartCoroutine(isOnWall());
+        StartCoroutine(isOnWall());
     }
     void OnCollisionExit2D(Collision2D col)
     {
-        //  onWall = false;
+        onWall = false;
     }
     IEnumerator isOnWall() { // small check to know if the user was on the wall for .3 seconds >(dont want them to get stuck so re-enable movement)
         onWall = true;
