@@ -17,8 +17,10 @@ public class AIController : Controller {
     private float highestSkillDistance;
 
     private bool dashQueued; // dont want to try to strafe but then run away because guy got too close
-
     int smarts = 5; // TEMP!@!@@!@!@!@!@! how "tough" the opponent is, controls how well they can predict dodges ect.
+
+    //stupid bool to make sure the corroutine only activates once.
+    private bool waitingForOpponent = false;
 
     private System.Random rand = new System.Random();
 
@@ -36,6 +38,7 @@ public class AIController : Controller {
     void Start() {
         currentState = 4;
         team = GetComponent<Team>().team;
+        targetLastSeenPos = homePosition;
     }
     public override void FixedUpdate() {
         updatePrefDistances();
@@ -85,15 +88,15 @@ public class AIController : Controller {
     //STATE PERFORMANCES::_____________________________________________________________________________________
     
     private void idle() {
+        stopMoving();
         //do nothing because its idle lmao.
     }
     private void goHome() { // I work alone
-        if (reachedTarget()) {
+        if (reachedVector(homePosition)) {
             setState("Idle");
             return;
         }
-        targetPos = homePosition;
-        moveTowardsTarget(true);
+        moveTowardsVector(true, homePosition);
     }
     private void wandering() {
         
@@ -123,10 +126,24 @@ public class AIController : Controller {
         }
     }
     private void dodging() {
+        drawPoint(targetLastSeenPos, 0.3f);
         // get closest bullet in the area to test if you should move right or left of it.
         GameObject closestEnemy = getClosestEnemy();
         GameObject closestProj = getClosestEnemyProjectile();
-        if (GameObject.ReferenceEquals(closestProj, null) && GameObject.ReferenceEquals(closestEnemy, null)) return; //nothing to dodge from
+        if (GameObject.ReferenceEquals(closestProj, null) && GameObject.ReferenceEquals(closestEnemy, null)) { // nothing to dodge from go to last time something was seen
+            
+            if (!reachedVector(targetLastSeenPos)) {
+                Debug.Log("has not reached last seen");
+                moveTowardsVector(true, targetLastSeenPos);
+            } else if (!waitingForOpponent) {
+                StartCoroutine(goHomeAfterWait());
+            }
+            
+            return;
+        }
+        waitingForOpponent = false; // back to fighting so dont try to go home anymore.
+
+        if (moveFromWall()) return; // move away from any walls because it might interfear with fighting. But only after you tried to get to last seen
 
         Vector2 enemyPos;
 
@@ -147,8 +164,7 @@ public class AIController : Controller {
             enemyPos = new Vector2(closestEnemy.transform.position.x, closestEnemy.transform.position.y);
             if (!inDanger(closestEnemy.GetComponent<Character>()))
                 moveToAttackRange();
-            else {
-                Debug.Log("rather strafe than attack");
+            else {// the enemy is better, so run
                 moveTowardsVector(false, enemyPos);
             }
         }
@@ -166,14 +182,13 @@ public class AIController : Controller {
             targetPos = temp.transform.position;
             //moveToAttackRange();
         
-        if (equipAttack()) {
-            attackUserWithPredict(temp.GetComponent<Character>());
+            if (equipAttack()) {
+                attackUserWithPredict(temp.GetComponent<Character>());
+            }
         }
-        }
-        if (canSee(targetPos))
-            setState("Dodging");
-        else
-            moveTowardsVector(true, targetLastSeenPos);
+    
+        setState("Dodging");
+        
     }
     private void AttackSoft() {
         GameObject temp = getClosestEnemy();
@@ -184,7 +199,6 @@ public class AIController : Controller {
                 attackUserWithPredict(temp.GetComponent<Character>());
             }
         }
-        
         setState("Dodging");
     }
 
@@ -229,10 +243,10 @@ public class AIController : Controller {
         }
     }
     private bool reachedTarget() { // returns true when the user is at(close enough) to the target position.
-        return withinRadiusTarget(0.1f);
+        return withinRadiusTarget(0.2f);
     }
     private bool reachedVector(Vector2 v) { // returns true when the user is at(close enough) to the target position.
-        return withinRadiusOfVector(v, 0.1f);
+        return withinRadiusOfVector(v, 0.2f);
     }
     private bool withinRadiusTarget(float maxDistance) { // returns if the user is within a specified radius of the target position.
         return withinRadiusOfVector(targetPos, maxDistance);
@@ -292,7 +306,6 @@ public class AIController : Controller {
             h *= -1;
             v *= -1;
             if (getLineLength(getPos(), tar) < getPrefCloseDistance() || inDanger()) { // if youre too close or your health is low
-                Debug.Log("rolling");
                 rollTowardsVector(new Vector2(h,v)+ getPos()); // try to roll away first
             }
         } else {
@@ -366,6 +379,7 @@ public class AIController : Controller {
     public bool canSee(Vector2 trgt) { // draws a ray to see if there is not objects between the user and the target destination
         
         //Debug.DrawRay(getPos(), getDirection(trgt), Color.blue, 0.2f);
+        drawPoint(getPos(), 0.2f);
         float rayLength = getLineLength(getPos(), trgt);
         if (rayLength > 1) {
             rayLength -= 1;
@@ -378,10 +392,35 @@ public class AIController : Controller {
         targetLastSeenPos = trgt;
         return true;
     }
+    public bool moveFromWall() { //move the character if there are any walls nearby, returns if the user was actually moved.
+        Vector2 v = getNearWalls();
+        if (v != Vector2.zero) {
+            Debug.Log("moved from the wall(s) at " + v);
+            moveTowardsVector(false, (getPos() + v));
+            return true;
+        }
+        return false;
+    }
+    public Vector2 getNearWalls() { // returns ({-1,0,1},{-1,0,1}) for where walls are reletive to the user. returns 0 if no walls in that direction or both walls are equadistant from user.
+        float rayLength = 0.8f;
+        Vector2 walls = new Vector2(0,0);
+
+        RaycastHit2D up = Physics2D.Raycast(getPos(), Vector2.up, rayLength, LayerMask.GetMask("Collision"));
+        RaycastHit2D down = Physics2D.Raycast(getPos(), Vector2.down, rayLength, LayerMask.GetMask("Collision"));
+        RaycastHit2D right = Physics2D.Raycast(getPos(), Vector2.right, rayLength, LayerMask.GetMask("Collision"));
+        RaycastHit2D left = Physics2D.Raycast(getPos(), Vector2.left, rayLength, LayerMask.GetMask("Collision"));
+
+        if (up.collider != null) walls.y++;
+        if (down.collider != null) walls.y--;
+        if (right.collider != null) walls.x++;
+        if (left.collider != null) walls.x--;
+
+        return walls;
+    }
+
     private Vector2 getDirection(Vector2 v) {
         return (v - getPos());
     }
-    
 
     public GameObject getClosestEnemy() { // collects any hit colliders within the attackArea and sends out the damage( * user strength ect.)
         Collider2D[] hitColliders = Physics2D.OverlapCircleAll(getPos(), noticeRange);
@@ -441,7 +480,8 @@ public class AIController : Controller {
     }
 
     private Vector2 getPos() {
-        return this.gameObject.transform.position;
+        Vector2 v = new Vector2(this.gameObject.transform.position.x, this.gameObject.transform.position.y - 0.5f);
+        return v;
     }
     private float getPrefCloseDistance() { // prefered distances to the nearest opponent.
         return lowestSkillDistance;
@@ -543,6 +583,37 @@ public class AIController : Controller {
         setState("Idle");
         yield return new WaitForSeconds(s);
         setState(prevState);
+    }
+    public IEnumerator goHomeAfterWait() {
+        waitingForOpponent = true;
+        yield return new WaitForSeconds(3f);
+        if (waitingForOpponent) {
+            setState("Home");
+            Debug.Log("going back home");
+        }
+    }
+
+    //EVENTS
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        //StartCoroutine(isOnWall());
+    }
+    void OnCollisionExit2D(Collision2D col)
+    {
+        //  onWall = false;
+    }
+    IEnumerator isOnWall() { // small check to know if the user was on the wall for .3 seconds >(dont want them to get stuck so re-enable movement)
+        onWall = true;
+        yield return new WaitForSeconds(0.3f);
+        if (onWall) {
+            moveOverride = false;
+        }
+    }
+
+    //TESTING
+    public void drawPoint(Vector2 v, float radius) {
+        Debug.DrawLine(new Vector2(v.x-radius, v.y), new Vector2(v.x+radius, v.y), Color.blue, 1f);
+        Debug.DrawLine(new Vector2(v.x, v.y-radius), new Vector2(v.x, v.y+radius), Color.blue, 1f);
     }
 
 }

@@ -85,7 +85,7 @@ public class Controller : MonoBehaviour
         rb.velocity = movement * user.getSpeed() * (140) * Time.fixedDeltaTime;
     }
     public void dash(Vector2 targetPos, float spd) { // dash with - speed for - seconds
-        if (spd == 0f) { // a teleport
+        if (spd == 0f) { // a teleport, so check where youre landing so its not in a wall
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(targetPos, 0.3f);
             foreach (Collider2D cols in hitColliders) {
                 if (cols.gameObject.GetComponent<TilemapCollider2D>() != null) {
@@ -98,7 +98,8 @@ public class Controller : MonoBehaviour
             user.transform.position = new Vector2(targetPos.x, targetPos.y + 0.5f);
             if (user.gameObject)
             return;
-        }
+        } // otherwise just start dash
+
         dashSpeed = spd;
         target = targetPos;
         moveOverride = true;//start dash
