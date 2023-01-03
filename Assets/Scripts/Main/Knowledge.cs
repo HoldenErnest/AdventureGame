@@ -64,7 +64,7 @@ public static class Knowledge {
         Quest newQuest = new Quest();
         try {
             string json = Resources.Load<TextAsset>(questsPath + questName).text;
-            JsonUtility.FromJsonOverwrite(json, newQuest); // instead of rewriting a new Skill() try rewriting the skill currently in use
+            JsonUtility.FromJsonOverwrite(json, newQuest);
         } catch {
             Debug.Log("Quest \"" + questName + ".json\" not found.");
         }

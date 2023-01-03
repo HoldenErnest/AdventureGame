@@ -27,7 +27,6 @@ public class Dialogue : MonoBehaviour
     private static void setDialogueBox(int num) { // sets the actual text from one of the dialogue items
         
         textUI.text = $"{dialogue.dialogueItems[num].speaker} \n  {escapeVars(dialogue.dialogueItems[num].text)}";
-        // OPTIONS >> dialogue.dialogueItems[0].options[0];
         
     }
     private static string escapeVars(string txt) { // escape variables

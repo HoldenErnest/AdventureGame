@@ -1,0 +1,14 @@
+{
+    "isComplete":false,"rewardsCollected":false,"title":"Fish for Fred","desc":"Find alot of fish for some loser in the town square, why? Who knows.",
+    "rewards":[{
+        "rewardName":"","rewardType":"xp","ammount":100
+    }],"items":[{
+        "desc":"Collect five Trout","type":"collect","objective":"trout","total":5,"isComplete":false
+    },{
+        "desc":"Collect three Giant Bass","type":"collect","objective":"giant_bass","total":3,"isComplete":false
+    },{
+        "desc":"Collect a Tinted Rainbow Fish","type":"collect","objective":"tinted_rainbow_fish","total":1,"isComplete":false
+    },{
+        "desc":"Converse with Fred","type":"talk","objective":"fred","total":1,"isComplete":false
+    }]
+}

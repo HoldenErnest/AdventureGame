@@ -31,7 +31,4 @@ public class DialogueItemXml {
     [XmlElement(ElementName = "text")]
     public string text;
 
-    [XmlArray("options")]
-    [XmlArrayItem("option")]
-    public string[] options { get; set; }
 }

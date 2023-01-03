@@ -66,12 +66,17 @@ public class Character : MonoBehaviour
             Knowledge.inventory.addItem("apple");
             Knowledge.inventory.addItem("apple");
 
+
+            Knowledge.inventory.addQuest("intro");
+            Knowledge.inventory.addQuest("test1");
+            Knowledge.inventory.addQuest("test1");
             //Knowledge.effectToJson(new Effect());
             //Knowledge.skillToJson(new Skill());
             //Knowledge.questToJson(new Quest());
             //Knowledge.itemToJson(new Item());
             //Knowledge.equipToJson(new Equipable());
             Knowledge.overwriteInventoryJson();
+            
         } else {
             equip(Knowledge.getEquipable("blue_pants"));
             userStats.setLevel(10);

@@ -13,7 +13,8 @@ using System;
 public class Inventory : MonoBehaviour {
 
     public List<Item> inventory = new List<Item>();
-    public List<Skill> learnedSkills;
+    public List<Skill> learnedSkills = new List<Skill>();
+    public List<Quest> activeQuests = new List<Quest>();
 
     void Start() {
         inventory = new List<Item>();
@@ -23,7 +24,11 @@ public class Inventory : MonoBehaviour {
     public List<Item> getAllItems() {
         return inventory;
     }
+    public List<Quest> getAllQuests() {
+        return activeQuests;
+    }
 
+    //items
     public void addItems (string itemName, int ammount) {
         for (int i = 0; i < ammount; i++) {
             addItem(itemName);
@@ -41,6 +46,7 @@ public class Inventory : MonoBehaviour {
         inventory.Add(Knowledge.getEquipable(itemName));
     }
 
+    //skills
     public void learnSkill(Skill s) {
         learnedSkills.Add(s);
     }
@@ -50,6 +56,13 @@ public class Inventory : MonoBehaviour {
             if (Knowledge.player.usingSkills[i] == s) Knowledge.player.usingSkills[i] = null;
         }
 
+    }
+
+    //quests
+    public void addQuest(string q) {
+        Quest newQuest = Knowledge.getQuest(q);
+        // if (!newQuest.activeQuest()) // might need a check so quests cant get activated more than once. << including if its completed.
+        activeQuests.Add(newQuest);
     }
 
 }

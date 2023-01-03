@@ -16,8 +16,8 @@ public class Quest {
     public Quest () {
         isComplete = false;
         rewardsCollected = false;
-        title = "An unnamed quest";
-        desc = "Speak with the unnamed man";
+        title = "Unknown Quest";
+        desc = "This quest is unknown";
         rewards = new QuestReward[] {new QuestReward()};
         items = new QuestItem[] {new QuestItem(), new QuestItem(), new QuestItem()};
     }
@@ -56,13 +56,14 @@ public class QuestItem {
     public string type; // the action needed
     public string objective; // the name of the noun the type of quest is acting on
     public int total;
-    private int current = 0;
+    private int current; // the current quest item the player is on.
     public bool isComplete;
 
     public QuestItem () {
         desc = "Exterminate 1 bat with the newly aquired power";
-        type = "kill"; // (kill objectives), (collect objectives), (talk to objectives)
+        type = "kill"; // (kill objectives), (collect objectives), (talk to objectives), (remove objectives)
         objective = "bat"; // name of enemy, item, or talkable character
+        current = 1;
         total = 1;
         isComplete = false;
     }

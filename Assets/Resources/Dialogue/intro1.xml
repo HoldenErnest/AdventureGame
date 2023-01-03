@@ -4,26 +4,16 @@
         <item>
             <speaker>Some Guy</speaker>
             <text>Hello good sir bun, what can I do for you?</text>
-            <options>
-                <option>continue</option>
-            </options>
         </item>
 
         <item>
             <speaker>Mr. Bunson</speaker>
             <text>I am off on a journey with my pal {player.name} {player.title}!</text>
-            <options>
-                <option>continue</option>
-            </options>
         </item>
 
         <item>
             <speaker>Rewards:</speaker>
             <text>you have recieved a sword of bunson</text>
-            <options>
-                <option>accept</option>
-                <option>decline</option>
-            </options>
         </item>
 
     </dialogue>
