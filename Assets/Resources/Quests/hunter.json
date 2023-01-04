@@ -1,0 +1,10 @@
+{
+    "isComplete":false,"rewardsCollected":false,"title":"Hunters Quest","desc":"Kill a bunch of monsters",
+    "rewards":[{
+        "rewardName":"","rewardType":"xp","ammount":80
+    }],"items":[{
+        "desc":"Kill 1 monster","type":"kill","objective":"monster","total":2,"isComplete":false
+    },{
+        "desc":"Kill 3 monsters","type":"kill","objective":"monster","total":3,"isComplete":false
+    }]
+}

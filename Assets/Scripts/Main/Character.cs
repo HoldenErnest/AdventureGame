@@ -69,7 +69,7 @@ public class Character : MonoBehaviour
 
             Knowledge.inventory.addQuest("intro");
             Knowledge.inventory.addQuest("test1");
-            Knowledge.inventory.addQuest("test1");
+            Knowledge.inventory.addQuest("hunter");
             //Knowledge.effectToJson(new Effect());
             //Knowledge.skillToJson(new Skill());
             //Knowledge.questToJson(new Quest());
@@ -79,7 +79,7 @@ public class Character : MonoBehaviour
             
         } else {
             equip(Knowledge.getEquipable("blue_pants"));
-            userStats.setLevel(10);
+            userStats.setLevel(1);
         }
         fullHealth();
         createCharacter(); // create character texture after getting previous equipped items.
@@ -210,12 +210,14 @@ public class Character : MonoBehaviour
     private void updateDeath() {
         if (hp <= 0) {
             giveXpToLastHit();
+            if (lastHitCharacter.isPlayer()) { // player killed this character.
+                Knowledge.inventory.updateAllQuests("kill", name);
+            }
             Destroy(this.gameObject);
         }
     }
     private void giveXpToLastHit() {
         if (lastHitCharacter) {
-            Debug.Log("addding xp: " + userStats.getOnKillXp());
             lastHitCharacter.addXp(userStats.getOnKillXp());
         }
     }
@@ -280,7 +282,7 @@ public class Character : MonoBehaviour
     }
     public IEnumerator skillCooldown(Skill s) {
         s.setReloading(true);
-        Debug.Log(this.gameObject.name + " is reloading " + s.skillName);
+        //Debug.Log(this.gameObject.name + " is reloading " + s.skillName);
         if (isPlayer())
             hotbarItems[Controller.skillInUse].startReload(s.getReloadTime());
         yield return new WaitForSeconds(s.getReloadTime());

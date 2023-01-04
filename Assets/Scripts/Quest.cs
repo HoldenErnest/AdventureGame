@@ -10,6 +10,7 @@ public class Quest {
     public bool rewardsCollected;
     public string title;
     public string desc;
+    private int itemsDone; // the ammount of quest items the player has completed.
     public QuestReward[] rewards;
     public QuestItem[] items;
 
@@ -18,6 +19,7 @@ public class Quest {
         rewardsCollected = false;
         title = "Unknown Quest";
         desc = "This quest is unknown";
+        itemsDone = 0;
         rewards = new QuestReward[] {new QuestReward()};
         items = new QuestItem[] {new QuestItem(), new QuestItem(), new QuestItem()};
     }
@@ -30,13 +32,23 @@ public class Quest {
     }
 
     public void updateCompletion() {
+        itemsDone = 0;
         foreach (QuestItem item in items) {
             if (!item.isComplete)  {
                 isComplete = false;
+                Debug.Log($"Overall Quest quota ({title}): {itemsDone} / {items.Length}");
                 return;
             }
+            itemsDone++;
         }
+        completeQuest();
+        
+    }
+
+    public void completeQuest() {
         isComplete = true;
+        Debug.Log($"Completed Quest ({title}): {itemsDone} / {items.Length}");
+        collectAllRewards(); // rewards given as soon as quest is completed.. maybe change to redeem rewards in quest menu.
     }
 
     public void collectAllRewards() {
@@ -47,6 +59,16 @@ public class Quest {
         }
         rewardsCollected = true;
     }
+
+    public int getProgress() { // quest progress, how many quest items are completed
+        return itemsDone;
+    }
+
+    public void update(string type, string objective) { // type of questitem to see if its even applicable --> after talking to a guy >> update("talk", "bilbo");
+        if (itemsDone >= items.Length)  { updateCompletion(); return; }
+        items[itemsDone].updateCompletion(this, type, objective);
+
+    }
 }
 
 [Serializable]
@@ -56,16 +78,27 @@ public class QuestItem {
     public string type; // the action needed
     public string objective; // the name of the noun the type of quest is acting on
     public int total;
-    private int current; // the current quest item the player is on.
     public bool isComplete;
+    public int current; // current objective completion
 
     public QuestItem () {
         desc = "Exterminate 1 bat with the newly aquired power";
         type = "kill"; // (kill objectives), (collect objectives), (talk to objectives), (remove objectives)
         objective = "bat"; // name of enemy, item, or talkable character
-        current = 1;
         total = 1;
+        current = 0;
         isComplete = false;
+    }
+
+    //the "events" to run after every of these t types of interactions.
+    public void updateCompletion(Quest q, string t, string o) {
+        if (!type.Equals(t) || !objective.Equals(o)) return; // make sure the current quest item is this type anyway.
+        current++;
+        Debug.Log($"Item quota for Quest ({q.title}): {current} / {total} : by {t}ing a {o}");
+        if (current >= total) { // quest item quota met.
+            isComplete = true;
+            q.updateCompletion();
+        }
     }
 }
 
@@ -83,16 +116,24 @@ public class QuestReward {
     }
 
     public void redeem() {
-        if (rewardType.Equals("xp")) {
-            //Inventory.player.addXp(ammount);
-        } else if (rewardType.Equals("item")) {
-            //Inventory.addItems(rewardName, ammount);
-        } else if (rewardType.Equals("equip")) {
-            //Inventory.addEquips(rewardName, ammount);
-        } else if (rewardType.Equals("remove")) {
-            //Inventory.loseItem(rewardName, ammount);
-        } else if (rewardType.Equals("skill")) {
-            //Inventory.learnSkill(rewardName);
+
+        switch (rewardType) {
+            case "xp":
+                Knowledge.player.addXp(ammount);
+                break;
+            case "item":
+                Knowledge.inventory.addItems(rewardName, ammount);
+                break;
+            case "equip":
+                Knowledge.inventory.addEquips(rewardName, ammount);
+                break;
+            case "remove":
+                Knowledge.inventory.loseItems(rewardName, ammount);
+                break;
+            case "skill":
+                Knowledge.inventory.learnSkill(rewardName);
+                break;
         }
+        Debug.Log("reward given from a quest(I asssume)");
     }
 }

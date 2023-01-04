@@ -59,6 +59,7 @@ public class Stats {
     public void addXp(int amt) {
         xp += amt;
         level = (int)Math.Floor(Math.Cbrt(xp)) + 1;
+        Debug.Log($"added {amt} xp");
         //Debug.Log("level: " + level + ", with " + xp + " xp!");
         //Debug.Log("current XP: " + getXp() + " out of " + getMaxXp());
         

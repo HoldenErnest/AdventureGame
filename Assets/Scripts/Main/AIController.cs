@@ -132,8 +132,7 @@ public class AIController : Controller {
         GameObject closestProj = getClosestEnemyProjectile();
         if (GameObject.ReferenceEquals(closestProj, null) && GameObject.ReferenceEquals(closestEnemy, null)) { // nothing to dodge from go to last time something was seen
             
-            if (!reachedVector(targetLastSeenPos)) {
-                Debug.Log("has not reached last seen");
+            if (!reachedVector(targetLastSeenPos)) { // hasent reached last seen position yet
                 moveTowardsVector(true, targetLastSeenPos);
             } else if (!waitingForOpponent) {
                 StartCoroutine(goHomeAfterWait());
@@ -395,7 +394,7 @@ public class AIController : Controller {
     public bool moveFromWall() { //move the character if there are any walls nearby, returns if the user was actually moved.
         Vector2 v = getNearWalls();
         if (v != Vector2.zero) {
-            Debug.Log("moved from the wall(s) at " + v);
+            //Debug.Log("moved from the wall(s) at " + v);
             moveTowardsVector(false, (getPos() + v));
             return true;
         }
