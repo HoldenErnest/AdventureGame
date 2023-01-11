@@ -10,6 +10,8 @@ public class Quest {
     public bool rewardsCollected;
     public string title;
     public string desc;
+    public int reccomendedLevel; // reccomended level to take on the quest (to get a gague on difficulty)
+    public bool isMainQuest;
     private int itemsDone; // the ammount of quest items the player has completed.
     public QuestReward[] rewards;
     public QuestItem[] items;
@@ -19,6 +21,8 @@ public class Quest {
         rewardsCollected = false;
         title = "Unknown Quest";
         desc = "This quest is unknown";
+        reccomendedLevel = 0;
+        isMainQuest = false;
         itemsDone = 0;
         rewards = new QuestReward[] {new QuestReward()};
         items = new QuestItem[] {new QuestItem(), new QuestItem(), new QuestItem()};

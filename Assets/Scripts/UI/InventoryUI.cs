@@ -6,19 +6,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryUI : MonoBehaviour {
 
-    public GameObject itemCellPrefab;
-    public GameObject questCellPrefab;
+    
     public GameObject rcItemMenu;
 
     public GameObject[] menuToggles; // used only to darken the color of the selected tab.
+    public RectTransform scrollTransform;
     public int currentMenu; // 0 = inventory, 1 = quests
-
+    public GameObject[] cellPrefabs;
     public List<GameObject> cells = new List<GameObject>();
+    public Sprite[] invSprites; // the sprites for the inventory color changes.
+    private Image invImage;
+
+    void Start() {
+        invImage = GetComponent<Image>();
+    }
 
     public void updateCells() {
+        updateHeight();
         repopulate(); // maybe do soemthing differetn here in the future(dont delete then repopulate all items each time inventory is opened)
     }
 
@@ -43,8 +51,8 @@ public class InventoryUI : MonoBehaviour {
     }
 
     private GameObject newCell(Item item) { // runs for every new call for a cell
-        GameObject g = Instantiate(itemCellPrefab, new Vector3(0,0, 0), Quaternion.identity);
-        g.transform.parent = gameObject.transform;
+        GameObject g = Instantiate(cellPrefabs[0], new Vector3(0,0, 0), Quaternion.identity);
+        g.transform.parent = scrollTransform;
         ItemCell cScript = g.GetComponent<ItemCell>();
         cScript.setUIposition(this.gameObject.transform.position);
         cScript.setItem(item);
@@ -55,8 +63,8 @@ public class InventoryUI : MonoBehaviour {
         return g;
     }
     private GameObject newCell(Quest quest) { // runs for every new call for a cell
-        GameObject g = Instantiate(questCellPrefab, new Vector3(0,0, 0), Quaternion.identity);
-        g.transform.parent = gameObject.transform;
+        GameObject g = Instantiate(cellPrefabs[1], new Vector3(0,0, 0), Quaternion.identity);
+        g.transform.parent = scrollTransform;
         QuestUI cScript = g.GetComponent<QuestUI>();
         cScript.setUIposition(this.gameObject.transform.position);
         cScript.setQuest(quest);
@@ -77,13 +85,24 @@ public class InventoryUI : MonoBehaviour {
     public void setMenuInventory() { // the onClick events for the buttons
         if (currentMenu != 0) {
             currentMenu = 0;
+            updateInvSprite();
             updateCells();
         }
     }
     public void setMenuQuests() { // the onClick events for the buttons
         if (currentMenu != 1) {
             currentMenu = 1;
+            updateInvSprite();
             updateCells();
         }
+    }
+
+    private void updateInvSprite() { // set the background sprite to current menu sprite
+        invImage.sprite = invSprites[currentMenu];
+    }
+
+    private void updateHeight() { // update the content height so the scroll viewport can correctly translate when allowed
+        scrollTransform.localPosition = Vector3.zero;
+        scrollTransform.sizeDelta = new Vector2(0,800); // !!FIX, NEED HEIGHT OF ALL CONTENT -- maybe a simple fix like fitting to children !!
     }
 }
