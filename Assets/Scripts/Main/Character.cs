@@ -67,9 +67,9 @@ public class Character : MonoBehaviour
             Knowledge.inventory.addItem("apple");
 
 
-            Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");
+            Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");
             Knowledge.inventory.addQuest("test1");
-            Knowledge.inventory.addQuest("hunter");
+            Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("hunter");
             //Knowledge.effectToJson(new Effect());
             //Knowledge.skillToJson(new Skill());
             //Knowledge.questToJson(new Quest());

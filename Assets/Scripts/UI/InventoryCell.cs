@@ -34,6 +34,9 @@ public class InventoryCell : MonoBehaviour
         location = l;
         updatePosition();
     }
+    public int getLocation() {
+        return location;
+    }
     private void updatePosition() {//given an integer position
         int locInRow = (location%itemsPerRow);
         int locInCol = -(location/itemsPerRow);

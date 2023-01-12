@@ -588,7 +588,6 @@ public class AIController : Controller {
         yield return new WaitForSeconds(3f);
         if (waitingForOpponent) {
             setState("Home");
-            Debug.Log("going back home");
         }
     }
 
