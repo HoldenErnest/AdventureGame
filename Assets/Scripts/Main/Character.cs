@@ -1,4 +1,5 @@
-//Holden Ernest -date close to project beginning- - A base for all characters, keeps track of stats and things
+//Holden Ernest -date close to project beginning-
+//A base for all characters, keeps track of stats and things
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,23 +10,22 @@ using UnityEditor;
 using UnityEngine.U2D.Animation;
 
 
-public class Character : MonoBehaviour
-{
+public class Character : MonoBehaviour {
+
     private Controller controls;
     public GameObject statsUI; // empty gameobject encompasing the personal stats overlay (health and xp bars ect)
     private CustomSlider hpUI;
     private CustomSlider xpUI;
     public Hotbar[] hotbarItems;
     public GameObject otherHealthbar;
-    public Texture2D bodyTexture;
     public List<Equipable> equips = new List<Equipable>(); // list of all equiped items, when equipping new items update createCharacter() to update the character model if needed
     public string[] startingSkills = new string[5];
     public Skill[] usingSkills; // the players 'hotbar' of skills
     public List<Effect> activeEffects = new List<Effect>();
 
-    
     public string name = "Fella";
     public int baseMaxHp = 100;
+    public string bodyTexture;
     public Stats userStats = new Stats();
     
     private int hp;
@@ -75,7 +75,7 @@ public class Character : MonoBehaviour
             //Knowledge.questToJson(new Quest());
             //Knowledge.itemToJson(new Item());
             //Knowledge.equipToJson(new Equipable());
-            Knowledge.overwriteInventoryJson();
+            Knowledge.overwriteInventoryJson(); // LEGACY, characters and their items are stored in the same CharacterCreator JSON
             
         } else {
             equip(Knowledge.getEquipable("blue_pants"));
@@ -88,7 +88,7 @@ public class Character : MonoBehaviour
 
 
     public void createCharacter() { //create new texture from equips textures(if they have one)
-        Texture2D tex = bodyTexture;
+        Texture2D tex = Knowledge.getBodyTexture(bodyTexture);
         foreach (Equipable e in equips) {
             if (e.updateTexture()) { // if the texture is updated
                 tex = ImageMerge.mergeTextures(tex, e.getTexture());
@@ -107,7 +107,7 @@ public class Character : MonoBehaviour
         return usingSkills[i];
     }
     public int getLevel() {
-        return userStats.level;
+        return userStats.getLevel();
     }
     public Controller GetController() {
         return controls;
@@ -176,6 +176,46 @@ public class Character : MonoBehaviour
         return highest;
     }
 
+    // SETTERS ONLY CALLED WHEN CREATING CHARACTER::
+    public void setName(string n) {
+        name = n ?? "Unknown Character";
+    }
+    public void setBaseHp(int n) {
+        if  (String.IsNullOrEmpty(n.ToString())) n = 100;
+        else if (n <= 0 ) n = 1;
+        else if (n > 10000 ) n = 10000; // max base hp = 10000?
+        baseMaxHp = n;
+    }
+    public void setStats(Stats s) {
+        userStats = s;
+    }
+    public void setEquips(Equipable[] e) {
+        foreach (Equipable equip in e) {
+            equips.Add(equip);
+        }
+    }
+    public void setEquips(string[] e) {
+        foreach (string s in e) {
+            Knowledge.inventory.addEquip(s);
+        }
+    }
+    public void setItems(string[] i) {
+        foreach (string s in i) {
+            Knowledge.inventory.addItem(s);
+        }
+    }
+    public void setStartingSkills(string[] s) { // max of 5 skills active
+        if (s == null) return;
+        for (int i = 0; i <= 5; i++) {
+            startingSkills[i] = s[i];
+        }
+    }
+    public void setBodyTex(string s) {
+        bodyTexture = s;
+    }
+    public void setCharIcon(string s) {
+        //set this characters icon
+    }
     //-----------------------------------Update values------------------------------
     private void updateSkillsUsers() { // once a skill is obtained set its user to it works properly
         foreach (Skill skl in usingSkills) {

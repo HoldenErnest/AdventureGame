@@ -17,6 +17,7 @@ public static class Knowledge {
     public static readonly string itemsPath = "SavedObjects/Items/";
     public static readonly string equipsPath = "SavedObjects/Equips/";
     public static readonly string equipsTexturePath = "Textures/Equips/";
+    public static readonly string bodyTexturePath = "Textures/Bodies/";
     public static readonly string effectsIconPath = "Icons/Effects/";
     public static readonly string itemsIconPath = "Icons/Items/";
     public static readonly string skillsIconPath = "Icons/Skills/";
@@ -106,6 +107,14 @@ public static class Knowledge {
             return Resources.Load<Texture2D>(equipsTexturePath + s);
         } catch {
             Debug.Log("Equip texture \"" + s + ".png\" not found.");
+        }
+        return null;
+    }
+    public static Texture2D getBodyTexture(string s) {
+        try {
+            return Resources.Load<Texture2D>(bodyTexturePath + s);
+        } catch {
+            Debug.Log("Body texture \"" + s + ".png\" not found.");
         }
         return null;
     }

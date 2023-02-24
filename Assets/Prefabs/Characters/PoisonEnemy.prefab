@@ -89,7 +89,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!50 &8215924147482751327
@@ -154,11 +154,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f32fc6b68e8cf7e4899b6f449d8de8b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerControls: 0
-  hpUI: {fileID: 0}
+  statsUI: {fileID: 0}
   hotbarItems: []
   otherHealthbar: {fileID: 8812794201528256107, guid: a74ce439a0135c248b5bad39de60384f, type: 3}
-  bodyTexture: {fileID: 2800000, guid: 077c84a6a3d8d4c49b512e348026212e, type: 3}
   equips: []
   startingSkills:
   - magic
@@ -169,7 +167,19 @@ MonoBehaviour:
   usingSkills: []
   activeEffects: []
   name: Fella
-  carriedWeight: 0
+  baseMaxHp: 100
+  bodyTexture: Monster
+  userStats:
+    constitution: 0
+    strength: 0
+    dexterity: 0
+    intelligence: 0
+    evasion: 0
+    armor: 0
+    speed: 0
+    xp: 1
+    poisonResist: 0
+    psychResist: 0
 --- !u!114 &8215924147482751318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,13 +192,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90f4a24b5c4a3444f8827183fdaa1ec2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  escUI: {fileID: 0}
   rb: {fileID: 8215924147482751327}
   anim: {fileID: 8215924147482751319}
   user: {fileID: 8215924147482751314}
   invUI: {fileID: 0}
   movement: {x: 0, y: 0}
-  speed: 1
+  moveOverride: 0
+  target: {x: 0, y: 0}
+  dashSpeed: 1
+  onWall: 0
   noticeRange: 10
+  homePosition: {x: 0, y: 0}
+  targetPos: {x: 0, y: 0}
+  targetLastSeenPos: {x: 0, y: 0}
+  currentState: 0
 --- !u!95 &8215924147482751319
 Animator:
   serializedVersion: 4

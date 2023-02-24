@@ -29,12 +29,14 @@ public class Stats {
     public int armor = 0; // % resistence >> based on clothing
     public int speed = 0; // affects controller speed value >> clothing weight can lower this depending on strength
 
+    public int xp = 1; // total xp gathered
+
     public int poisonResist = 0;
     public int psychResist = 0;
 
-    public int xp = 1; // total xp gathered
-    public int level = 1; // + stat points, + BaseConstitution, + SmallStrength
-    public int carriedWeight = 0;
+    //stats determined by other factors
+    private int level = 1; // + stat points, + BaseConstitution, + SmallStrength
+    private int carriedWeight = 0;
 
 
     public Stats() {
@@ -69,6 +71,9 @@ public class Stats {
     }
     public int getMaxXp() { // total xp getting to a new level would take
         return (int)Math.Pow(level, 3) - (int)Math.Pow(level - 1, 3);
+    }
+    public int getLevel() {
+        return level;
     }
     public int getNeededXp() { // xp currently needed to level up
         return (int)Math.Pow(level, 3) - xp;

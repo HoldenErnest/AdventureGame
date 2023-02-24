@@ -7,9 +7,9 @@ using UnityEngine.Tilemaps;
 public class Controller : MonoBehaviour
 {
     public GameObject escUI;
-    public Rigidbody2D rb;
-    public Animator anim;
-    public Character user;
+    public Rigidbody2D rb; // not used in inspector
+    public Animator anim; // not used in inspector
+    public Character user; // not used in inspector
     public GameObject invUI;
     public Vector2 movement; // (-1, -1)||(1, 1), to multiply speed
     public static int skillInUse = 0;
@@ -24,7 +24,6 @@ public class Controller : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         user = GetComponent<Character>();
         anim.SetFloat("animSpeed", user.getSpeed());
-        
     }
 
     public virtual void Update() {
@@ -129,7 +128,7 @@ public class Controller : MonoBehaviour
         }
 
         if (Input.GetMouseButton(0)) {
-            if (!GameObject.ReferenceEquals( user.getSkill(skillInUse), null)) {
+            if (!GameObject.ReferenceEquals( user.getSkill(skillInUse), null)) { // use the selected skill
                 user.getSkill(skillInUse).updateTargetPosition(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 8)));
                 user.getSkill(skillInUse).useSkill();
             }

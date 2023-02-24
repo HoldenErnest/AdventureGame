@@ -13,4 +13,7 @@ public class Team : MonoBehaviour
     public string getTeamName() {
         return Team.teams[team];
     }
+    public void setTeam(int t) {
+        team = t;
+    }
 }

@@ -11,15 +11,15 @@ public class ItemCell : InventoryCell // shows UI of each item in the inventoryU
     private Item item;
     public GameObject border;
     
-    public void setOffsets() {
+    public void setOffsets() { // set the specified offset values
         cellOffsetX = 0.2f;
         cellOffsetY = 0.5f;
         tableOffsetX = -5.5f;
         tableOffsetY = 2.3f;
-        itemsPerRow = 10;
+        itemsPerRow = 9;
     }
 
-    public void setItem(Item i) {
+    public void setItem(Item i) { // set the item cell values to whatever Item
         item = i;
         updateText();
         updateIcon();

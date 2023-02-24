@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6b5778607dcd36a4e990e23b3251fb55
+guid: b5fa6c6529eb7f94597ec902d0feedc6
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -100,11 +100,23 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: shirt_0
+      name: playerTiles_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,14 +130,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 54a1577d423312c48a48e047a6a18134
-      internalID: 843562207
+      spriteID: 2f277f92793d1d746859548e40407b28
+      internalID: 1902196407
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_1
+      name: playerTiles_1
       rect:
         serializedVersion: 2
         x: 32
@@ -139,14 +151,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ad7482afac0c5454e92e9a6fc6c2f597
-      internalID: 746791746
+      spriteID: 2a72971632c64964098077a86eeb6e07
+      internalID: 1772981559
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_2
+      name: playerTiles_2
       rect:
         serializedVersion: 2
         x: 64
@@ -160,14 +172,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efaf3a5afd993094e89fef6a92fa17c2
-      internalID: -698944442
+      spriteID: 3a8cf02ccaf7eee42a5d80d5d6699335
+      internalID: 1525039620
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_3
+      name: playerTiles_3
       rect:
         serializedVersion: 2
         x: 96
@@ -181,14 +193,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dec6da84162680042868fb33f1c6ff06
-      internalID: -596481827
+      spriteID: b4972296f05c6644496f2a3c98b3c607
+      internalID: 2038158925
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_4
+      name: playerTiles_4
       rect:
         serializedVersion: 2
         x: 128
@@ -202,14 +214,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 366186afe1f1faa4c8c2799db90c4bd5
-      internalID: 761068590
+      spriteID: 09726216919a3c543bf6055f2ac0ddce
+      internalID: 424101484
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_5
+      name: playerTiles_5
       rect:
         serializedVersion: 2
         x: 0
@@ -223,14 +235,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5d36f9b90feadd48945c7878c2a1197
-      internalID: -1573442409
+      spriteID: 7e0635b0f81610b4294a89d034b9bc5d
+      internalID: -710261891
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_6
+      name: playerTiles_6
       rect:
         serializedVersion: 2
         x: 32
@@ -244,14 +256,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25c7f5465b3fc994cbb0fe688c6aac95
-      internalID: -1075286229
+      spriteID: 71876be3cbc052643a0a2a2894a6418d
+      internalID: 1592780833
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_7
+      name: playerTiles_7
       rect:
         serializedVersion: 2
         x: 64
@@ -265,14 +277,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7b8d159d544fe4042a6f8d852546aeaf
-      internalID: 1831974614
+      spriteID: edfef2977257e8d4b90a1c917f12313d
+      internalID: -1574250359
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_8
+      name: playerTiles_8
       rect:
         serializedVersion: 2
         x: 96
@@ -286,14 +298,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0abaa6a01298c9a4eb4b291ebb69fa8e
-      internalID: 1246970028
+      spriteID: d2d77bb4c7579e540abf4ff9e1745da7
+      internalID: 1759289667
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_9
+      name: playerTiles_9
       rect:
         serializedVersion: 2
         x: 128
@@ -307,14 +319,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cb7ffc59984b23141a033e2919b18572
-      internalID: -804654479
+      spriteID: e6e30ffeb2774c64ea85ffddcc1f5e3a
+      internalID: -698105337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_10
+      name: playerTiles_10
       rect:
         serializedVersion: 2
         x: 0
@@ -328,14 +340,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 417778b5ab0cd684c86c5a316058fd0f
-      internalID: 1888530980
+      spriteID: c1e16dad16631064284d7c77081fa19f
+      internalID: 665254319
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_11
+      name: playerTiles_11
       rect:
         serializedVersion: 2
         x: 32
@@ -349,14 +361,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de476a2b847561244a33ee4de723af6b
-      internalID: -1904421077
+      spriteID: 1ab0b5cfb52eb834694e42900faaa986
+      internalID: -565195720
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_12
+      name: playerTiles_12
       rect:
         serializedVersion: 2
         x: 64
@@ -370,14 +382,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a1e13a3ac0ebab741b0b0ceef6ed7cb0
-      internalID: 1144458212
+      spriteID: 0d859208133e64f47b20d3cbda699182
+      internalID: -1155505409
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_13
+      name: playerTiles_13
       rect:
         serializedVersion: 2
         x: 96
@@ -391,14 +403,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f169f7fe527e7854a812b0cfa877e14b
-      internalID: 1065775662
+      spriteID: 32cefa8a999e2f14e97085078773c081
+      internalID: -1815066240
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_14
+      name: playerTiles_14
       rect:
         serializedVersion: 2
         x: 128
@@ -412,14 +424,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d4b8e3dc3e9c26147a1c6745138fe3e7
-      internalID: -1367617584
+      spriteID: 4597fe31ba44fa940bcb590ee10bed59
+      internalID: -1486836119
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_15
+      name: playerTiles_15
       rect:
         serializedVersion: 2
         x: 0
@@ -433,14 +445,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db2fb60d95fee764ca198792c70eb757
-      internalID: -1745692800
+      spriteID: 21628bcd512cb0f408b3c28e6abf48a9
+      internalID: 1661673073
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_16
+      name: playerTiles_16
       rect:
         serializedVersion: 2
         x: 32
@@ -454,14 +466,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1a5cdf88ca73dfc468d42722ce3b94d2
-      internalID: -128040989
+      spriteID: eda00fb51683b7c43a9ad59a853e6d54
+      internalID: -781745504
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_17
+      name: playerTiles_17
       rect:
         serializedVersion: 2
         x: 64
@@ -475,14 +487,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 156e1a585449aa3418f6808f96172e10
-      internalID: 721723596
+      spriteID: e65f18f5ccec35c4889dff715652eee3
+      internalID: 709708855
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_18
+      name: playerTiles_18
       rect:
         serializedVersion: 2
         x: 96
@@ -496,14 +508,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3c13fc5db220f746b09164635e55eae
-      internalID: -2095265380
+      spriteID: 7b295e1f3e267f44586351a560f33235
+      internalID: 1486906031
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_19
+      name: playerTiles_19
       rect:
         serializedVersion: 2
         x: 128
@@ -517,14 +529,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8734cfe7b094b154495c72c19bdb1403
-      internalID: 796769726
+      spriteID: 0c6255bc2ad738548bb11dcca17e9633
+      internalID: -486275264
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_20
+      name: playerTiles_20
       rect:
         serializedVersion: 2
         x: 0
@@ -538,14 +550,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe9fe66cade1585468e1ded9ff7454b6
-      internalID: -1211708488
+      spriteID: c8638db473c568545bf6a3ff3f797a4f
+      internalID: -1468458591
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_21
+      name: playerTiles_21
       rect:
         serializedVersion: 2
         x: 32
@@ -559,14 +571,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fa140dd9ec90fe4d9068a105f58f5a9
-      internalID: 1472986325
+      spriteID: 2d98b7ecf675bc842968373a3536822b
+      internalID: 895830564
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_22
+      name: playerTiles_22
       rect:
         serializedVersion: 2
         x: 64
@@ -580,14 +592,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3a79ef7e1e5e34469f6db21ebbca6a7
-      internalID: -379843876
+      spriteID: f366ce8a25225cb45aacf91f8b82fb46
+      internalID: 1554037264
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_23
+      name: playerTiles_23
       rect:
         serializedVersion: 2
         x: 96
@@ -601,14 +613,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d1be2c81e52e5aa4bbb1ab44c17e575d
-      internalID: 1639778396
+      spriteID: 7a913796033d46b498027c07fef0983b
+      internalID: -816382623
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: shirt_24
+      name: playerTiles_24
       rect:
         serializedVersion: 2
         x: 128
@@ -622,8 +634,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 291ad07208879d648b411b59bb114b41
-      internalID: 1560930601
+      spriteID: fb99e6553cec162469c82cec7f3b5dfb
+      internalID: 1946189721
       vertices: []
       indices: 
       edges: []
@@ -639,31 +651,31 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      shirt_10: 1888530980
-      shirt_7: 1831974614
-      shirt_12: 1144458212
-      shirt_16: -128040989
-      shirt_11: -1904421077
-      shirt_20: -1211708488
-      shirt_0: 843562207
-      shirt_5: -1573442409
-      shirt_2: -698944442
-      shirt_3: -596481827
-      shirt_4: 761068590
-      shirt_8: 1246970028
-      shirt_13: 1065775662
-      shirt_18: -2095265380
-      shirt_15: -1745692800
-      shirt_1: 746791746
-      shirt_19: 796769726
-      shirt_23: 1639778396
-      shirt_6: -1075286229
-      shirt_17: 721723596
-      shirt_9: -804654479
-      shirt_21: 1472986325
-      shirt_22: -379843876
-      shirt_24: 1560930601
-      shirt_14: -1367617584
+      playerTiles_22: 1554037264
+      playerTiles_1: 1772981559
+      playerTiles_9: -698105337
+      playerTiles_12: -1155505409
+      playerTiles_14: -1486836119
+      playerTiles_4: 424101484
+      playerTiles_10: 665254319
+      playerTiles_0: 1902196407
+      playerTiles_16: -781745504
+      playerTiles_11: -565195720
+      playerTiles_24: 1946189721
+      playerTiles_5: -710261891
+      playerTiles_21: 895830564
+      playerTiles_8: 1759289667
+      playerTiles_7: -1574250359
+      playerTiles_13: -1815066240
+      playerTiles_20: -1468458591
+      playerTiles_6: 1592780833
+      playerTiles_18: 1486906031
+      playerTiles_2: 1525039620
+      playerTiles_17: 709708855
+      playerTiles_19: -486275264
+      playerTiles_3: 2038158925
+      playerTiles_23: -816382623
+      playerTiles_15: 1661673073
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
