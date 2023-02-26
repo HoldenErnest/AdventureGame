@@ -26,16 +26,18 @@ public class Stats {
     public int dexterity = 0; //small speed increase and better ranged damage
     public int intelligence = 0; // more magic damage >> affects responses?
     public int evasion = 0; // chance to actually get hit
-    public int armor = 0; // % resistence >> based on clothing
     public int speed = 0; // affects controller speed value >> clothing weight can lower this depending on strength
 
     public int xp = 1; // total xp gathered
 
+    //set by armors or runes or something, cant spec into
+    public int armor = 0; // % resistence >> based on clothing
     public int poisonResist = 0;
     public int psychResist = 0;
 
     //stats determined by other factors
     private int level = 1; // + stat points, + BaseConstitution, + SmallStrength
+    private int attrPoints = 0;
     private int carriedWeight = 0;
 
 
@@ -60,7 +62,12 @@ public class Stats {
     }
     public void addXp(int amt) {
         xp += amt;
-        level = (int)Math.Floor(Math.Cbrt(xp)) + 1;
+        int newLevel = (int)Math.Floor(Math.Cbrt(xp)) + 1;
+        if (newLevel > level) { // level up
+            attrPoints += (newLevel - level)*2;
+        } else if (newLevel < level) { // character somehow lost levels
+            resetAllAttr();
+        }
         Debug.Log($"added {amt} xp");
         //Debug.Log("level: " + level + ", with " + xp + " xp!");
         //Debug.Log("current XP: " + getXp() + " out of " + getMaxXp());
@@ -83,7 +90,26 @@ public class Stats {
         int addRandom = (int)rand.Next((int)Mathf.Floor(-specifiedXp / 5), (int)Mathf.Ceil(specifiedXp / 5));
         return specifiedXp + addRandom;
     }
+    private int getTotalAttr() {// Hypothetical ammount to available if playing by the rules
+        return getLevel()*2;
+    }
+    private int getTotalAttrUsed() {
+        return constitution+strength+dexterity+intelligence+evasion+speed;
+    }
+    public int getAvailableAttr() {
+        return (getTotalAttr() - getTotalAttrUsed());
+    }
 
+    public void resetAllAttr() {
+        constitution = 0;
+        strength = 0;
+        dexterity = 0;
+        intelligence = 0;
+        evasion = 0;
+        speed = 0;
+
+        attrPoints = getTotalAttr();
+    }
 
     // Calculates and returns damage based on the type of attack and the users armor
     public int calculateDamageRecieve(int baseDamage, string type) {

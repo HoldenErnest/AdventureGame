@@ -13,6 +13,7 @@ using UnityEngine.U2D.Animation;
 public class Character : MonoBehaviour {
 
     private Controller controls;
+    public Tools theTools; // TEMP -- initializing tools for Knowledge
     public GameObject statsUI; // empty gameobject encompasing the personal stats overlay (health and xp bars ect)
     private CustomSlider hpUI;
     private CustomSlider xpUI;
@@ -24,6 +25,7 @@ public class Character : MonoBehaviour {
     public List<Effect> activeEffects = new List<Effect>();
 
     public string name = "Fella";
+    public string title = "The farmer";
     public int baseMaxHp = 100;
     public string bodyTexture;
     public Stats userStats = new Stats();
@@ -36,16 +38,16 @@ public class Character : MonoBehaviour {
 
     void Start() {
         controls = GetComponent<Controller>();
-        updateSpeed();
-        setupUI();
-        setStartSkills();
         
+
         if (isPlayer()) {
+            updateAll();
             userStats.speed = 10;
             updateSpeed();
             updateHotbarIcons();
             Knowledge.player = this;
-            Knowledge.inventory = new Inventory(); // set this to the old saved inventory from xml
+            Knowledge.tools = theTools;
+             // set this to the old saved inventory from xml
             Knowledge.inventory.addItem("apple");
             Knowledge.inventory.addItem("orange");
             Knowledge.inventory.addItem("apple");
@@ -75,14 +77,8 @@ public class Character : MonoBehaviour {
             //Knowledge.questToJson(new Quest());
             //Knowledge.itemToJson(new Item());
             //Knowledge.equipToJson(new Equipable());
-            Knowledge.overwriteInventoryJson(); // LEGACY, characters and their items are stored in the same CharacterCreator JSON
-            
-        } else {
-            equip(Knowledge.getEquipable("blue_pants"));
-            userStats.setLevel(1);
+            //Knowledge.overwriteInventoryJson(); // LEGACY, characters and their items are stored in the same CharacterCreator JSON
         }
-        fullHealth();
-        createCharacter(); // create character texture after getting previous equipped items.
     }
 
 
@@ -139,7 +135,7 @@ public class Character : MonoBehaviour {
     public void addXp(int amt) {
         userStats.addXp(amt);
         if (xpUI)
-        updateXpSlider();
+            updateXpSlider();
     }
     public void kill() {
         hp = 0;
@@ -178,7 +174,10 @@ public class Character : MonoBehaviour {
 
     // SETTERS ONLY CALLED WHEN CREATING CHARACTER::
     public void setName(string n) {
-        name = n ?? "Unknown Character";
+        name = n ?? "Unknown";
+    }
+    public void setTitle(string s) {
+        title = s ?? "";
     }
     public void setBaseHp(int n) {
         if  (String.IsNullOrEmpty(n.ToString())) n = 100;
@@ -189,24 +188,23 @@ public class Character : MonoBehaviour {
     public void setStats(Stats s) {
         userStats = s;
     }
-    public void setEquips(Equipable[] e) {
-        foreach (Equipable equip in e) {
-            equips.Add(equip);
-        }
-    }
     public void setEquips(string[] e) {
-        foreach (string s in e) {
-            Knowledge.inventory.addEquip(s);
+        List<Equipable> es = new List<Equipable>();
+        foreach (string ee in e) {
+            es.Add(Knowledge.getEquipable(ee));
         }
+        equipAll(es);
     }
     public void setItems(string[] i) {
         foreach (string s in i) {
+            Debug.Log(s);
+            Debug.Log(Knowledge.inventory.inventory);
             Knowledge.inventory.addItem(s);
         }
     }
     public void setStartingSkills(string[] s) { // max of 5 skills active
         if (s == null) return;
-        for (int i = 0; i <= 5; i++) {
+        for (int i = 0; i < s.Length; i++) {
             startingSkills[i] = s[i];
         }
     }
@@ -217,6 +215,16 @@ public class Character : MonoBehaviour {
         //set this characters icon
     }
     //-----------------------------------Update values------------------------------
+    // used when creating a new character, to initially update the passed values
+    public void updateAll() {
+        controls = GetComponent<Controller>();
+        updateSpeed();
+        setupUI();
+        setStartSkills();
+
+        fullHealth();
+        createCharacter();
+    }
     private void updateSkillsUsers() { // once a skill is obtained set its user to it works properly
         foreach (Skill skl in usingSkills) {
             if (!GameObject.ReferenceEquals( skl, null))
@@ -285,6 +293,11 @@ public class Character : MonoBehaviour {
         }
         updateSkillsUsers();   // set any used skills you have to have this character as the user
     }
+    public void equipAll(List<Equipable> es) {
+        foreach (Equipable e in es) {
+            equip(e);
+        }
+    }
     public void equip(Equipable e) { // Equip all items from here
 
         for (int i = 0; i < equips.Count; i++) {
@@ -293,7 +306,6 @@ public class Character : MonoBehaviour {
                 i--;
             }
         }
-
         equips.Add(e);
         e.equip();
         if (e.hasTexture()) createCharacter(); // if the equipped item had a model texture, reload the character texture asset.
@@ -368,9 +380,6 @@ public class Character : MonoBehaviour {
             activeEffects.Add(newEffect);
             StartCoroutine(handleEffects(newEffect));
     }
-
-
-
 
     public void damageByType(int d, string type) { // pass in base damage and damage type to damage with resistences and such
         int m = userStats.calculateDamageRecieve(d, type);

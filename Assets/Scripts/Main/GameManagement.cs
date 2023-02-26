@@ -1,4 +1,5 @@
-//Holden Ernest - Manage save / load system + game exit ect.
+// Holden Ernest - 10/23/2022
+// Manage save / load system + game exit ect.
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

@@ -11,11 +11,14 @@ public static class Knowledge {
 
     public static Inventory inventory;
     public static Character player;
+    public static Tools tools;
 
     public static readonly string skillsPath = "SavedObjects/Skills/";
     public static readonly string effectsPath = "SavedObjects/Effects/";
     public static readonly string itemsPath = "SavedObjects/Items/";
     public static readonly string equipsPath = "SavedObjects/Equips/";
+    public static readonly string textPath = "Texts/";
+    public static readonly string charactersPath = "SavedObjects/Characters/";
     public static readonly string equipsTexturePath = "Textures/Equips/";
     public static readonly string bodyTexturePath = "Textures/Bodies/";
     public static readonly string effectsIconPath = "Icons/Effects/";
@@ -43,6 +46,10 @@ public static class Knowledge {
     }
     public static void itemToJson(Item i) {
         string json = JsonUtility.ToJson(i);
+        Debug.Log(json);
+    }
+    public static void characterToJson(CharacterCreator c) {
+        string json = JsonUtility.ToJson(c);
         Debug.Log(json);
     }
     public static void overwriteInventoryJson() {
@@ -101,7 +108,28 @@ public static class Knowledge {
         }
         return newItem;
     }
-
+    // Returns a generic list of strings with methods
+    public static TextList getTextList(string textName) {
+        TextList list = new TextList();
+        try {
+            string json = Resources.Load<TextAsset>(textPath + textName).text;
+            JsonUtility.FromJsonOverwrite(json, list);
+        } catch {
+            Debug.Log("Text \"" + textName + ".json\" not found.");
+        }
+        return list;
+    }
+    // Returns the blueprint for a new character, call createCharacterFrom() to make a new character.
+    public static CharacterCreator getCharBlueprint(string charName) {
+        CharacterCreator character = new CharacterCreator();
+        try {
+            string json = Resources.Load<TextAsset>(charactersPath + charName).text;
+            JsonUtility.FromJsonOverwrite(json, character);
+        } catch {
+            Debug.Log("Character \"" + charName + ".json\" not found.");
+        }
+        return character;
+    }
     public static Texture2D getEquipTexture(string s) {
         try {
             return Resources.Load<Texture2D>(equipsTexturePath + s);
