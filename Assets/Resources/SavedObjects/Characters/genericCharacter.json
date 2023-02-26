@@ -1,0 +1,7 @@
+{"id":0,"name":"Billy","title":"The Guy","baseHealth":105,"team":0,
+"stats":{"constitution":10,"strength":5,"dexterity":0,"intelligence":0,"evasion":0,"armor":0,"speed":15,"xp":10000,"poisonResist":0,"psychResist":0},
+"homePos":[-5.0,-5.0],
+"equipment":["red_shirt","red_cap"],
+"items":["apple","orange"],
+"startingSkills":["magic"],
+"bodyTexture":"HumanMale","icon":""}
