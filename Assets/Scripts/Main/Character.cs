@@ -187,6 +187,7 @@ public class Character : MonoBehaviour {
     }
     public void setStats(Stats s) {
         userStats = s;
+        userStats.updateLevel();
     }
     public void setEquips(string[] e) {
         List<Equipable> es = new List<Equipable>();

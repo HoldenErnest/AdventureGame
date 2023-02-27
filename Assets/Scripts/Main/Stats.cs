@@ -60,12 +60,17 @@ public class Stats {
         xp = (int)Math.Pow(l - 1, 3);
         level = l;
     }
+    public int updateLevel() { // returns how many levels were added: (-) if lost levels somehow
+        int oldLevel = level;
+        level = (int)Math.Floor(Math.Cbrt(xp)) + 1;
+        return level - oldLevel;
+    }
     public void addXp(int amt) {
         xp += amt;
-        int newLevel = (int)Math.Floor(Math.Cbrt(xp)) + 1;
-        if (newLevel > level) { // level up
-            attrPoints += (newLevel - level)*2;
-        } else if (newLevel < level) { // character somehow lost levels
+        int levelsAdded = updateLevel();
+        if (levelsAdded > 0) { // level up
+            attrPoints += (levelsAdded)*2;
+        } else if (levelsAdded < 0) { // character somehow lost levels
             resetAllAttr();
         }
         Debug.Log($"added {amt} xp");

@@ -11,6 +11,7 @@ public class CharacterCreator : MonoBehaviour {
 
     public int id; // specified to tell unique characters
     public string name; // character name
+    public string title; // character name
     public int baseHealth; // base max health
     public Stats stats; // const, str, dex, int, evade, armor, spd, xp, poiRst, psyRst
     public int team; // character team
@@ -39,6 +40,7 @@ public class CharacterCreator : MonoBehaviour {
         Team cTeam = character.GetComponent<Team>();
 
         c.setName(name);
+        c.setTitle(title);
         c.setBaseHp(baseHealth);
         c.setStats(stats);
         cTeam.setTeam(team);

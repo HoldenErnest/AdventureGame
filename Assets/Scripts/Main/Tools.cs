@@ -12,15 +12,17 @@ public class Tools : MonoBehaviour {
 
     public CharacterUI charHoverUI;
 
+    private Camera cam;
     private Transform pos;
     private bool hovering;
 
     void Start() { // everytime this script is enabled
-        
+        cam = this.gameObject.GetComponent<Camera>();
     }
     void Update() {
-        if (allowHoverUI && pos)
-            charHoverUI.gameObject.transform.position = pos.position; // update position
+        if (allowHoverUI && pos) {
+            charHoverUI.gameObject.transform.position = cam.WorldToScreenPoint(new Vector3(pos.position.x, pos.position.y, 0)); // update position
+        }
     }
 
     public void setHoverUI(Character c) {
@@ -32,7 +34,7 @@ public class Tools : MonoBehaviour {
     public void closeHoverUI() {
         StartCoroutine(close());
     }
-    public IEnumerator close() {
+    private IEnumerator close() {
         hovering = false;
         yield return new WaitForSeconds(0.5f);
         if (!hovering)
