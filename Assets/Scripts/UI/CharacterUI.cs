@@ -17,10 +17,13 @@ public class CharacterUI : MonoBehaviour {
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI[] statsText;
+    public CustomSlider healthBar;
 
     private Color enemy = new Color(1.0f, 0.2f, 0.2f, 1.0f);
     private Color friend = new Color(0.2f, 1.0f, 0.2f, 1.0f);
     private Color neutral = new Color(0.7f, 0.7f, 0.7f, 1.0f);
+
+    private Character theCharacter;
 
     /*
     int i = 0;
@@ -40,11 +43,13 @@ public class CharacterUI : MonoBehaviour {
         b = false;
     }
     */
-
+    
     public void setCharacter(Character c) {
+        theCharacter = c;
         setName(c.name);
         setTitle(c.title);
         setStats(c.userStats);
+        setHealth(c.getHp(), c.userStats.getMaxHp(c.baseMaxHp));
         setLevel(c.userStats.getLevel());
         if (c.gameObject.GetComponent<Team>().getTeam() == 0) {
             setTheme(friend);
@@ -56,12 +61,6 @@ public class CharacterUI : MonoBehaviour {
     private void setName(string s) {
         nameText.text = s;
     }
-    private void setHealth() {
-
-    }
-    private void setMaxHealth() {
-
-    }
     private void setTheme(Color c) {
         nameText.color = c;
     }
@@ -71,6 +70,12 @@ public class CharacterUI : MonoBehaviour {
     }
     private void setLevel(int l) {
         levelText.text = "[" + l + "]";
+    }
+    private void setHealth(int hp, int maxHp) {
+        healthBar.updateSlider(hp, maxHp);
+    }
+    public void updateHealth() {
+        setHealth(theCharacter.getHp(), theCharacter.userStats.getMaxHp(theCharacter.baseMaxHp));
     }
     private void setStats(Stats s) {
         setStat(0,s.constitution);

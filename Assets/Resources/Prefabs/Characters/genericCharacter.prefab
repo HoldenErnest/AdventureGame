@@ -158,7 +158,7 @@ MonoBehaviour:
   theTools: {fileID: 0}
   statsUI: {fileID: 0}
   hotbarItems: []
-  otherHealthbar: {fileID: 8812794201528256107, guid: a74ce439a0135c248b5bad39de60384f, type: 3}
+  otherHealthbar: {fileID: 0}
   equips: []
   startingSkills:
   - 

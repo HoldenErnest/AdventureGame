@@ -1,5 +1,5 @@
 {"id":0,"name":"Billy","title":"The Guy","baseHealth":105,"team":0,
-"stats":{"constitution":18,"strength":19,"dexterity":20,"intelligence":21,"evasion":22,"speed":23,"armor":0,"xp":10000,"poisonResist":0,"psychResist":0},
+"stats":{"constitution":18,"strength":19,"dexterity":20,"intelligence":21,"evasion":0,"speed":23,"armor":0,"xp":10000,"poisonResist":0,"psychResist":0},
 "homePos":[-5.0,-5.0],
 "equipment":["red_shirt","red_cap"],
 "items":["apple","orange"],

@@ -24,7 +24,12 @@ public class Tools : MonoBehaviour {
             charHoverUI.gameObject.transform.position = cam.WorldToScreenPoint(new Vector3(pos.position.x, pos.position.y, 0)); // update position
         }
     }
-
+    // update the char health object
+    public void updateHealth() {
+        if (charHoverUI != null)
+            charHoverUI.updateHealth();
+    }
+    // Events --------
     public void setHoverUI(Character c) {
         hovering = true;
         charHoverUI.gameObject.SetActive(true);

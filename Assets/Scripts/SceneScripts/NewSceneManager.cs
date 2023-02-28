@@ -18,7 +18,8 @@ public class NewSceneManager : MonoBehaviour {
         CharacterCreator a = Knowledge.getCharBlueprint("genericCharacter");
         CharacterCreator b = Knowledge.getCharBlueprint("genericCharacter2");
         a.createCharacterFrom(genericCharacter);
-        //a.team = 1;
-        b.createCharacterFrom(genericCharacter);
+        a.team = 1;
+        a.createCharacterFrom(genericCharacter);
+        //b.createCharacterFrom(genericCharacter);
     }
 }

@@ -13,12 +13,11 @@ using UnityEngine.U2D.Animation;
 public class Character : MonoBehaviour {
 
     private Controller controls;
-    public Tools theTools; // TEMP -- initializing tools for Knowledge
+    public Tools theTools; // TEMP -- initializing tools for Knowledge!!!!!
     public GameObject statsUI; // empty gameobject encompasing the personal stats overlay (health and xp bars ect)
     private CustomSlider hpUI;
     private CustomSlider xpUI;
     public Hotbar[] hotbarItems;
-    public GameObject otherHealthbar;
     public List<Equipable> equips = new List<Equipable>(); // list of all equiped items, when equipping new items update createCharacter() to update the character model if needed
     public string[] startingSkills = new string[5];
     public Skill[] usingSkills; // the players 'hotbar' of skills
@@ -46,7 +45,7 @@ public class Character : MonoBehaviour {
             updateSpeed();
             updateHotbarIcons();
             Knowledge.player = this;
-            Knowledge.tools = theTools;
+            Knowledge.tools = theTools; // TEMP init for knowledge
              // set this to the old saved inventory from xml
             Knowledge.inventory.addItem("apple");
             Knowledge.inventory.addItem("orange");
@@ -120,6 +119,9 @@ public class Character : MonoBehaviour {
     public float getHealthPercentage() {
         //Debug.Log("current HP: " + hp + " and max is " + userStats.getMaxHp(baseMaxHp));
         return hp / userStats.getMaxHp(baseMaxHp);
+    }
+    public int getHp() {
+        return hp;
     }
     //Health
     public void fullHealth() {
@@ -251,7 +253,12 @@ public class Character : MonoBehaviour {
         return userStats.getSpeed();
     }
     public void updateHpSlider() {
-        hpUI.updateSlider(hp, userStats.getMaxHp(baseMaxHp));
+        if (isPlayer()) {
+            hpUI.updateSlider(hp, userStats.getMaxHp(baseMaxHp));
+        } else {
+            if (Knowledge.tools)
+            Knowledge.tools.updateHealth();
+        }
     }
     public void updateXpSlider() {
         xpUI.updateSlider(userStats.getXp(), userStats.getMaxXp());
@@ -273,8 +280,8 @@ public class Character : MonoBehaviour {
     private void setupUI() { // set the UI scripts based on the specified UI gameobjects
         GameObject newHp;
         if (!isPlayer()) { // if its an AI, create a floating healthbar
-            newHp = Instantiate(otherHealthbar, transform);
-            hpUI = newHp.GetComponent<CustomSlider>();
+            //newHp = Instantiate(otherHealthbar, transform);
+            //hpUI = newHp.GetComponent<CustomSlider>();
         } else {
             GameObject newXp;
             newHp = statsUI.transform.GetChild(0).gameObject;
@@ -394,6 +401,7 @@ public class Character : MonoBehaviour {
     public void damage(int damage) { // deal damage to the player with either a physical or magical attack
         if (damage == 0) return;
         hp -= damage;
+        Debug.Log(name + " damaged for it " + damage);
         updateHpSlider();
         updateDeath();
     }

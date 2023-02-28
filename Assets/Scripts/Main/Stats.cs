@@ -40,7 +40,6 @@ public class Stats {
     private int attrPoints = 0;
     private int carriedWeight = 0;
 
-
     public Stats() {
 
     }
