@@ -173,4 +173,13 @@ public static class Knowledge {
         }
         return null;
     }
+    public static GameObject getHpUI() {
+        try {
+            return Resources.Load<GameObject>("Prefabs/UI/HealthbarUI");
+        } catch {
+            Debug.Log("Gameobject \"Prefabs/UI/HealthbarUI.prefab\" not found.");
+        }
+        return null;
+        
+    }
 }

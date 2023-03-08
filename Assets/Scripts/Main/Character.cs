@@ -25,6 +25,7 @@ public class Character : MonoBehaviour {
 
     public string name = "Fella";
     public string title = "The farmer";
+    public string description = "An old buntown farmer from the old times";
     public int baseMaxHp = 100;
     public string bodyTexture;
     public Stats userStats = new Stats();
@@ -253,9 +254,9 @@ public class Character : MonoBehaviour {
         return userStats.getSpeed();
     }
     public void updateHpSlider() {
-        if (isPlayer()) {
+        if (hpUI)
             hpUI.updateSlider(hp, userStats.getMaxHp(baseMaxHp));
-        } else {
+        if (!isPlayer()) {
             if (Knowledge.tools)
             Knowledge.tools.updateHealth();
         }
@@ -280,8 +281,8 @@ public class Character : MonoBehaviour {
     private void setupUI() { // set the UI scripts based on the specified UI gameobjects
         GameObject newHp;
         if (!isPlayer()) { // if its an AI, create a floating healthbar
-            //newHp = Instantiate(otherHealthbar, transform);
-            //hpUI = newHp.GetComponent<CustomSlider>();
+            newHp = Instantiate(Knowledge.getHpUI(), transform);
+            hpUI = newHp.transform.GetChild(0).GetComponent<CustomSlider>();
         } else {
             GameObject newXp;
             newHp = statsUI.transform.GetChild(0).gameObject;

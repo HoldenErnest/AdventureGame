@@ -26,7 +26,7 @@ public class Tools : MonoBehaviour {
     }
     // update the char health object
     public void updateHealth() {
-        if (charHoverUI != null)
+        if (charHoverUI != null && allowHoverUI)
             charHoverUI.updateHealth();
     }
     // Events --------
