@@ -19,11 +19,6 @@ public class Tools : MonoBehaviour {
     void Start() { // everytime this script is enabled
         cam = this.gameObject.GetComponent<Camera>();
     }
-    void Update() {
-        if (allowHoverUI && pos) {
-            charHoverUI.gameObject.transform.position = cam.WorldToScreenPoint(new Vector3(pos.position.x, pos.position.y, 0)); // update position
-        }
-    }
     // update the char health object
     public void updateHealth() {
         if (charHoverUI != null && allowHoverUI)

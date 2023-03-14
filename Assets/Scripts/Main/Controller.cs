@@ -10,7 +10,7 @@ public class Controller : MonoBehaviour
     public Rigidbody2D rb; // not used in inspector
     public Animator anim; // not used in inspector
     public Character user; // not used in inspector
-    public GameObject invUI;
+    public GameObject invUI; // UI for inventory
     public Vector2 movement; // (-1, -1)||(1, 1), to multiply speed
     public static int skillInUse = 0;
     public bool moveOverride = false;

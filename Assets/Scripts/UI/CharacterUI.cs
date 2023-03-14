@@ -1,5 +1,5 @@
 // Holden Ernest - 2/25/2023
-// The UI for when a character is hovered (variables set through Tools.cs)
+// The complete STATIC UI for when a character is hovered (variables set through Tools.cs)
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,7 +16,7 @@ public class CharacterUI : MonoBehaviour {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI titleText;
     public TextMeshProUGUI levelText;
-    public TextMeshProUGUI[] statsText;
+    public TextMeshProUGUI[] statsText;// con, str, dex, int, evd, spd, amr
     public CustomSlider healthBar;
 
     private Color enemy = new Color(1.0f, 0.2f, 0.2f, 1.0f);
@@ -61,21 +61,23 @@ public class CharacterUI : MonoBehaviour {
     private void setName(string s) {
         nameText.text = s;
     }
+    // what is changed based on team
     private void setTheme(Color c) {
-        nameText.color = c;
+        //nameText.color = c;
     }
 
     private void setTitle(string s) {
         titleText.text = s;
     }
     private void setLevel(int l) {
-        levelText.text = "[" + l + "]";
+        levelText.text = "" + l;
     }
     private void setHealth(int hp, int maxHp) {
         healthBar.updateSlider(hp, maxHp);
     }
     public void updateHealth() {
-        setHealth(theCharacter.getHp(), theCharacter.userStats.getMaxHp(theCharacter.baseMaxHp));
+        if (theCharacter)
+            setHealth(theCharacter.getHp(), theCharacter.userStats.getMaxHp(theCharacter.baseMaxHp));
     }
     private void setStats(Stats s) {
         setStat(0,s.constitution);
@@ -84,6 +86,7 @@ public class CharacterUI : MonoBehaviour {
         setStat(3,s.intelligence);
         setStat(4,s.evasion);
         setStat(5,s.speed);
+        setStat(6,s.armor);
     }
 
     private void setStat(int stat, int points) { // changes the specified stat in the statsText array, how many points should it be set to

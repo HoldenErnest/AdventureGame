@@ -13,7 +13,7 @@ public class Skill : MonoBehaviour {
     //each skill has an animation that it plays
 
     public string skillName = "Unassigned Skill";
-    public string damageType = "null";
+    public string damageType = "null"; // "movement", "summon", "physical, "magical"
     public int baseDamage;
     public int manaCost;
     public float reloadTime; // time to regenerate a stack
@@ -21,10 +21,12 @@ public class Skill : MonoBehaviour {
     public float minRange;
     public float attackArea; // radius of the circle hitbox used to detect hits
     public int levelReq;
-    public GameObject user;
-    public GameObject animPrefab; // animation / turret / effectcloud / ect.
     public string[] setEffects; // effects tied to each hit
     public string prefabName = "Unknown Prefab";
+
+    public GameObject user;
+    public GameObject animPrefab; // animation / turret / effectcloud / ect.
+    
 
     public float projectileSpeed = 0f; // also used for movement speed
     public int pierce = 1;
@@ -120,15 +122,22 @@ public class Skill : MonoBehaviour {
     }
 
     public void createPrefab(Vector2 target) {
-        GameObject visual = Instantiate(Knowledge.getPrefab(prefabName), target, Quaternion.identity);
-        if (visual.GetComponent<Summon>() == null) {
+        GameObject visual;
+        if (damageType == "summon") {
+            CharacterCreator cc = Knowledge.getCharBlueprint(prefabName);
+            cc.setSpawn(target);
+            visual = cc.createCharacter();
+        } else {
+            visual = Instantiate(Knowledge.getSkillPrefab(prefabName), target, Quaternion.identity);
+        }
+        if (visual.GetComponent<Character>() == null) {
             Destroy(visual, 3f);
         } else {
-            Debug.Log(user.name + " summoned a " + visual.name);
+            Debug.Log(user.name + " summoned a " + visual.GetComponent<Character>().name);
         }
     }
     public void createProjectile(Vector2 target) {
-        GameObject visual = Instantiate(Knowledge.getPrefab(prefabName), target, Quaternion.identity);
+        GameObject visual = Instantiate(Knowledge.getSkillPrefab(prefabName), target, Quaternion.identity);
         if (visual.GetComponent<Projectile>() != null) {
             Projectile p = visual.GetComponent<Projectile>();
             p.areaDamage = attackArea;

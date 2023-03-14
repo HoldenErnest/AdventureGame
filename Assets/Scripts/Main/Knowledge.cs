@@ -25,6 +25,7 @@ public static class Knowledge {
     public static readonly string itemsIconPath = "Icons/Items/";
     public static readonly string skillsIconPath = "Icons/Skills/";
     public static readonly string skillsPrefabPath = "Prefabs/Skills/";
+    public static readonly string charsPrefabPath = "Prefabs/Characters/";
     public static readonly string questsPath = "Quests/";
 
     //any __ToJson method will take an object and print it in json format
@@ -165,9 +166,17 @@ public static class Knowledge {
         return Resources.Load<Texture2D>(itemsIconPath + "no_texture");
     }
 
-    public static GameObject getPrefab(string s) {
+    public static GameObject getSkillPrefab(string s) {
         try {
             return Resources.Load<GameObject>(skillsPrefabPath + s);
+        } catch {
+            Debug.Log("Gameobject \"" + s + ".prefab\" not found.");
+        }
+        return null;
+    }
+    public static GameObject getCharacterPrefab(string s) {
+        try {
+            return Resources.Load<GameObject>(charsPrefabPath + s);
         } catch {
             Debug.Log("Gameobject \"" + s + ".prefab\" not found.");
         }

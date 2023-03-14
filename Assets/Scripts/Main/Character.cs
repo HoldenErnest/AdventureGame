@@ -14,7 +14,7 @@ public class Character : MonoBehaviour {
 
     private Controller controls;
     public Tools theTools; // TEMP -- initializing tools for Knowledge!!!!!
-    public GameObject statsUI; // empty gameobject encompasing the personal stats overlay (health and xp bars ect)
+    public GameObject statsUI; // empty gameobject encompasing the personal stats overlay (health and xp bars ect) FOR PLAYER ONLY!!!!!
     private CustomSlider hpUI;
     private CustomSlider xpUI;
     public Hotbar[] hotbarItems;

@@ -158,7 +158,6 @@ MonoBehaviour:
   theTools: {fileID: 0}
   statsUI: {fileID: 0}
   hotbarItems: []
-  otherHealthbar: {fileID: 0}
   equips: []
   startingSkills:
   - 
@@ -170,6 +169,7 @@ MonoBehaviour:
   activeEffects: []
   name: 
   title: 
+  description: An old buntown farmer from the old times
   baseMaxHp: 0
   bodyTexture: 
   userStats:
