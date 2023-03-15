@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CharacterUI : MonoBehaviour {
@@ -18,6 +19,8 @@ public class CharacterUI : MonoBehaviour {
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI[] statsText;// con, str, dex, int, evd, spd, amr
     public CustomSlider healthBar;
+    public Image classIcon;
+    public Sprite[] classTextures;
 
     private Color enemy = new Color(1.0f, 0.2f, 0.2f, 1.0f);
     private Color friend = new Color(0.2f, 1.0f, 0.2f, 1.0f);
@@ -66,6 +69,10 @@ public class CharacterUI : MonoBehaviour {
         //nameText.color = c;
     }
 
+    // Icon is based off stats,  0 - NOTHING, 1 - str, 2 - int, 3 - dex/spd
+    private void updateClassIcon(Stats s) {
+        classIcon.sprite = classTextures[getBestStat(s)];
+    }
     private void setTitle(string s) {
         titleText.text = s;
     }
@@ -87,12 +94,35 @@ public class CharacterUI : MonoBehaviour {
         setStat(4,s.evasion);
         setStat(5,s.speed);
         setStat(6,s.armor);
+        updateClassIcon(s);
     }
 
     private void setStat(int stat, int points) { // changes the specified stat in the statsText array, how many points should it be set to
         statsText[stat].text = points.ToString();
 
         statsText[stat].color = getColorFromPoints(points);
+    }
+
+    // 0 - NOTHING, 1 - str/con, 2 - int, 3 - dex/spd
+    private int getBestStat(Stats s) {
+        int stat = 0;
+
+        int most = 0;
+
+        checkBiggerStat(s.constitution, ref most, 1, ref stat);
+        checkBiggerStat(s.strength, ref most, 1, ref stat);
+        checkBiggerStat(s.intelligence, ref most, 2, ref stat);
+        checkBiggerStat(s.dexterity, ref most, 3, ref stat);
+        checkBiggerStat(s.speed, ref most, 3, ref stat);
+        return stat;
+    }
+    // check most against a number and return the value n or most represent(used only for getBestStat)
+    private void checkBiggerStat(int n, ref int most, int stat, ref int mostStat) {
+        if (n < 10) return;
+        if (n > most) {
+            most = n;
+            mostStat = stat;
+        }
     }
     private Color getColorFromPoints(int points) {
         //set stat color
