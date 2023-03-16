@@ -24156,19 +24156,19 @@ PrefabInstance:
       objectReference: {fileID: 219759766, guid: c650214fa041d31409588dc264c7f6b0, type: 3}
     - target: {fileID: 7718585140143133077, guid: 0a0b7d23fbbe63d4eb8d2d3fa3837150, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 7718585140143133077, guid: 0a0b7d23fbbe63d4eb8d2d3fa3837150, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8258676604309824915, guid: 0a0b7d23fbbe63d4eb8d2d3fa3837150, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.39
       objectReference: {fileID: 0}
     - target: {fileID: 8258676604309824915, guid: 0a0b7d23fbbe63d4eb8d2d3fa3837150, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8493407225711681600, guid: 0a0b7d23fbbe63d4eb8d2d3fa3837150, type: 3}
       propertyPath: m_Name
@@ -24176,7 +24176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8493407225711681600, guid: 0a0b7d23fbbe63d4eb8d2d3fa3837150, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8493407225711681602, guid: 0a0b7d23fbbe63d4eb8d2d3fa3837150, type: 3}
       propertyPath: statsText.Array.size

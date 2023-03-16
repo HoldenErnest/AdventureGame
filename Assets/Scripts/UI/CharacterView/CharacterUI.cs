@@ -3,7 +3,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class CharacterUI : MonoBehaviour {
@@ -19,8 +18,8 @@ public class CharacterUI : MonoBehaviour {
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI[] statsText;// con, str, dex, int, evd, spd, amr
     public CustomSlider healthBar;
-    public Image classIcon;
-    public Sprite[] classTextures;
+    public ImageSwapper classIcon;
+    public ImageSwapper teamIcon;
 
     private Color enemy = new Color(1.0f, 0.2f, 0.2f, 1.0f);
     private Color friend = new Color(0.2f, 1.0f, 0.2f, 1.0f);
@@ -54,11 +53,7 @@ public class CharacterUI : MonoBehaviour {
         setStats(c.userStats);
         setHealth(c.getHp(), c.userStats.getMaxHp(c.baseMaxHp));
         setLevel(c.userStats.getLevel());
-        if (c.gameObject.GetComponent<Team>().getTeam() == 0) {
-            setTheme(friend);
-        } else if (c.gameObject.GetComponent<Team>().getTeam() != 0) {
-            setTheme(enemy);
-        }
+        updateTeam(c.gameObject.GetComponent<Team>().getTeam());
     }
 
     private void setName(string s) {
@@ -71,7 +66,10 @@ public class CharacterUI : MonoBehaviour {
 
     // Icon is based off stats,  0 - NOTHING, 1 - str, 2 - int, 3 - dex/spd
     private void updateClassIcon(Stats s) {
-        classIcon.sprite = classTextures[getBestStat(s)];
+        classIcon.setSprite(getBestStat(s));
+    }
+    private void updateTeam(int t) {
+        teamIcon.setSprite(t);
     }
     private void setTitle(string s) {
         titleText.text = s;

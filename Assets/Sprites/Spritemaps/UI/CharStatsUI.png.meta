@@ -129,10 +129,10 @@ TextureImporter:
       name: CharStatsUI_1
       rect:
         serializedVersion: 2
-        x: 874
-        y: 1039
-        width: 46
-        height: 22
+        x: 765
+        y: 1032
+        width: 91
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,8 +150,8 @@ TextureImporter:
       name: CharStatsUI_2
       rect:
         serializedVersion: 2
-        x: 930
-        y: 1047
+        x: 874
+        y: 1039
         width: 46
         height: 22
       alignment: 0
@@ -171,10 +171,10 @@ TextureImporter:
       name: CharStatsUI_3
       rect:
         serializedVersion: 2
-        x: 1000
-        y: 1009
-        width: 141
-        height: 57
+        x: 930
+        y: 1047
+        width: 46
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,7 +192,7 @@ TextureImporter:
       name: CharStatsUI_4
       rect:
         serializedVersion: 2
-        x: 1150
+        x: 1000
         y: 1009
         width: 141
         height: 57
@@ -213,7 +213,7 @@ TextureImporter:
       name: CharStatsUI_5
       rect:
         serializedVersion: 2
-        x: 1299
+        x: 1150
         y: 1009
         width: 141
         height: 57
@@ -234,10 +234,10 @@ TextureImporter:
       name: CharStatsUI_6
       rect:
         serializedVersion: 2
-        x: 874
-        y: 999
-        width: 46
-        height: 22
+        x: 1299
+        y: 1009
+        width: 141
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,10 +255,10 @@ TextureImporter:
       name: CharStatsUI_7
       rect:
         serializedVersion: 2
-        x: 930
-        y: 1007
-        width: 46
-        height: 22
+        x: 765
+        y: 991
+        width: 91
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,10 +276,10 @@ TextureImporter:
       name: CharStatsUI_8
       rect:
         serializedVersion: 2
-        x: 569
-        y: 959
-        width: 91
-        height: 33
+        x: 874
+        y: 999
+        width: 46
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -297,10 +297,10 @@ TextureImporter:
       name: CharStatsUI_9
       rect:
         serializedVersion: 2
-        x: 888
-        y: 894
-        width: 490
-        height: 89
+        x: 930
+        y: 1007
+        width: 46
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -318,6 +318,48 @@ TextureImporter:
       name: CharStatsUI_10
       rect:
         serializedVersion: 2
+        x: 765
+        y: 950
+        width: 91
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ce04821b59c0b34a8292f40e90e692f
+      internalID: 1630211164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharStatsUI_11
+      rect:
+        serializedVersion: 2
+        x: 888
+        y: 894
+        width: 490
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7698a0d0378e36d4a91042ba88d26a01
+      internalID: -1781819774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharStatsUI_12
+      rect:
+        serializedVersion: 2
         x: 1394
         y: 917
         width: 39
@@ -329,8 +371,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ce04821b59c0b34a8292f40e90e692f
-      internalID: 1630211164
+      spriteID: 1bb43c8fa110b26409d294fa760675c0
+      internalID: 1971522760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharStatsUI_13
+      rect:
+        serializedVersion: 2
+        x: 765
+        y: 909
+        width: 91
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11cd4a115e2c0194bafbce15fcac822e
+      internalID: -1654995944
       vertices: []
       indices: 
       edges: []
@@ -348,10 +411,13 @@ TextureImporter:
     nameFileIdTable:
       CharStatsUI_2: 1573308529
       CharStatsUI_10: 1630211164
+      CharStatsUI_13: -1654995944
       CharStatsUI_7: -1213580731
       CharStatsUI_6: -46911179
+      CharStatsUI_12: 1971522760
       CharStatsUI_0: -1350707084
       CharStatsUI_3: 1294300760
+      CharStatsUI_11: -1781819774
       CharStatsUI_4: 1037903449
       CharStatsUI_5: -1561506836
       CharStatsUI_1: -254542639
