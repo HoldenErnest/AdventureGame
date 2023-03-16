@@ -276,10 +276,10 @@ TextureImporter:
       name: CharStatsUI_8
       rect:
         serializedVersion: 2
-        x: 888
-        y: 894
-        width: 490
-        height: 89
+        x: 569
+        y: 959
+        width: 91
+        height: 33
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -297,6 +297,27 @@ TextureImporter:
       name: CharStatsUI_9
       rect:
         serializedVersion: 2
+        x: 888
+        y: 894
+        width: 490
+        height: 89
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10398bd7421fcd64b9f8f24979ac4aec
+      internalID: -414840159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CharStatsUI_10
+      rect:
+        serializedVersion: 2
         x: 1394
         y: 917
         width: 39
@@ -308,8 +329,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10398bd7421fcd64b9f8f24979ac4aec
-      internalID: -414840159
+      spriteID: 7ce04821b59c0b34a8292f40e90e692f
+      internalID: 1630211164
       vertices: []
       indices: 
       edges: []
@@ -326,6 +347,7 @@ TextureImporter:
     secondaryTextures: []
     nameFileIdTable:
       CharStatsUI_2: 1573308529
+      CharStatsUI_10: 1630211164
       CharStatsUI_7: -1213580731
       CharStatsUI_6: -46911179
       CharStatsUI_0: -1350707084
