@@ -10,7 +10,7 @@ public class CustomDropdown : MonoBehaviour
     private TMP_Dropdown dropdown;
 
     public bool multiSelect;
-    public string option = "bodies"; // what directory to access
+    public string path = "Assets/Resources/Textures/Bodies/"; // what directory to access
 
     private string[] list;
 
@@ -22,50 +22,18 @@ public class CustomDropdown : MonoBehaviour
         if (multiSelect)
             dropdown.gameObject.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "--";
     }
-    private string bodyPath = "Assets/Resources/Textures/Bodies/";
-    private string itempath = "Assets/Resources/SavedObjects/Items/";
-    private string equipPath = "Assets/Resources/SavedObjects/Equips/";
-    private string skillPath = "Assets/Resources/SavedObjects/Skills/";
+    //bodyPath = "Assets/Resources/Textures/Bodies/";
+    //itempath = "Assets/Resources/SavedObjects/Items/";
+    //equipPath = "Assets/Resources/SavedObjects/Equips/";
+    //skillPath = "Assets/Resources/SavedObjects/Skills/";
 
-    private string bodyPath2 = "Assets/Resources/Textures/Bodies/";
-    private string itempath2 = "Assets/Resources/SavedObjects/Items/";
-    private string equipPath2 = "Assets/Resources/SavedObjects/Equips/";
-    private string skillPath2 = "Assets/Resources/SavedObjects/Skills/";
     private void updateOptions() {
-        switch (option) {
-            case "bodies":
-                try {
-                    list = Directory.GetFiles(bodyPath);
-                    //list.Concat(Directory.GetFiles(bodyPath2)).ToArray();
-                } catch (Exception e) {
-                    Debug.Log(e);
-                }
-                break;
-            case "items":
-                try {
-                    list = Directory.GetFiles(itempath);
-                    //list.Concat(Directory.GetFiles(itempath2)).ToArray();
-                } catch (Exception e) {
-                    Debug.Log(e);
-                }
-                break;
-            case "equips":
-                try {
-                    list = Directory.GetFiles(equipPath);
-                    //list.Concat(Directory.GetFiles(equipPath2)).ToArray();
-                } catch (Exception e) {
-                    Debug.Log(e);
-                }
-                break;
-            case "skills":
-                try {
-                    list = Directory.GetFiles(skillPath);
-                    //list.Concat(Directory.GetFiles(skillPath2)).ToArray();
-                } catch (Exception e) {
-                    Debug.Log(e);
-                }
-                break;
-                
+        if (path == null || path == "") return;
+        try {
+            list = Directory.GetFiles(path);
+            //list.Concat(Directory.GetFiles(skillPath2)).ToArray();
+        } catch (Exception e) {
+            Debug.Log(e);
         }
         populate();
     }
@@ -76,16 +44,16 @@ public class CustomDropdown : MonoBehaviour
             if (!t.EndsWith(".meta")) {
                 string[] a = t.Split('/');
                 string newText = a[a.Length - 1];
-                if (newText.EndsWith(".json"))
-                    newText = newText.Substring(0,newText.Length-5);
-                if (newText.EndsWith(".png"))
-                    newText = newText.Substring(0,newText.Length-4);
+                int dot = newText.LastIndexOf('.');
+                if (dot != -1)
+                    newText = newText.Substring(0,dot);
                 dropdown.options.Add (new TMP_Dropdown.OptionData() {text=newText});
             }
         }
     }
-    public void onChange() {
 
+    // multi-select onChange event
+    public void onChange() {
 
         if (!multiSelect) return;
 
