@@ -14,7 +14,7 @@ public class Tools : MonoBehaviour {
 
     private Camera cam;
     private Transform pos;
-    private bool hovering;
+    private Coroutine hovering; 
 
     void Start() { // everytime this script is enabled
         cam = this.gameObject.GetComponent<Camera>();
@@ -26,18 +26,17 @@ public class Tools : MonoBehaviour {
     }
     // Events --------
     public void setHoverUI(Character c) {
-        hovering = true;
+        if (hovering != null)
+            StopCoroutine(hovering);
         charHoverUI.gameObject.SetActive(true);
         pos = c.gameObject.transform;
         charHoverUI.setCharacter(c);
     }
     public void closeHoverUI() {
-        StartCoroutine(close());
+        hovering = StartCoroutine(close());
     }
     private IEnumerator close() {
-        hovering = false;
-        yield return new WaitForSeconds(0.5f);
-        if (!hovering)
-            charHoverUI.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.4f);
+        charHoverUI.gameObject.SetActive(false);
     }
 }

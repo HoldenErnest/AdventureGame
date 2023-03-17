@@ -28,6 +28,12 @@ public class SpritemapAnimation : MonoBehaviour {
         sr.sprite = getSprite(catagory, index);
         
     }
+    public Sprite getCurrentSprite() {
+        return sr.sprite;
+    }
+    public Sprite getBaseSprite() {
+        return getSprite(0,0);
+    }
 
     public Sprite getSprite(int c, int i) {
         //Debug.Log($"new rect: {i}, {c} last: {lastI}, {lastC}"); //v 288 = texture.height

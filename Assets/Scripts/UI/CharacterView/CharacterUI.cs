@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class CharacterUI : MonoBehaviour {
 
@@ -20,6 +21,7 @@ public class CharacterUI : MonoBehaviour {
     public CustomSlider healthBar;
     public ImageSwapper classIcon;
     public ImageSwapper teamIcon;
+    public Image model;
 
     private Color enemy = new Color(1.0f, 0.2f, 0.2f, 1.0f);
     private Color friend = new Color(0.2f, 1.0f, 0.2f, 1.0f);
@@ -54,6 +56,7 @@ public class CharacterUI : MonoBehaviour {
         setHealth(c.getHp(), c.userStats.getMaxHp(c.baseMaxHp));
         setLevel(c.userStats.getLevel());
         updateTeam(c.gameObject.GetComponent<Team>().getTeam());
+        setModel(c.gameObject.GetComponent<SpritemapAnimation>().getBaseSprite());
     }
 
     private void setName(string s) {
@@ -79,6 +82,9 @@ public class CharacterUI : MonoBehaviour {
     }
     private void setHealth(int hp, int maxHp) {
         healthBar.updateSlider(hp, maxHp);
+    }
+    private void setModel(Sprite s) {
+        model.sprite = s;
     }
     public void updateHealth() {
         if (theCharacter)
