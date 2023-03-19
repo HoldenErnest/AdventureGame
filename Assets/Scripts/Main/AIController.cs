@@ -203,6 +203,7 @@ public class AIController : Controller {
 
     //END STATE PERFORMANCES::_________________________________________________________________________________
 
+    //Moves towards
     public void move(float h, float v) {
         if (moveOverride) {
             Vector2 dir = -(getPos() - Vector2.MoveTowards(getPos(), target, 1));
