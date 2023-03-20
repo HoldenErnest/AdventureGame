@@ -7,53 +7,38 @@ using UnityEngine;
 
 public class PathNode : MonoBehaviour {
 
-    private bool moveable; // if the node is not an object
-    private Vector2Int position; // in tiles, the x and y coords
+    public bool moveable; // if the node is not an object
+    public Vector2Int position; // in tiles, the x and y coords (NOT POSITION IN A GRID)
 
     // Cost in units of (tiles * 10)
-    private int startCost; // cost to the start node, traveling previous explored tiles
-    private int endCost; //cost to the end node
-
-    private PathNode[] neighbors;
+    public int startCost; // cost to the start node, traveling previous explored tiles
+    public int endCost; // cost to the end node
+    public PathNode parent; // where the node came from
 
     public PathNode(){}
 
     public PathNode(Vector2Int pos, bool isMoveable) {
         position = pos;
         moveable = isMoveable;
+        Debug.DrawLine(new Vector2(position.x, position.y), new Vector2(position.x + 1.0f, position.y + 1.0f), Color.green);
+        Debug.DrawLine(new Vector2(position.x, position.y + 1.0f), new Vector2(position.x + 1.0f, position.y), Color.green);
     }
 
     private int getTotalCost() {
         return startCost + endCost;
     }
 
-    public int getCost() {
-        return getTotalCost();
-    }
-    public int getEndCost() {
-        return endCost;
-    }
-
     // returns the better costing node
     public PathNode compareNodes(PathNode other) {
-        int otherCost = other.getCost();
-        int thisCost = getCost();
+        int otherCost = other.getTotalCost();
+        int thisCost = getTotalCost();
         if (otherCost < thisCost) {
             return other;
         }
         if (otherCost == thisCost) {
-            if (other.getEndCost() < endCost)
+            if (other.endCost < endCost)
                 return other;
         }
         return this;
-    }
-
-    // Activates the node, allowing it to be a potential candidate to move on. and not allowing it to be opened again
-    public void closeNode() {
-
-    }
-
-    public void updateNode() {
-
     }
 }

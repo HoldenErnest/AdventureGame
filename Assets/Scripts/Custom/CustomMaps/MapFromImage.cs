@@ -70,8 +70,10 @@ public class MapFromImage : MonoBehaviour
         int tx = v.x + (int)(getWidth()/2);
         int ty = v.y + (int)(getHeight()/2);
         
-        if (tx < 0 || tx >= getWidth()) return false;
-        if (ty < 0 || ty >= getHeight()) return false;
+        if (tx < 0 || tx >= getWidth() || ty < 0 || ty >= getHeight()) {
+            Debug.Log("PIXEL [" + tx + "," + ty + "] NOT WITHIN IMAGE!");
+            return false;
+        }
 
         Color pix = img.GetPixel(tx,ty);
         //Debug.Log(v + ": " + (pix != Color.clear) + "[" + tx + ", " + ty + "]");

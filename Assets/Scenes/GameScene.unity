@@ -20121,6 +20121,7 @@ GameObject:
   - component: {fileID: 1127738199}
   - component: {fileID: 1127738198}
   - component: {fileID: 1127738201}
+  - component: {fileID: 1127738203}
   - component: {fileID: 1127738202}
   m_Layer: 3
   m_Name: CustomWalls
@@ -20483,11 +20484,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1127738196}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 366a7fca3c1c3834fb54fadcabee65c0, type: 3}
+  m_Script: {fileID: 11500000, guid: a04f0f99f061acc4d9c9c0463872503b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1169913869}
-  objectMap: {fileID: 1127738198}
+--- !u!114 &1127738203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127738196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e07b78ee350ce84399f25b0c7a6e42d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1169913869
 GameObject:
   m_ObjectHideFlags: 0
