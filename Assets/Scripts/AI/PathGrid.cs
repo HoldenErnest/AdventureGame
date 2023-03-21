@@ -39,20 +39,17 @@ public class PathGrid : MonoBehaviour {
     3 4 5
     6 7 8
     */
-    public PathNode[] getNeighbors(PathNode p) {
-        PathNode[] neighbors = new PathNode[8];
+    public List<PathNode> getNeighbors(PathNode p) {
+        List<PathNode> neighbors = new List<PathNode>();
         for (int i = 0; i < 9; i++) {
             if (i != 4) {
                 int nX = (i%3) - 1 + p.position.x; // -1, 0, 1
                 int nY = Mathf.FloorToInt(i/3) - 1 + p.position.y; // -1, 0, 1
                 Vector2Int v = new Vector2Int(nX, nY);
-                Debug.Log("NGBRPOS: " + (v.x - p.position.x) + ", " + (v.y - p.position.y));
-                PathNode neighborPath = getFromGrid(new PathNode(v, objectMap.activeTile(v)));
-                Debug.Log("MY NEIGHBOR " + i + " IS: " + neighborPath);
-                if (i < 4)
-                    neighbors[i] = neighborPath;
-                else
-                    neighbors[i-1] = neighborPath;
+                if (isOnGrid(v)) {
+                    PathNode neighborPath = getFromGrid(new PathNode(v, objectMap.activeTile(v)));
+                    neighbors.Add(neighborPath);
+                }
                 
             }
         }
@@ -60,21 +57,37 @@ public class PathGrid : MonoBehaviour {
     }
 
     // takes in a node and retrieves the node in that place(so the old ones values arent replaced), otherwise it places it in the grid based off its position
-    private PathNode getFromGrid(PathNode p) {
-        Vector2Int v = p.position;
-        int x = (v.x - middlePos.x) + (int)(range/2);
-        int y = (v.y - middlePos.y) + (int)(range/2);
+    private bool isOnGrid(Vector2Int v) { // takes world pos
+        Vector2Int gridV = gridCoords(v);
+
+        if (gridV.x == -1 && gridV.y == -1) {
+            return false;
+        }
+        return true;
+    }
+    private Vector2Int gridCoords(Vector2Int v) { // takes world pos and converts to grid pos
+        int x = (v.x - middlePos.x) + Mathf.CeilToInt(range/2);
+        int y = (v.y - middlePos.y) + Mathf.CeilToInt(range/2);
 
         if (x >= range || x < 0 || y >= range || y < 0) {
-            Debug.Log("POSITION [" + x + "," + y + "] NOT WITHIN GRID!");
+            Debug.Log("POSITION [" + x + "," + y + "] NOT WITHIN GRID! " + v.x +","+ v.y);
+            return new Vector2Int(-1,-1);
+        }
+        return new Vector2Int(x,y);
+    }
+    private PathNode getFromGrid(PathNode p) { // returns a path node from world pos
+        Vector2Int v = gridCoords(p.position);
+        int x = v.x;
+        int y = v.y;
+
+        if (!isOnGrid(p.position)) {
             x = 0;
             y = 0;
-            p = new PathNode(new Vector2Int(0,0), false); // <<<<<<!! SET NODE TO CLOSEST STILL IN RANGE
-            
+            p = new PathNode(new Vector2Int(range-1,range-1), false); // <<<<<<!! SET NODE TO CLOSEST STILL IN RANGE
+            p.isNull = true; 
         }
         // replace the node only if there isnt already one in there
         if (!nodes[x,y]) {
-            Debug.Log(x + "," + y + "node null, making new Node");
             nodes[x,y] = p;
         }
         return nodes[x,y];

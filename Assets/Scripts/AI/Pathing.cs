@@ -9,18 +9,17 @@ public class Pathing : MonoBehaviour {
 
     private PathGrid grid;
 
-    
-
     void Start() {
         grid = GetComponent<PathGrid>();
+        
+    }
+    void FixedUpdate() {
         Vector3 pos = Input.mousePosition;
         pos.z = 10;
         pos = Camera.main.ScreenToWorldPoint(pos);
         Vector3 pos2 = grid.player.transform.position;
-        getPath(new Vector2(pos2.x, pos2.y - 0.5f), new Vector2(-8.0f,4.0f));
-    }
-    void Update() {
-        
+        Debug.Log("mouse at: " + pos.x + "," +  pos.y);
+        getPath(new Vector2(pos2.x, pos2.y - 0.5f), new Vector2(pos.x,pos.y));
     }
 
     // the method called by the AI, passing through the start and end nodes gotten from an image translation
@@ -31,8 +30,10 @@ public class Pathing : MonoBehaviour {
         PathNode endNode = grid.worldPosToNode(endPos);
         List<PathNode> openNodes = new List<PathNode>(); // make these binary tree heaps instead for better performance (keep sorted by lowest cost)
         openNodes.Add(startNode);
-
-        while (openNodes.Count > 0 && openNodes.Count < 20) {
+        int itterations = 0;
+        while (openNodes.Count > 0) {
+            itterations++;
+            if (itterations > 30) break;
             PathNode current = grid.lowestCost(openNodes);
             openNodes.Remove(current);
             current.setClosed();
@@ -40,15 +41,18 @@ public class Pathing : MonoBehaviour {
                 return current;
             }
             
-            PathNode[] neighbors = grid.getNeighbors(current);
+            List<PathNode> neighbors = grid.getNeighbors(current);
             foreach (PathNode node in neighbors) {
+                if (node.isNull) return null; // TEMP variable, if any node goes out of the array, return
                 if (node.moveable || node.isClosed())
                     continue;
 
                 // new total cost for the node
-                int newCostToNeighbour = current.startCost + current.getDistanceTo(node);
-				if (newCostToNeighbour < node.startCost || !openNodes.Contains(node)) {
-					node.startCost = newCostToNeighbour;
+                int newCostToStart = current.startCost + current.getDistanceTo(node);
+				if (newCostToStart < node.startCost || !openNodes.Contains(node)) {
+                    // if this new neighbor is a better path towards the end
+                    
+					node.startCost = newCostToStart;
 					node.endCost = node.getDistanceTo(endNode);
 					node.parent = current;
 

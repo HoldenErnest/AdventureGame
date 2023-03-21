@@ -16,14 +16,14 @@ public class PathNode : MonoBehaviour {
     public PathNode parent; // where the node came from
 
     private bool closed = false;
-
+    public bool isNull = false;
     public PathNode(){}
 
     public PathNode(Vector2Int pos, bool isMoveable) {
         position = pos;
         moveable = isMoveable;
-        Debug.DrawLine(new Vector2(position.x, position.y), new Vector2(position.x + 1.0f, position.y + 1.0f), Color.green, 5.0f);
-        Debug.DrawLine(new Vector2(position.x, position.y + 1.0f), new Vector2(position.x + 1.0f, position.y), Color.green, 5.0f);
+        Debug.DrawLine(new Vector2(position.x, position.y), new Vector2(position.x + 1.0f, position.y + 1.0f), Color.green, 0f);
+        Debug.DrawLine(new Vector2(position.x, position.y + 1.0f), new Vector2(position.x + 1.0f, position.y), Color.green, 0f);
     }
 
     private int getTotalCost() {
@@ -31,8 +31,8 @@ public class PathNode : MonoBehaviour {
     }
     public void setClosed() {
         closed = true;
-        Debug.DrawLine(new Vector2(position.x + 0.5f, position.y), new Vector2(position.x + 0.5f, position.y + 1.0f), Color.red, 5.0f);
-        Debug.DrawLine(new Vector2(position.x, position.y + 0.5f), new Vector2(position.x + 1.0f, position.y + 0.5f), Color.red, 5.0f);
+        Debug.DrawLine(new Vector2(position.x + 0.5f, position.y), new Vector2(position.x + 0.5f, position.y + 1.0f), Color.red, 0f);
+        Debug.DrawLine(new Vector2(position.x, position.y + 0.5f), new Vector2(position.x + 1.0f, position.y + 0.5f), Color.red, 0f);
     }
     public bool isClosed() {
         return closed;
