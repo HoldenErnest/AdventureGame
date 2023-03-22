@@ -10,7 +10,7 @@ public class PathGrid : MonoBehaviour {
     // nodes to keep track of neighbors
     private PathNode[,] nodes;
 
-    private int range = 21; // x tiles to check around the player
+    private int range = 31; // x tiles to check around the player
     private Vector2Int middlePos;
 
     public GameObject player; // TEMP!!!!!!!!!!!! for testing coords
@@ -76,21 +76,18 @@ public class PathGrid : MonoBehaviour {
         return new Vector2Int(x,y);
     }
     private PathNode getFromGrid(PathNode p) { // returns a path node from world pos
-        Vector2Int v = gridCoords(p.position);
-        int x = v.x;
-        int y = v.y;
-
         if (!isOnGrid(p.position)) {
-            x = 0;
-            y = 0;
             p = new PathNode(new Vector2Int(range-1,range-1), false); // <<<<<<!! SET NODE TO CLOSEST STILL IN RANGE
             p.isNull = true; 
+            return p;
         }
+        Vector2Int v = gridCoords(p.position);
+
         // replace the node only if there isnt already one in there
-        if (!nodes[x,y]) {
-            nodes[x,y] = p;
+        if (!nodes[v.x,v.y]) {
+            nodes[v.x,v.y] = p;
         }
-        return nodes[x,y];
+        return nodes[v.x,v.y];
     }
 
     // Returns the index for the position in the grid
@@ -108,5 +105,22 @@ public class PathGrid : MonoBehaviour {
             lowestCostNode = lowestCostNode.compareNodes(theNodes[i]);
         }
         return lowestCostNode;
+    }
+    public bool listContains(List<PathNode> theNodes, PathNode node) {
+        foreach (PathNode n in theNodes) {
+            if (n.isEqual(node)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool removeFromList(List<PathNode> theNodes, PathNode node) {
+        for (int i = 0; i < theNodes.Count; i++) {
+            if (theNodes[i].isEqual(node)) {
+                theNodes.RemoveAt(i);
+                return true;
+            }
+        }
+        return false;
     }
 }

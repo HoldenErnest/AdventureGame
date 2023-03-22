@@ -18,7 +18,7 @@ public class Pathing : MonoBehaviour {
         pos.z = 10;
         pos = Camera.main.ScreenToWorldPoint(pos);
         Vector3 pos2 = grid.player.transform.position;
-        Debug.Log("mouse at: " + pos.x + "," +  pos.y);
+        //Debug.Log("mouse at: " + pos.x + "," +  pos.y);
         getPath(new Vector2(pos2.x, pos2.y - 0.5f), new Vector2(pos.x,pos.y));
     }
 
@@ -33,8 +33,9 @@ public class Pathing : MonoBehaviour {
         int itterations = 0;
         while (openNodes.Count > 0) {
             itterations++;
-            if (itterations > 30) break;
+            if (itterations > 100) break;
             PathNode current = grid.lowestCost(openNodes);
+            Debug.Log("pos: " + current.position + ", start: " + current.startCost + ", end: " + current.endCost);
             openNodes.Remove(current);
             current.setClosed();
             if (current.isEqual(endNode)) {
@@ -42,21 +43,21 @@ public class Pathing : MonoBehaviour {
             }
             
             List<PathNode> neighbors = grid.getNeighbors(current);
+            int ia = 0;
             foreach (PathNode node in neighbors) {
                 if (node.isNull) return null; // TEMP variable, if any node goes out of the array, return
-                if (node.moveable || node.isClosed())
+                if (node.unwalkable || node.isClosed())
                     continue;
 
                 // new total cost for the node
                 int newCostToStart = current.startCost + current.getDistanceTo(node);
-				if (newCostToStart < node.startCost || !openNodes.Contains(node)) {
-                    // if this new neighbor is a better path towards the end
-                    
+				if (newCostToStart < node.startCost || !grid.listContains(openNodes,node)) {
+                    // if this new neighbor is a better path towards the end 
 					node.startCost = newCostToStart;
 					node.endCost = node.getDistanceTo(endNode);
 					node.parent = current;
 
-					if (!openNodes.Contains(node)) {
+					if (!grid.listContains(openNodes,node)) {
 						openNodes.Add(node);
                     }
 				}

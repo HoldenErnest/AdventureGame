@@ -1,5 +1,6 @@
 // Holden Ernest - 3/19/2023
 // A node(tile with costs) for the A* pathing algorithm
+// NOTE:!!: alot of built in methods dont work for comparing 2 nodes, (list.contains, node == null) use .isEqual(node) instead
 
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using UnityEngine;
 
 public class PathNode : MonoBehaviour {
 
-    public bool moveable; // if the node is not an object
+    public bool unwalkable; // if the node is not an object
     public Vector2Int position; // in tiles, the x and y coords (NOT POSITION IN A GRID)
 
     // Cost in units of (tiles * 10)
@@ -19,9 +20,9 @@ public class PathNode : MonoBehaviour {
     public bool isNull = false;
     public PathNode(){}
 
-    public PathNode(Vector2Int pos, bool isMoveable) {
+    public PathNode(Vector2Int pos, bool isunwalkable) {
         position = pos;
-        moveable = isMoveable;
+        unwalkable = isunwalkable;
         Debug.DrawLine(new Vector2(position.x, position.y), new Vector2(position.x + 1.0f, position.y + 1.0f), Color.green, 0f);
         Debug.DrawLine(new Vector2(position.x, position.y + 1.0f), new Vector2(position.x + 1.0f, position.y), Color.green, 0f);
     }
