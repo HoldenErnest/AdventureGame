@@ -4,13 +4,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PathGrid : MonoBehaviour {
     
     // nodes to keep track of neighbors
     private PathNode[,] nodes;
 
-    private int range = 31; // x tiles to check around the player
+    private int range = 21; // x tiles to check around the player
     private Vector2Int middlePos;
 
     public GameObject player; // TEMP!!!!!!!!!!!! for testing coords
@@ -48,7 +49,8 @@ public class PathGrid : MonoBehaviour {
                 Vector2Int v = new Vector2Int(nX, nY);
                 if (isOnGrid(v)) {
                     PathNode neighborPath = getFromGrid(new PathNode(v, objectMap.activeTile(v)));
-                    neighbors.Add(neighborPath);
+                    if (!neighborPath.isClosed())
+                        neighbors.Add(neighborPath);
                 }
                 
             }
@@ -78,13 +80,21 @@ public class PathGrid : MonoBehaviour {
     private PathNode getFromGrid(PathNode p) { // returns a path node from world pos
         if (!isOnGrid(p.position)) {
             p = new PathNode(new Vector2Int(range-1,range-1), false); // <<<<<<!! SET NODE TO CLOSEST STILL IN RANGE
-            p.isNull = true; 
+            p.isNull = true;
             return p;
         }
         Vector2Int v = gridCoords(p.position);
 
         // replace the node only if there isnt already one in there
-        if (!nodes[v.x,v.y]) {
+        /*if (nodes[v.x,v.y].Equals(null)) {
+            Debug.Log("null, create new node at: " + v.x + ", " + v.y);
+            nodes[v.x,v.y] = p;
+        }*/
+
+        // HELP!!!!!!!!!!! DONT KNOW WHY I cant tell if nodes[x,y] is null!!!!!!!!!!!!
+        try {
+            int no = nodes[v.x,v.y].position.x;
+        } catch (Exception e) {
             nodes[v.x,v.y] = p;
         }
         return nodes[v.x,v.y];

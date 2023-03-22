@@ -14,7 +14,7 @@ public class PathNode : MonoBehaviour {
     // Cost in units of (tiles * 10)
     public int startCost; // cost to the start node, traveling previous explored tiles // GCOST
     public int endCost; // cost to the end node                                        // HCOST
-    public PathNode parent; // where the node came from
+    private PathNode parent; // where the node came from
 
     private bool closed = false;
     public bool isNull = false;
@@ -23,8 +23,8 @@ public class PathNode : MonoBehaviour {
     public PathNode(Vector2Int pos, bool isunwalkable) {
         position = pos;
         unwalkable = isunwalkable;
-        Debug.DrawLine(new Vector2(position.x, position.y), new Vector2(position.x + 1.0f, position.y + 1.0f), Color.green, 0f);
-        Debug.DrawLine(new Vector2(position.x, position.y + 1.0f), new Vector2(position.x + 1.0f, position.y), Color.green, 0f);
+        //Debug.DrawLine(new Vector2(position.x, position.y), new Vector2(position.x + 1.0f, position.y + 1.0f), Color.green, 0f);
+        //Debug.DrawLine(new Vector2(position.x, position.y + 1.0f), new Vector2(position.x + 1.0f, position.y), Color.green, 0f);
     }
 
     private int getTotalCost() {
@@ -32,14 +32,20 @@ public class PathNode : MonoBehaviour {
     }
     public void setClosed() {
         closed = true;
-        Debug.DrawLine(new Vector2(position.x + 0.5f, position.y), new Vector2(position.x + 0.5f, position.y + 1.0f), Color.red, 0f);
-        Debug.DrawLine(new Vector2(position.x, position.y + 0.5f), new Vector2(position.x + 1.0f, position.y + 0.5f), Color.red, 0f);
+        //Debug.DrawLine(new Vector2(position.x + 0.5f, position.y), new Vector2(position.x + 0.5f, position.y + 1.0f), Color.red, 0f);
+        //Debug.DrawLine(new Vector2(position.x, position.y + 0.5f), new Vector2(position.x + 1.0f, position.y + 0.5f), Color.red, 0f);
     }
     public bool isClosed() {
         return closed;
     }
     public bool isEqual(PathNode other) {
         return (other.position == position);
+    }
+    public void setParent(PathNode p) {
+        parent = p;
+    }
+    public PathNode getParent() {
+        return parent;
     }
 
     // returns the better costing node
