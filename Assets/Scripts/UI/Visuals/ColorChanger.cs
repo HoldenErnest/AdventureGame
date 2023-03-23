@@ -10,7 +10,7 @@ public class ColorChanger : MonoBehaviour {
     public Color[] colors;
 
     public float delay = 0.15f; // in seconds, time between each pass
-    public float threshhold = 0.01f; // if within 1% of target color, move to next target
+    public float threshhold = 0.01f; // if within 1% of target color, set new target color to next color in
     public float multiplier = 0.01f; // move 1% closer to target color on each pass
 
     private Color currentColor;
