@@ -14,9 +14,9 @@ public class Pathing : MonoBehaviour {
         grid = GetComponent<PathGrid>();
         
     }
-    void FixedUpdate() {
+    void Update() {
         
-        if (Input.GetMouseButton(2)) {
+        if (Input.GetMouseButtonDown(2)) {
             Vector3 pos = Input.mousePosition;
             pos.z = 10;
             pos = Camera.main.ScreenToWorldPoint(pos);
@@ -36,8 +36,7 @@ public class Pathing : MonoBehaviour {
         openNodes.Add(startNode);
         int itterations = 0;
         while (openNodes.Count > 0) {
-            itterations++;
-            if (itterations > 150) break;
+            if (++itterations > 30) break;
             PathNode current = grid.lowestCost(openNodes);
             Debug.Log("pos: " + current.position + ", start: " + current.startCost + ", end: " + current.endCost);
             openNodes.Remove(current);
@@ -60,7 +59,8 @@ public class Pathing : MonoBehaviour {
 					node.endCost = node.getDistanceTo(endNode);
 					node.setParent(current);
 
-					if (!grid.listContains(openNodes,node)) { // only add 
+					if (!grid.listContains(openNodes,node)) { // only add
+                        Debug.Log(node);
 						openNodes.Add(node);
                     }
 				}
@@ -73,7 +73,7 @@ public class Pathing : MonoBehaviour {
         
         try {
             PathNode p = endNode.getParent();
-            Debug.DrawLine(new Vector2(endNode.position.x + 0.5f, endNode.position.y + 0.5f), new Vector2(p.position.x + 0.5f, p.position.y + 0.5f), Color.red, 0f);
+            //Debug.DrawLine(new Vector2(endNode.position.x + 0.5f, endNode.position.y + 0.5f), new Vector2(p.position.x + 0.5f, p.position.y + 0.5f), Color.red, 0f);
             traceBack(p);
         } catch (Exception e) {
             return;

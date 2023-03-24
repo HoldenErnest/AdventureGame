@@ -80,7 +80,6 @@ public class PathGrid : MonoBehaviour {
     private PathNode getFromGrid(PathNode p) { // returns a path node from world pos
         if (!isOnGrid(p.position)) {
             p = new PathNode(new Vector2Int(range-1,range-1), false); // <<<<<<!! SET NODE TO CLOSEST STILL IN RANGE
-            p.isNull = true;
             return p;
         }
         Vector2Int v = gridCoords(p.position);
