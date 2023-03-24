@@ -11,7 +11,7 @@ public class PathGrid : MonoBehaviour {
     // nodes to keep track of neighbors
     private PathNode[,] nodes;
 
-    private int range = 21; // x tiles to check around the player
+    private int range = 31; // x tiles to check around the player
     private Vector2Int middlePos;
 
     public GameObject player; // TEMP!!!!!!!!!!!! for testing coords
@@ -122,6 +122,13 @@ public class PathGrid : MonoBehaviour {
             }
         }
         return false;
+    }
+    public string printList(List<PathNode> theNodes) {
+        string temp = "";
+        foreach (PathNode n in theNodes) {
+            temp += "{" + n + "}, ";
+        }
+        return "List:" + temp;
     }
     public bool removeFromList(List<PathNode> theNodes, PathNode node) {
         for (int i = 0; i < theNodes.Count; i++) {
