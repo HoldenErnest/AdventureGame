@@ -29,7 +29,7 @@ public class PathGrid : MonoBehaviour {
 
     // adds a node to the array
     public PathNode worldPosToNode(Vector2 pos) { // ENTER THE POSITION OF THE FOOT HITBOX
-        Vector2Int nodePos = new Vector2Int((int)Mathf.FloorToInt(pos.x), (int)Mathf.FloorToInt(pos.y));
+        Vector2Int nodePos = inBoundsVector(middlePos, new Vector2Int((int)Mathf.FloorToInt(pos.x), (int)Mathf.FloorToInt(pos.y)), Mathf.CeilToInt(range/2));
         bool isWalkable = objectMap.activeTile(nodePos);
         // return the new node, or a node that is already in its place
         return getFromGrid(new PathNode(nodePos, isWalkable));
@@ -106,6 +106,9 @@ public class PathGrid : MonoBehaviour {
     public int getWidth() {
         return range;
     }
+    public void setRange(int r) {
+        range = r;
+    }
 
     // returns the lowest costing node from a list
     public PathNode lowestCost(List<PathNode> theNodes) {
@@ -138,5 +141,27 @@ public class PathGrid : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    private Vector2Int inBoundsVector(Vector2Int userPosition, Vector2Int targetPosition, int range) { // returns a point within the bounds from the center
+        if (isOnGrid(targetPosition)) return targetPosition;
+        int x = targetPosition.x;
+        int y = targetPosition.y;
+        int dx = userPosition.x - targetPosition.x;
+        int dy = userPosition.y - targetPosition.y;
+
+        // if either of the distances are further than 'range' set it to range
+        if (Math.Abs(dx) > range) {
+            Debug.Log(dx + "something, " + range);
+            x = userPosition.x - ((int)(dx / Math.Abs(dx)) * range);
+        }
+        if (Math.Abs(dy) > range) {
+            Debug.Log(dy + "dy, something, " + range);
+            y = userPosition.y - ((int)(dy / Mathf.Abs(dy)) * range);
+        }
+        Vector2Int v = new Vector2Int(x,y);
+        Debug.Log(v + ": " + isOnGrid(v));
+
+        return v;
     }
 }

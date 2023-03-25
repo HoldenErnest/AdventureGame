@@ -10,13 +10,17 @@ public class Pathing : MonoBehaviour {
 
     private PathGrid grid;
 
+    // decrease for less lag but less hits on target
+    public int allowedItterations = 100;
+    public int gridDiameter = 21;
+
     void Start() {
         grid = GetComponent<PathGrid>();
-        
+        grid.setRange(gridDiameter);
     }
-    void FixedUpdate() {
+    void Update() {
         
-        if (Input.GetMouseButton(2)) {
+        if (Input.GetMouseButtonDown(2)) {
             Vector3 pos = Input.mousePosition;
             pos.z = 10;
             pos = Camera.main.ScreenToWorldPoint(pos);
@@ -32,14 +36,17 @@ public class Pathing : MonoBehaviour {
         grid.createGrid(startPos);
         PathNode startNode = grid.worldPosToNode(startPos);
         PathNode endNode = grid.worldPosToNode(endPos);
+        if (endNode.unwalkable) {
+            Debug.Log("Target point for path is an object!");
+            return startNode;
+        }
         List<PathNode> openNodes = new List<PathNode>(); // make these binary tree heaps instead for better performance (keep sorted by lowest cost)
         openNodes.Add(startNode);
         int itterations = 0;
         while (openNodes.Count > 0) {
-            if (++itterations > 100) break;
+            if (++itterations > allowedItterations) break;
             Debug.Log(grid.printList(openNodes));
             PathNode current = grid.lowestCost(openNodes);
-            Debug.Log("pos: " + current.position + ", start: " + current.startCost + ", end: " + current.endCost);
             grid.removeFromList(openNodes,current);
             current.setClosed();
             if (current.isEqual(endNode)) {
@@ -70,10 +77,10 @@ public class Pathing : MonoBehaviour {
     }
 
     public void traceBack(PathNode endNode) {
-        
+
         try {
             PathNode p = endNode.getParent();
-            Debug.DrawLine(new Vector2(endNode.position.x + 0.5f, endNode.position.y + 0.5f), new Vector2(p.position.x + 0.5f, p.position.y + 0.5f), Color.red, 0f);
+            Debug.DrawLine(new Vector2(endNode.position.x + 0.5f, endNode.position.y + 0.5f), new Vector2(p.position.x + 0.5f, p.position.y + 0.5f), Color.red, 0.8f);
             traceBack(p);
         } catch (Exception e) {
             return;

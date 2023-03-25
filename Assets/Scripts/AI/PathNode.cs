@@ -22,8 +22,8 @@ public class PathNode : MonoBehaviour {
     public PathNode(Vector2Int pos, bool isunwalkable) {
         position = pos;
         unwalkable = isunwalkable;
-        //Debug.DrawLine(new Vector2(position.x, position.y), new Vector2(position.x + 1.0f, position.y + 1.0f), Color.green, 0.3f);
-        //Debug.DrawLine(new Vector2(position.x, position.y + 1.0f), new Vector2(position.x + 1.0f, position.y), Color.green, 0.3f);
+        Debug.DrawLine(new Vector2(position.x, position.y), new Vector2(position.x + 1.0f, position.y + 1.0f), Color.green, 0.3f);
+        Debug.DrawLine(new Vector2(position.x, position.y + 1.0f), new Vector2(position.x + 1.0f, position.y), Color.green, 0.3f);
     }
 
     private int getTotalCost() {
@@ -31,8 +31,8 @@ public class PathNode : MonoBehaviour {
     }
     public void setClosed() {
         closed = true;
-        //Debug.DrawLine(new Vector2(position.x + 0.5f, position.y), new Vector2(position.x + 0.5f, position.y + 1.0f), Color.red, 0.3f);
-        //Debug.DrawLine(new Vector2(position.x, position.y + 0.5f), new Vector2(position.x + 1.0f, position.y + 0.5f), Color.red, 0.3f);
+        Debug.DrawLine(new Vector2(position.x + 0.5f, position.y), new Vector2(position.x + 0.5f, position.y + 1.0f), Color.red, 0.3f);
+        Debug.DrawLine(new Vector2(position.x, position.y + 0.5f), new Vector2(position.x + 1.0f, position.y + 0.5f), Color.red, 0.3f);
     }
     public bool isClosed() {
         return closed;
