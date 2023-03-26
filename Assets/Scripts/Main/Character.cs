@@ -34,6 +34,9 @@ public class Character : MonoBehaviour {
     
     private int higherPlane = 0; // if you are on a higher plane than the ground floor (gets bouses like range and view // can shoot through the wall collision)
 
+    private Coroutine hideHPRoutine;
+    private float closeTime = 10.0f; // time for hp to hide after not taking damage
+
     private Character lastHitCharacter;
 
     void Start() {
@@ -254,8 +257,10 @@ public class Character : MonoBehaviour {
         return userStats.getSpeed();
     }
     public void updateHpSlider() {
-        if (hpUI)
+        if (hpUI) {
             hpUI.updateSlider(hp, userStats.getMaxHp(baseMaxHp));
+            showHealthbar();
+        }
         if (!isPlayer()) {
             if (Knowledge.tools)
             Knowledge.tools.updateHealth();
@@ -362,7 +367,16 @@ public class Character : MonoBehaviour {
         }
         //REMOVE EFFECT FROM Player.activeEffects[] AND DELETE EFFECT
     }
-    
+    // shows but sets/resets a timer to close after x seconds
+    private void showHealthbar() {
+        if (hideHPRoutine != null) StopCoroutine(hideHPRoutine);
+        hideHPRoutine = StartCoroutine("hideHealthbar");
+    }
+    private IEnumerator hideHealthbar() {
+        hpUI.gameObject.SetActive(true);
+        yield return new WaitForSeconds(closeTime);
+        hpUI.gameObject.SetActive(false);
+    }
 
     public void addEffect(string eType, int eTier, GameObject caster) {
         Effect oldEffect = null;

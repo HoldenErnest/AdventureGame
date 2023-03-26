@@ -243,10 +243,10 @@ public class AIController : Controller {
         }
     }
     private bool reachedTarget() { // returns true when the user is at(close enough) to the target position.
-        return withinRadiusTarget(0.2f);
+        return withinRadiusTarget(0.3f);
     }
     private bool reachedVector(Vector2 v) { // returns true when the user is at(close enough) to the target position.
-        return withinRadiusOfVector(v, 0.2f);
+        return withinRadiusOfVector(v, 0.3f);
     }
     private bool withinRadiusTarget(float maxDistance) { // returns if the user is within a specified radius of the target position.
         return withinRadiusOfVector(targetPos, maxDistance);

@@ -104,7 +104,7 @@ public class CharacterUI : MonoBehaviour {
     private void setStat(int stat, int points) { // changes the specified stat in the statsText array, how many points should it be set to
         statsText[stat].text = points.ToString();
 
-        statsText[stat].color = getColorFromPoints(points);
+        //statsText[stat].color = getColorFromPoints(points);
     }
 
     // 0 - NOTHING, 1 - str/con, 2 - int, 3 - dex/spd
@@ -128,6 +128,8 @@ public class CharacterUI : MonoBehaviour {
             mostStat = stat;
         }
     }
+
+    // get a specific color for how many points the user invested -- fun in theory, but in practice really crowded
     private Color getColorFromPoints(int points) {
         //set stat color
         float r = 1.0f, g = 1.0f, b = 1.0f;
