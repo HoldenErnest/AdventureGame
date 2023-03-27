@@ -20125,7 +20125,7 @@ GameObject:
   - component: {fileID: 1127738202}
   m_Layer: 3
   m_Name: CustomWalls
-  m_TagString: Untagged
+  m_TagString: collidable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20501,7 +20501,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowedItterations: 100
-  gridDiameter: 21
+  gridDiameter: 81
+  thePath: []
 --- !u!1 &1169913869
 GameObject:
   m_ObjectHideFlags: 0
