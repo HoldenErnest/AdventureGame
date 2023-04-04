@@ -11,7 +11,7 @@ using System;
 [Serializable]
 public class Skill : MonoBehaviour {
     //each skill has an animation that it plays
-
+    private string path;
     public string skillName = "Unassigned Skill";
     public string damageType = "null"; // "movement", "summon", "physical, "magical"
     public int baseDamage;
@@ -241,4 +241,11 @@ public class Skill : MonoBehaviour {
         }
     }
 
+    // save path object came from
+    public string getPath() {
+        return path;
+    }
+    public void setPath(string p) {
+        path = p;
+    }
 }

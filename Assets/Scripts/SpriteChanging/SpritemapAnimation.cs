@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System;
 
 public class SpritemapAnimation : MonoBehaviour {
 
@@ -38,7 +39,11 @@ public class SpritemapAnimation : MonoBehaviour {
     public Sprite getSprite(int c, int i) {
         //Debug.Log($"new rect: {i}, {c} last: {lastI}, {lastC}"); //v 288 = texture.height
         Sprite sp = Sprite.Create(texture, new Rect(i*32, (288-32)-(c*32), 32, 32), new Vector2(0.5f, 0.5f), 32f);
-        sr.sprite = sp;
+        try {
+            sr.sprite = sp;
+        } catch (Exception e) {
+            //sagnas
+        }   
         lastC = catagory;
         lastI = index;
         return sp;

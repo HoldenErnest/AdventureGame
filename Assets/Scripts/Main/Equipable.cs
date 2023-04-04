@@ -56,14 +56,14 @@ public class Equipable : Item
         //randomize the new equip with a certain ammount of stats based on rarity (good and bad stats)
     }
 
-    public void unequip() { // called by Character.equip() if this equipable is equipped
+    public void unequip(Character c) { // called by Character.equip() if this equipable is equipped
         if (hasSkill())
-            Knowledge.inventory.unlearnSkill(grantSkill);
+            c.inventory.unlearnSkill(grantSkill);
         isEqppd = false;
     }
-    public void equip() {
+    public void equip(Character c) {
         if (hasSkill())
-            Knowledge.inventory.learnSkill(grantSkill);
+            c.inventory.learnSkill(grantSkill);
         isEqppd = true;
     }
 

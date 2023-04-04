@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
     public float dashSpeed = 1;
     public bool onWall = false;
 
-    void Start()
+    void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();

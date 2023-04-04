@@ -9,9 +9,10 @@ using UnityEngine.U2D.Animation;
 // Refrence this class when equipping any skill to a character
 public static class Knowledge {
 
-    public static Inventory inventory;
     public static Character player;
     public static Tools tools;
+
+    public static readonly string savesPath = "Saves/";
 
     public static readonly string skillsPath = "SavedObjects/Skills/";
     public static readonly string effectsPath = "SavedObjects/Effects/";
@@ -53,12 +54,22 @@ public static class Knowledge {
         string json = JsonUtility.ToJson(c);
         Debug.Log(json);
     }
-    public static void overwriteInventoryJson() {
-        string json = JsonUtility.ToJson(new Inventory());
-        Debug.Log(json);
+    public static string inventoryToJson(Inventory i) {
+        string json = JsonUtility.ToJson(i);
+        return json;//Debug.Log(json);
     }
 
     // all get___ methods take a file based on a specified path and name and generates it as an object of that type
+    public static Inventory getSave(string path) {
+        Inventory newInv = new Inventory();
+        try {
+            string json = Resources.Load<TextAsset>(savesPath + path).text;
+            JsonUtility.FromJsonOverwrite(json, newInv); // instead of rewriting a new Skill() try rewriting the skill currently in use
+        } catch {
+            Debug.Log("Save \"" + path + ".json\" not found.");
+        }
+        return newInv;
+    }
     public static Skill getSkill(string skillName) {
         Skill newSkill = new Skill();
         try {
@@ -67,6 +78,7 @@ public static class Knowledge {
         } catch {
             Debug.Log("Skill \"" + skillName + ".json\" not found.");
         }
+        newSkill.setPath(skillsPath + skillName);
         return newSkill;
     }
     public static Quest getQuest(string questName) {
@@ -77,6 +89,7 @@ public static class Knowledge {
         } catch {
             Debug.Log("Quest \"" + questName + ".json\" not found.");
         }
+        newQuest.setPath(questsPath + questName);
         return newQuest;
     }
     public static Effect getEffect(string effectName, int effectTier) {
@@ -97,6 +110,7 @@ public static class Knowledge {
         } catch {
             Debug.Log("Equipable \"" + equipName + ".json\" not found.");
         }
+        newEquip.setPath(equipsPath + equipName);
         return newEquip;
     }
     public static Item getItem(string itemName) {
@@ -107,6 +121,7 @@ public static class Knowledge {
         } catch {
             Debug.Log("Item \"" + itemName + ".json\" not found.");
         }
+        newItem.setPath(itemsPath + itemName);
         return newItem;
     }
     // Returns a generic list of strings with methods

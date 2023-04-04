@@ -2,6 +2,6 @@
 "stats":{"constitution":0,"strength":8,"dexterity":9,"intelligence":10,"evasion":0,"speed":12,"armor":0,"xp":100,"poisonResist":0,"psychResist":0},
 "homePos":[-5.0,-5.0],
 "equipment":["red_shirt","red_cap"],
-"items":["apple","orange"],
+"items":["SavedObjects/Items/apple","SavedObjects/Items/orange"],
 "startingSkills":["magic"],
 "bodyTexture":"HumanMale","icon":""}

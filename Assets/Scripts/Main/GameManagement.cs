@@ -6,15 +6,24 @@ using UnityEngine;
 
 public class GameManagement : MonoBehaviour{
 
+    private int currentSave = 0; // CHANGE WITH EACH SAVE
+
     public void exitGame() {
         //saveGame();
         Application.Quit();
     }
     public void saveGame() {
+        PlayerLoader.overwrite(currentSave);
         // create more than one save? be able to load from operable saves?
     }
+    public void loadGame() { // load one of the 3 saves!
+        PlayerLoader.loadInventory(currentSave);
+    }
     public void openSettings() {
-
+        loadGame(); // TEMP REPLACEMENT
+    }
+    public int getCurrentSaveIndex() {
+        return currentSave;
     }
 
 }

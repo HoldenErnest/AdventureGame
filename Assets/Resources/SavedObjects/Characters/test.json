@@ -1,7 +1,0 @@
-{"id":0,"name":"Sum mon","title":"Player Summon","baseHealth":20,"team":0,
-"stats":{"constitution":5,"strength":1,"dexterity":2,"intelligence":3,"evasion":0,"speed":2,"armor":6,"xp":300,"poisonResist":0,"psychResist":0},
-"homePos":[-5.0,-5.0],
-"equipment":["green_shirt"],
-"items":["apple","orange"],
-"startingSkills":["magic"],
-"bodyTexture":"HumanMale","icon":""}

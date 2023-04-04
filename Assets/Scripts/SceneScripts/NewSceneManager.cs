@@ -8,18 +8,30 @@ using UnityEngine;
 public class NewSceneManager : MonoBehaviour {
 
     public GameObject genericCharacter;
+    public GameObject playerCharacter;
+    public GameObject statsUI; // empty gameobject encompasing the personal stats overlay (health and xp bars ect) FOR PLAYER ONLY!!!!!
+    public GameObject escUI;
+    public GameObject invUI;
 
     void Start() {
-        Knowledge.inventory = new Inventory();
+        loadPlayer();
         loadCharacters();
     }
 
     public void loadCharacters() {
         CharacterCreator a = Knowledge.getCharBlueprint("genericCharacter");
-        CharacterCreator b = Knowledge.getCharBlueprint("genericCharacter2");
-        a.createCharacterFrom(genericCharacter);
+        a.createCharacter();
         a.team = 1;
-        //a.createCharacterFrom(genericCharacter);
-        //b.createCharacterFrom(genericCharacter);
+    }
+    private void loadPlayer() {
+        int n = gameObject.GetComponent<GameManagement>().getCurrentSaveIndex();
+        
+        CharacterCreator playerBP = Knowledge.getCharBlueprint("player" + n); // << playercharacter instead (get playerCharacter save path)
+        Knowledge.player = playerBP.createPlayerFrom(playerCharacter, escUI, invUI, statsUI).GetComponent<Character>();
+        gameObject.GetComponent<CameraFollow>().playerPos = Knowledge.player.gameObject.transform;
+        Knowledge.tools = gameObject.GetComponent<Tools>();
+        
+        
+        PlayerLoader.loadInventory(n);
     }
 }

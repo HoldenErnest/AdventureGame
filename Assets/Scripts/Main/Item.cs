@@ -11,11 +11,18 @@ using System;
 
 [Serializable]
 public class Item : MonoBehaviour {
+    private string path; // path the object came from (put in as soon as it is taken from Knowledge.getItem())
     public string sid; // real item name, used to refrence the items icon
     public string itemName; // custom name
-    public int ammount;
+    public int ammount = 1;
 
     public virtual string ToString() {
         return "[" + sid + "]: " + itemName + ". amnt: " + ammount;
+    }
+    public string getPath() {
+        return path;
+    }
+    public void setPath(string p) {
+        path = p;
     }
 }

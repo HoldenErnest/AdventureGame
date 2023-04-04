@@ -47,14 +47,14 @@ public class InventoryUI : MonoBehaviour {
         removeAllCells();
         switch (currentMenu) { // depending on whatever menu is up change what the cells contain.
             case 0:
-                foreach (Item items in Knowledge.inventory.getAllItems()) {
+                foreach (Item items in Knowledge.player.inventory.getAllItems()) {
                     GameObject gm = newCell(items);
                     cells.Add(gm);
                     //gm.GetComponent<Button>().onClick.AddListener(() => setSelectedCell(gm));
                 }
                 break;
             case 1:
-                foreach (Quest quests in Knowledge.inventory.getAllQuests()) {
+                foreach (Quest quests in Knowledge.player.inventory.getAllQuests()) {
                     GameObject gm = newCell(quests);
                     cells.Add(gm);
 
@@ -69,10 +69,10 @@ public class InventoryUI : MonoBehaviour {
     private int getCellCount() { // populate new cells for all items in Inventory into the grid
         switch (currentMenu) { // depending on whatever menu is up change what the cells contain.
             case 0:
-                return Knowledge.inventory.getAllItems().Count;
+                return Knowledge.player.inventory.getAllItems().Count;
                 break;
             case 1:
-                return Knowledge.inventory.getAllQuests().Count;
+                return Knowledge.player.inventory.getAllQuests().Count;
                 break;
             default:
                 break;

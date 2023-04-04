@@ -1,3 +1,6 @@
+// Holden Ernest - 3/10/2023
+// This class takes UI inputs and converts them to a new characterCreator in which to save later
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -60,7 +63,7 @@ public class saveCharacter : MonoBehaviour
         //thisCharacter.description = descInput.text;
         thisCharacter.baseHealth = Int32.Parse(healthInput.text);
         thisCharacter.bodyTexture = bodyTexture.options[bodyTexture.value].text;
-        thisCharacter.items = listToArray(items.theList);
+        //thisCharacter.items = listToArray(items.theList);
         thisCharacter.equipment = listToArray(equips.theList);
         thisCharacter.startingSkills = listToArray(skills.theList);
 
@@ -79,7 +82,7 @@ public class saveCharacter : MonoBehaviour
         nameInput.text = thisCharacter.name;
         titleInput.text = thisCharacter.title;
         healthInput.text = "" + thisCharacter.baseHealth;
-        items.theList = ArrayToList(thisCharacter.items);
+        //items.theList = ArrayToItems(thisCharacter.items);
         equips.theList = ArrayToList(thisCharacter.equipment);
         skills.theList = ArrayToList(thisCharacter.startingSkills);
         //bodyTexture.value = bodyTexture.options.IndexOf(new TMP_Dropdown.OptionData() {text=thisCharacter.bodyTexture});

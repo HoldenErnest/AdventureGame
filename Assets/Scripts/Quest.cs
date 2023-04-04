@@ -6,6 +6,7 @@ using System;
 [Serializable]
 public class Quest {
 
+    private string path;
     public bool isComplete;
     public bool rewardsCollected;
     public string title;
@@ -73,6 +74,14 @@ public class Quest {
         items[itemsDone].updateCompletion(this, type, objective);
 
     }
+
+    // save path object came from
+    public string getPath() {
+        return path;
+    }
+    public void setPath(string p) {
+        path = p;
+    }
 }
 
 [Serializable]
@@ -126,16 +135,16 @@ public class QuestReward {
                 Knowledge.player.addXp(ammount);
                 break;
             case "item":
-                Knowledge.inventory.addItems(rewardName, ammount);
+                Knowledge.player.inventory.addItems(rewardName, ammount);
                 break;
             case "equip":
-                Knowledge.inventory.addEquips(rewardName, ammount);
+                Knowledge.player.inventory.addEquips(rewardName, ammount);
                 break;
             case "remove":
-                Knowledge.inventory.loseItems(rewardName, ammount);
+                Knowledge.player.inventory.loseItems(rewardName, ammount);
                 break;
             case "skill":
-                Knowledge.inventory.learnSkill(rewardName);
+                Knowledge.player.inventory.learnSkill(rewardName);
                 break;
         }
         Debug.Log("reward given from a quest(I asssume)");

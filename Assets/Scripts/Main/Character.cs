@@ -1,6 +1,8 @@
 //Holden Ernest -date close to project beginning-
 //A base for all characters, keeps track of stats and things
 
+// everything is loaded and saved to a seprate characterCreator class
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +11,10 @@ using System.IO;
 using UnityEditor;
 using UnityEngine.U2D.Animation;
 
-
 public class Character : MonoBehaviour {
-
+    private bool charIsPlayer = false;
     private Controller controls;
-    public Tools theTools; // TEMP -- initializing tools for Knowledge!!!!!
-    public GameObject statsUI; // empty gameobject encompasing the personal stats overlay (health and xp bars ect) FOR PLAYER ONLY!!!!!
+    private GameObject statsUI; // player only (current level and HP UI stuff)
     private CustomSlider hpUI;
     private CustomSlider xpUI;
     public Hotbar[] hotbarItems;
@@ -29,7 +29,9 @@ public class Character : MonoBehaviour {
     public int baseMaxHp = 100;
     public string bodyTexture;
     public Stats userStats = new Stats();
-    
+
+    public Inventory inventory = new Inventory(); // keep track of new obtained items, skills, and quests
+
     private int hp;
     
     private int higherPlane = 0; // if you are on a higher plane than the ground floor (gets bouses like range and view // can shoot through the wall collision)
@@ -39,52 +41,9 @@ public class Character : MonoBehaviour {
 
     private Character lastHitCharacter;
 
-    void Start() {
+    void Awake() {
         controls = GetComponent<Controller>();
-        
-
-        if (isPlayer()) {
-            updateAll();
-            userStats.speed = 10;
-            updateSpeed();
-            updateHotbarIcons();
-            Knowledge.player = this;
-            Knowledge.tools = theTools; // TEMP init for knowledge
-             // set this to the old saved inventory from xml
-            Knowledge.inventory.addItem("apple");
-            Knowledge.inventory.addItem("orange");
-            Knowledge.inventory.addItem("apple");
-            Knowledge.inventory.addItem("orange");
-            Knowledge.inventory.addEquip("pointed_stick");
-            Knowledge.inventory.addEquip("blue_pants");
-            Knowledge.inventory.addItem("orange");
-            Knowledge.inventory.addItem("orange");
-            Knowledge.inventory.addItem("apple");
-            Knowledge.inventory.addEquip("red_cap");
-            Knowledge.inventory.addItem("apple");
-            Knowledge.inventory.addItem("orange");
-            Knowledge.inventory.addItem("apple");
-            Knowledge.inventory.addEquip("red_shirt");
-            Knowledge.inventory.addEquip("green_shirt");
-            Knowledge.inventory.addEquip("grey_shirt");
-            Knowledge.inventory.addItem("apple");
-            Knowledge.inventory.addItem("apple");
-            Knowledge.inventory.addItem("apple");
-
-
-            Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");Knowledge.inventory.addQuest("intro");
-            Knowledge.inventory.addQuest("test1");
-            Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("hunter");Knowledge.inventory.addQuest("hunter");
-            //Knowledge.effectToJson(new Effect());
-            //Knowledge.skillToJson(new Skill());
-            //Knowledge.questToJson(new Quest());
-            //Knowledge.itemToJson(new Item());
-            //Knowledge.equipToJson(new Equipable());
-            //Knowledge.overwriteInventoryJson(); // LEGACY, characters and their items are stored in the same CharacterCreator JSON
-        }
     }
-
-
 
     public void createCharacter() { //create new texture from equips textures(if they have one)
         Texture2D tex = Knowledge.getBodyTexture(bodyTexture);
@@ -118,7 +77,15 @@ public class Character : MonoBehaviour {
         higherPlane = i;
     }
     public bool isPlayer() {
-        return gameObject.name.Equals("Player");
+        return charIsPlayer;
+    }
+    public void setPlayer() {
+        charIsPlayer = true;
+        updateAll();
+
+         // temp nonesense for OPness
+        userStats.speed = 10;
+        updateSpeed();
     }
     public float getHealthPercentage() {
         //Debug.Log("current HP: " + hp + " and max is " + userStats.getMaxHp(baseMaxHp));
@@ -149,6 +116,9 @@ public class Character : MonoBehaviour {
     }
     public void setLastHit (Character c) {
         lastHitCharacter = c;
+    }
+    public void setStatsUI (GameObject g) {
+        statsUI = g;
     }
     public float getAvgSkillDist() {
         float total = 0;
@@ -203,11 +173,9 @@ public class Character : MonoBehaviour {
         equipAll(es);
     }
     public void setItems(string[] i) {
-        foreach (string s in i) {
-            Debug.Log(s);
-            Debug.Log(Knowledge.inventory.inventory);
-            Knowledge.inventory.addItem(s);
-        }
+        if (!inventory)
+        inventory = new Inventory();
+        inventory.setInventory(i);
     }
     public void setStartingSkills(string[] s) { // max of 5 skills active
         if (s == null) return;
@@ -228,8 +196,10 @@ public class Character : MonoBehaviour {
         updateSpeed();
         setupUI();
         setStartSkills();
-
-        fullHealth();
+        if (isPlayer()) {
+            updateHotbarIcons();
+        }
+        fullHealth();   
         createCharacter();
     }
     private void updateSkillsUsers() { // once a skill is obtained set its user to it works properly
@@ -273,7 +243,7 @@ public class Character : MonoBehaviour {
         if (hp <= 0) {
             giveXpToLastHit();
             if (lastHitCharacter.isPlayer()) { // player killed this character.
-                Knowledge.inventory.updateAllQuests("kill", name);
+                inventory.updateAllQuests("kill", name);
             }
             Destroy(this.gameObject);
         }
@@ -301,6 +271,7 @@ public class Character : MonoBehaviour {
             updateXpSlider();
     }
     private void setStartSkills() { // setup your hotbar of skills based on inputed "startingSkills"
+        hotbarItems = new Hotbar[5];
         usingSkills = new Skill[5];
         for (int i = 0; i < startingSkills.Length; i++) {
             usingSkills[i] = Knowledge.getSkill(startingSkills[i]);
@@ -321,14 +292,14 @@ public class Character : MonoBehaviour {
             }
         }
         equips.Add(e);
-        e.equip();
+        e.equip(this);
         if (e.hasTexture()) createCharacter(); // if the equipped item had a model texture, reload the character texture asset.
     }
     public void unequip(Equipable e) {
         int rIndex = indexFromList(equips, e);
         if (rIndex != -1) {
             equips.RemoveAt(rIndex);
-            e.unequip();
+            e.unequip(this);
             if (e.hasTexture()) createCharacter();
         } else {
             Debug.Log("CANNOT FIND THIS OBJECT IN THE LIST?");
@@ -349,8 +320,13 @@ public class Character : MonoBehaviour {
     public IEnumerator skillCooldown(Skill s) {
         s.setReloading(true);
         //Debug.Log(this.gameObject.name + " is reloading " + s.skillName);
-        if (isPlayer())
-            hotbarItems[Controller.skillInUse].startReload(s.getReloadTime());
+        if (isPlayer()) {
+            try {
+                hotbarItems[Controller.skillInUse].startReload(s.getReloadTime());
+            } catch (Exception e) {
+                Debug.Log("hotbarItems not init: " + e);
+            }
+        }
         yield return new WaitForSeconds(s.getReloadTime());
         s.setReloading(false);
     }

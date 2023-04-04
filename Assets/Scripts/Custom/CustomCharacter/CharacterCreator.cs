@@ -46,7 +46,7 @@ public class CharacterCreator : MonoBehaviour {
         cTeam.setTeam(team);
         c.setBodyTex(bodyTexture);
         c.setEquips(equipment);
-        //c.setItems(items);  // << need a new inventory for this character
+        c.setItems(items);  // << need a new inventory for this character
         c.setStartingSkills(startingSkills);
         c.setCharIcon(icon);
 
@@ -72,11 +72,35 @@ public class CharacterCreator : MonoBehaviour {
         cTeam.setTeam(team);
         c.setBodyTex(bodyTexture);
         c.setEquips(equipment);
-        //c.setItems(items);  // << need a new inventory for this character
+        c.setItems(items);  // << need a new inventory for this character
         c.setStartingSkills(startingSkills);
         c.setCharIcon(icon);
 
         c.updateAll();
+
+        return character;
+    }
+    public GameObject createPlayerFrom(GameObject characterBase, GameObject escUI, GameObject invUI, GameObject statsUI) { // Create a PLAYER from the base character GameObject / model
+        GameObject character = Instantiate(characterBase);
+        Character c = character.GetComponent<Character>();
+        Team cTeam = character.GetComponent<Team>();
+        try {
+        c.setName(name);
+        c.setTitle(title);
+        c.setBaseHp(baseHealth);
+        c.setStats(stats);
+        cTeam.setTeam(team);
+        c.setBodyTex(bodyTexture);
+        c.setEquips(equipment);
+        c.setStartingSkills(startingSkills);
+        c.setCharIcon(icon);
+        character.GetComponent<Controller>().invUI = invUI;
+        character.GetComponent<Controller>().escUI = escUI;
+        c.setStatsUI(statsUI);
+        c.setPlayer(); // setplayer inherintly does updateAll()
+        } catch (Exception e) {
+            Debug.Log("PLAYER CANT BE CREATED: " + e);
+        }
 
         return character;
     }
