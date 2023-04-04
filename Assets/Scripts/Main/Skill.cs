@@ -203,6 +203,10 @@ public class Skill : MonoBehaviour {
         }
         return false;
     }
+    // returns if the skill should be null
+    public bool isEmpty() {
+        return skillName.Equals("Unknown Skill");
+    }
 
 
     //Math and things-----------------

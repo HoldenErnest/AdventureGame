@@ -128,7 +128,7 @@ public class Controller : MonoBehaviour
         }
 
         if (Input.GetMouseButton(0)) {
-            if (!GameObject.ReferenceEquals( user.getSkill(skillInUse), null)) { // use the selected skill
+            if (!user.getSkill(skillInUse).isEmpty()) { // use the selected skill
                 user.getSkill(skillInUse).updateTargetPosition(Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 8)));
                 user.getSkill(skillInUse).useSkill();
             }

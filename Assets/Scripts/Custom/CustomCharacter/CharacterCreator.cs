@@ -80,7 +80,7 @@ public class CharacterCreator : MonoBehaviour {
 
         return character;
     }
-    public GameObject createPlayerFrom(GameObject characterBase, GameObject escUI, GameObject invUI, GameObject statsUI) { // Create a PLAYER from the base character GameObject / model
+    public GameObject createPlayerFrom(GameObject characterBase, GameObject escUI, GameObject invUI, GameObject statsUI, Hotbar[] hotbars) { // Create a PLAYER from the base character GameObject / model
         GameObject character = Instantiate(characterBase);
         Character c = character.GetComponent<Character>();
         Team cTeam = character.GetComponent<Team>();
@@ -93,6 +93,7 @@ public class CharacterCreator : MonoBehaviour {
         c.setBodyTex(bodyTexture);
         c.setEquips(equipment);
         c.setStartingSkills(startingSkills);
+        c.setHotbar(hotbars);
         c.setCharIcon(icon);
         character.GetComponent<Controller>().invUI = invUI;
         character.GetComponent<Controller>().escUI = escUI;

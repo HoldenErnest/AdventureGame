@@ -222,7 +222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d10ee6245684514ba53a262d4d8cd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!1 &98256532
 GameObject:
   m_ObjectHideFlags: 0
@@ -3935,6 +3934,12 @@ MonoBehaviour:
   statsUI: {fileID: 1996637114}
   escUI: {fileID: 2111492862}
   invUI: {fileID: 1961877405}
+  hotbars:
+  - {fileID: 1916720672}
+  - {fileID: 85881597}
+  - {fileID: 818454016}
+  - {fileID: 828103669}
+  - {fileID: 1854278880}
 --- !u!114 &519420037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19209,7 +19214,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d10ee6245684514ba53a262d4d8cd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!213 &826563063
 Sprite:
   m_ObjectHideFlags: 0
@@ -19519,7 +19523,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d10ee6245684514ba53a262d4d8cd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!1 &844237015
 GameObject:
   m_ObjectHideFlags: 0
@@ -22710,7 +22713,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d10ee6245684514ba53a262d4d8cd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!1 &1877330400
 GameObject:
   m_ObjectHideFlags: 0
@@ -22765,7 +22767,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d10ee6245684514ba53a262d4d8cd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!1 &1916720669
 GameObject:
   m_ObjectHideFlags: 0
@@ -22865,7 +22866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d10ee6245684514ba53a262d4d8cd6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
 --- !u!213 &1948640855
 Sprite:
   m_ObjectHideFlags: 0

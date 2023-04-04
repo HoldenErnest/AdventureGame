@@ -61,7 +61,7 @@ public class Character : MonoBehaviour {
     public List<Equipable> getEquipables() { // return array of currently equiped items
         return equips;
     }
-    public Skill getSkill(int i) { // return array of currently equiped items
+    public Skill getSkill(int i) { // return skill that should be used
         return usingSkills[i];
     }
     public int getLevel() {
@@ -187,7 +187,10 @@ public class Character : MonoBehaviour {
         bodyTexture = s;
     }
     public void setCharIcon(string s) {
-        //set this characters icon
+        //TODO, set this characters icon
+    }
+    public void setHotbar(Hotbar[] h) {
+        hotbarItems = h;
     }
     //-----------------------------------Update values------------------------------
     // used when creating a new character, to initially update the passed values
@@ -210,14 +213,11 @@ public class Character : MonoBehaviour {
     }
     public void updateHotbarIcons() {
         for (int i = 0; i < usingSkills.Length; i++) {
-                Texture2D tex = null;
-                try {
-                    tex = Knowledge.getSkillIcon(usingSkills[i].skillName);
-                } catch {
-                    tex = Knowledge.getSkillIcon("noSkill");
-                }
-                hotbarItems[i].updateIcon(tex);
-            }
+            Texture2D tex = tex = Knowledge.getSkillIcon("noSkill");
+            if (!usingSkills[i].isEmpty())
+                tex = Knowledge.getSkillIcon(usingSkills[i].skillName);
+            hotbarItems[i].updateIcon(tex);
+        }
     }
     public void updateSpeed() {
         float val = userStats.getSpeed();
@@ -271,7 +271,6 @@ public class Character : MonoBehaviour {
             updateXpSlider();
     }
     private void setStartSkills() { // setup your hotbar of skills based on inputed "startingSkills"
-        hotbarItems = new Hotbar[5];
         usingSkills = new Skill[5];
         for (int i = 0; i < startingSkills.Length; i++) {
             usingSkills[i] = Knowledge.getSkill(startingSkills[i]);

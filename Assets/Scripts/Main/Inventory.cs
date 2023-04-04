@@ -72,7 +72,6 @@ public class Inventory : MonoBehaviour {
         foreach(string itm in i) {
             int delimit = itm.LastIndexOf('/') + 1;
             string file = itm.Substring(delimit, itm.Length - delimit);
-            Debug.Log("the thing is: " + itm.Substring(0,delimit));
             if (itm.Substring(0,delimit).Equals("SavedObjects/Items/")) // if the path says its in the Items/ folder
                 inventory.Add(Knowledge.getItem(file));
             else // its in the Equipables/ folder
@@ -85,7 +84,8 @@ public class Inventory : MonoBehaviour {
         if (q == null) return;
         activeQuests.Clear();
         foreach(string qst in q) {
-            string file = qst.Substring(qst.LastIndexOf('/')+1, qst.Length);
+            int delimit = qst.LastIndexOf('/')+1;
+            string file = qst.Substring(delimit, qst.Length - delimit);
             activeQuests.Add(Knowledge.getQuest(file));
         }
     }
@@ -93,7 +93,8 @@ public class Inventory : MonoBehaviour {
         if (s == null) return;
         learnedSkills.Clear();
         foreach(string skl in s) {
-            string file = skl.Substring(skl.LastIndexOf('/')+1, skl.Length);
+            int delimit = skl.LastIndexOf('/')+1;
+            string file = skl.Substring(delimit, skl.Length - delimit);
             learnedSkills.Add(Knowledge.getSkill(file));
         }
     }
