@@ -396,6 +396,46 @@ public class Character : MonoBehaviour {
         updateDeath();
     }
 
+    // converts this character to a CharacterCreator for saving purposes
+    public CharacterCreator toBlueprint() {
+        CharacterCreator cc = new CharacterCreator();
+        cc.name = name;
+        cc.title = title;
+        cc.baseHealth = baseMaxHp;
+        cc.team = gameObject.GetComponent<Team>().getTeam();
+        cc.stats = userStats;
+        cc.homePos = new float[2];
+        cc.homePos[0] = gameObject.transform.position.x;
+        cc.homePos[1] = gameObject.transform.position.y;
+        cc.equipment = equipsToString();
+        cc.items = new string[0]; //TODO SET ITEMS FOR NON-PLAYERS!!!!!
+        cc.startingSkills = usingSkillsToString();
+        cc.bodyTexture = bodyTexture;
+        //TODO cc.icon = new string for current icon 
+        return cc;
+    }
+    private string[] equipsToString() {
+        string[] eArr = new string[equips.Count];
+        for(int i = 0; i < equips.Count; i++) {
+            string file = equips[i].getPath();
+            int delimit = file.LastIndexOf('/') + 1;
+            file = file.Substring(delimit, file.Length - delimit);
+            eArr[i] = file;
+        }
+        return eArr;
+    }
+    private string[] usingSkillsToString() {
+        string[] eArr = new string[5];
+        for(int i = 0; i < usingSkills.Length; i++) {
+            if (usingSkills[i].isEmpty()) continue;
+            string file = usingSkills[i].getPath();
+            int delimit = file.LastIndexOf('/') + 1;
+            file = file.Substring(delimit, file.Length - delimit);
+            eArr[i] = file;
+        }
+        return eArr;
+    }
+
     /*
     public void addAllEquipStats() {
         foreach (Equipable e in equips) {

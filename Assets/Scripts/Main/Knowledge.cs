@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.U2D.Animation;
+using System.IO;
+using System;
 
 //A class strictly for remembering the combinations for skills, Effects, ect.
 // Refrence this class when equipping any skill to a character
@@ -12,7 +14,7 @@ public static class Knowledge {
     public static Character player;
     public static Tools tools;
 
-    public static readonly string savesPath = "Saves/";
+    public static readonly string savesPath = "/Saves/";
 
     public static readonly string skillsPath = "SavedObjects/Skills/";
     public static readonly string effectsPath = "SavedObjects/Effects/";
@@ -50,9 +52,9 @@ public static class Knowledge {
         string json = JsonUtility.ToJson(i);
         Debug.Log(json);
     }
-    public static void characterToJson(CharacterCreator c) {
+    public static string characterToJson(CharacterCreator c) {
         string json = JsonUtility.ToJson(c);
-        Debug.Log(json);
+        return json;
     }
     public static string inventoryToJson(Inventory i) {
         string json = JsonUtility.ToJson(i);
@@ -60,15 +62,23 @@ public static class Knowledge {
     }
 
     // all get___ methods take a file based on a specified path and name and generates it as an object of that type
-    public static Inventory getSave(string path) {
+    public static Inventory getInvSave(string path) {
         Inventory newInv = new Inventory();
         try {
-            string json = Resources.Load<TextAsset>(savesPath + path).text;
-            JsonUtility.FromJsonOverwrite(json, newInv); // instead of rewriting a new Skill() try rewriting the skill currently in use
-        } catch {
-            Debug.Log("Save \"" + path + ".json\" not found.");
+            JsonUtility.FromJsonOverwrite(File.ReadAllText(Application.persistentDataPath + savesPath + path + ".json"), newInv);
+        } catch (Exception e){
+            Debug.Log("Save \"" + path + ".json\" not found." + e);
         }
         return newInv;
+    }
+    public static CharacterCreator getPlayerSave(string path) {
+        CharacterCreator cc = new CharacterCreator();
+        try {
+            JsonUtility.FromJsonOverwrite(File.ReadAllText(Application.persistentDataPath + savesPath + path + ".json"), cc);
+        } catch (Exception e){
+            Debug.Log("Save \"" + path + ".json\" not found." + e);
+        }
+        return cc;
     }
     public static Skill getSkill(string skillName) {
         Skill newSkill = new Skill();

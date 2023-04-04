@@ -27,7 +27,7 @@ public class NewSceneManager : MonoBehaviour {
     private void loadPlayer() {
         int n = gameObject.GetComponent<GameManagement>().getCurrentSaveIndex();
         
-        CharacterCreator playerBP = Knowledge.getCharBlueprint("player" + n); // << playercharacter instead (get playerCharacter save path)
+        CharacterCreator playerBP = Knowledge.getPlayerSave("player" + n); // << playercharacter instead (get playerCharacter save path)
         Knowledge.player = playerBP.createPlayerFrom(playerCharacter, escUI, invUI, statsUI, hotbars).GetComponent<Character>();
         gameObject.GetComponent<CameraFollow>().playerPos = Knowledge.player.gameObject.transform;
         Knowledge.tools = gameObject.GetComponent<Tools>();

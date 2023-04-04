@@ -23716,6 +23716,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EscapeMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 5157865942575686842, guid: a802f22cd6639684592fe64771efcc48, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5157865942575686843, guid: a802f22cd6639684592fe64771efcc48, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

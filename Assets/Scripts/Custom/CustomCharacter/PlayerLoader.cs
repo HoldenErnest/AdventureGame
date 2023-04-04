@@ -11,14 +11,16 @@ public static class PlayerLoader {
 
     // set the players inventory
     public static void loadInventory(int n) {
-        Knowledge.player.inventory = Knowledge.getSave("save" + n);
+        Knowledge.player.inventory = Knowledge.getInvSave("save" + n);
         Knowledge.player.inventory.loadLists();
     }
 
     public static void overwrite(int n) {
-        string file = @$"{getPath()}save{n}.json"; // something/Saves/save0.json
+        string path = @$"{getPath()}"; // something/Saves/save0.json
         string content = Knowledge.player.inventory.overwriteLists();
-        File.WriteAllText(file, content);
+        File.WriteAllText($"{path}save{n}.json", content);
+        string cc = Knowledge.characterToJson(Knowledge.player.toBlueprint());
+        File.WriteAllText($"{path}player{n}.json", cc);
         
         // save to someplace/PlayerSave/inventory.json
         // Player characterCreator is saved to someplace/PlayerSave/player.json

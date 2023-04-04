@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Team : MonoBehaviour
 {
-    public static string[] teams = {"player", "enemy"};
+    public static readonly string[] teams = {"player", "enemy"};
     public int team;
 
     public int getTeam() {

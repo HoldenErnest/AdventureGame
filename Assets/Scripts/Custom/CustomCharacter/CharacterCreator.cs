@@ -95,8 +95,10 @@ public class CharacterCreator : MonoBehaviour {
         c.setStartingSkills(startingSkills);
         c.setHotbar(hotbars);
         c.setCharIcon(icon);
-        character.GetComponent<Controller>().invUI = invUI;
-        character.GetComponent<Controller>().escUI = escUI;
+        Controller charCont = character.GetComponent<Controller>();
+        charCont.invUI = invUI;
+        charCont.escUI = escUI;
+        charCont.gameObject.transform.position = new Vector2(homePos[0], homePos[1]); // sets the players transform to the home position
         c.setStatsUI(statsUI);
         c.setPlayer(); // setplayer inherintly does updateAll()
         } catch (Exception e) {
