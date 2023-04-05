@@ -16,7 +16,7 @@ public static class Knowledge {
 
     // Any files from Assets/Resources/{path} are only used for new instance files
     // new files are saved to Application.persistentDataPath/{path}
-    private static string savesPath = $"/Saves/save0/";
+    private static string savesPath = $"{Application.persistentDataPath}/Saves/save0/";
     public static readonly string playerPath = "Player/";
     public static readonly string skillsPath = "SavedObjects/Skills/";
     public static readonly string effectsPath = "SavedObjects/Effects/";
@@ -82,7 +82,6 @@ public static class Knowledge {
     public static CharacterCreator getPlayerSave() {
         CharacterCreator cc = new CharacterCreator();
         string theFile = playerPath + "player";
-        Debug.Log(savesPath + theFile + " is the path");
         try {
             if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
                 JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), cc);
@@ -97,31 +96,46 @@ public static class Knowledge {
     }
     public static Skill getSkill(string skillName) {
         Skill newSkill = new Skill();
+        string theFile = skillsPath + skillName;
         try {
-            string json = Resources.Load<TextAsset>(skillsPath + skillName).text;
-            JsonUtility.FromJsonOverwrite(json, newSkill); // instead of rewriting a new Skill() try rewriting the skill currently in use
+            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
+                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newSkill);
+            } else {
+                string json = Resources.Load<TextAsset>(theFile).text;
+                JsonUtility.FromJsonOverwrite(json, newSkill); // instead of rewriting a new Skill() try rewriting the skill currently in use
+            }
         } catch {
             Debug.Log("Skill \"" + skillName + ".json\" not found.");
         }
-        newSkill.setPath(skillsPath + skillName);
+        newSkill.setPath(theFile);
         return newSkill;
     }
     public static Quest getQuest(string questName) {
         Quest newQuest = new Quest();
+        string theFile = questsPath + questName;
         try {
-            string json = Resources.Load<TextAsset>(questsPath + questName).text;
-            JsonUtility.FromJsonOverwrite(json, newQuest);
+            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
+                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newQuest);
+            } else {
+                string json = Resources.Load<TextAsset>(theFile).text;
+                JsonUtility.FromJsonOverwrite(json, newQuest); // instead of rewriting a new Skill() try rewriting the skill currently in use
+            }
         } catch {
             Debug.Log("Quest \"" + questName + ".json\" not found.");
         }
-        newQuest.setPath(questsPath + questName);
+        newQuest.setPath(theFile);
         return newQuest;
     }
     public static Effect getEffect(string effectName, int effectTier) {
         Effect newEffect = new Effect();
+        string theFile = effectsPath + effectName + effectTier;
         try {
-            string json = Resources.Load<TextAsset>(effectsPath + effectName + effectTier).text;
-            JsonUtility.FromJsonOverwrite(json, newEffect);
+            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
+                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newEffect);
+            } else {
+                string json = Resources.Load<TextAsset>(theFile).text;
+                JsonUtility.FromJsonOverwrite(json, newEffect); // instead of rewriting a new Skill() try rewriting the skill currently in use
+            }
         } catch {
             Debug.Log("Effect \"" + effectName + effectTier + ".json\" not found.");
         }
@@ -129,24 +143,34 @@ public static class Knowledge {
     }
     public static Equipable getEquipable(string equipName) {
         Equipable newEquip = new Equipable();
+        string theFile = equipsPath + equipName;
         try {
-            string json = Resources.Load<TextAsset>(equipsPath + equipName).text;
-            JsonUtility.FromJsonOverwrite(json, newEquip);
+            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
+                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newEquip);
+            } else {
+                string json = Resources.Load<TextAsset>(theFile).text;
+                JsonUtility.FromJsonOverwrite(json, newEquip); // instead of rewriting a new Skill() try rewriting the skill currently in use
+            }
         } catch {
             Debug.Log("Equipable \"" + equipName + ".json\" not found.");
         }
-        newEquip.setPath(equipsPath + equipName);
+        newEquip.setPath(theFile);
         return newEquip;
     }
     public static Item getItem(string itemName) {
         Item newItem = new Item();
+        string theFile = itemsPath + itemName;
         try {
-            string json = Resources.Load<TextAsset>(itemsPath + itemName).text;
-            JsonUtility.FromJsonOverwrite(json, newItem);
+            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
+                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newItem);
+            } else {
+                string json = Resources.Load<TextAsset>(theFile).text;
+                JsonUtility.FromJsonOverwrite(json, newItem); // instead of rewriting a new Skill() try rewriting the skill currently in use
+            }
         } catch {
             Debug.Log("Item \"" + itemName + ".json\" not found.");
         }
-        newItem.setPath(itemsPath + itemName);
+        newItem.setPath(theFile);
         return newItem;
     }
     // Returns a generic list of strings with methods
@@ -163,12 +187,18 @@ public static class Knowledge {
     // Returns the blueprint for a new character, call createCharacterFrom() to make a new character.
     public static CharacterCreator getCharBlueprint(string charName) {
         CharacterCreator character = new CharacterCreator();
+        string theFile = charactersPath + charName;
         try {
-            string json = Resources.Load<TextAsset>(charactersPath + charName).text;
-            JsonUtility.FromJsonOverwrite(json, character);
+            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
+                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), character);
+            } else {
+                string json = Resources.Load<TextAsset>(theFile).text;
+                JsonUtility.FromJsonOverwrite(json, character); // instead of rewriting a new Skill() try rewriting the skill currently in use
+            }
         } catch {
             Debug.Log("Character \"" + charName + ".json\" not found.");
         }
+        character.setPath(charName);
         return character;
     }
     public static Texture2D getEquipTexture(string s) {

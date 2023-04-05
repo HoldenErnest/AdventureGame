@@ -12,6 +12,7 @@ using UnityEditor;
 using UnityEngine.U2D.Animation;
 
 public class Character : MonoBehaviour {
+    private string path;
     private bool charIsPlayer = false;
     private Controller controls;
     private GameObject statsUI; // player only (current level and HP UI stuff)
@@ -456,4 +457,12 @@ public class Character : MonoBehaviour {
         }
     }
     */
+
+    // so it can be overwritten later
+    public string getPath() {
+        return path;
+    }
+    public void setPath(string p) {
+        path = p;
+    }
 }

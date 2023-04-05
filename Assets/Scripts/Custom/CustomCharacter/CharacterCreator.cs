@@ -9,6 +9,7 @@ using System;
 [Serializable]
 public class CharacterCreator : MonoBehaviour {
 
+    private string path;
     public int id; // specified to tell unique characters
     public string name; // character name
     public string title; // character name
@@ -28,7 +29,7 @@ public class CharacterCreator : MonoBehaviour {
     public CharacterCreator() {
         
     }
-    public GameObject createCharacter() { // Create a character from the base character GameObject / model
+    public Character createCharacter() { // Create a character from the base character GameObject / model
         GameObject character = Instantiate(Knowledge.getCharacterPrefab("genericCharacter"), new Vector2(homePos[0], homePos[1]), Quaternion.identity);
         Character c = character.GetComponent<Character>();
         if (!c.isPlayer()) {
@@ -39,6 +40,7 @@ public class CharacterCreator : MonoBehaviour {
         }
         Team cTeam = character.GetComponent<Team>();
 
+        c.setPath(path);
         c.setName(name);
         c.setTitle(title);
         c.setBaseHp(baseHealth);
@@ -52,9 +54,9 @@ public class CharacterCreator : MonoBehaviour {
 
         c.updateAll();
 
-        return character;
+        return c;
     }
-    public GameObject createCharacterFrom(GameObject characterBase) { // Create a character from the base character GameObject / model
+    public Character createCharacterFrom(GameObject characterBase) { // Create a character from the base character GameObject / model
         GameObject character = Instantiate(characterBase);
         Character c = character.GetComponent<Character>();
         if (!c.isPlayer()) {
@@ -64,7 +66,8 @@ public class CharacterCreator : MonoBehaviour {
             } else control.homePosition = new Vector2(0,0);
         }
         Team cTeam = character.GetComponent<Team>();
-
+        
+        c.setPath(path);
         c.setName(name);
         c.setTitle(title);
         c.setBaseHp(baseHealth);
@@ -78,7 +81,7 @@ public class CharacterCreator : MonoBehaviour {
 
         c.updateAll();
 
-        return character;
+        return c;
     }
     public GameObject createPlayerFrom(GameObject characterBase, GameObject escUI, GameObject invUI, GameObject statsUI, Hotbar[] hotbars) { // Create a PLAYER from the base character GameObject / model
         GameObject character = Instantiate(characterBase);
@@ -149,5 +152,12 @@ public class CharacterCreator : MonoBehaviour {
                 stats.speed = points;
                 break;
         }
+    }
+
+    public string getPath() {
+        return path;
+    }
+    public void setPath(string p) {
+        path = p;
     }
 }

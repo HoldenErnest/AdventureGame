@@ -17,14 +17,15 @@ public class NewSceneManager : MonoBehaviour {
     void Start() {
         loadInit();
         loadPlayer();
-        loadCharacters();
+        loadCharacters(); // LOAD ALL NPCS
     }
     private void loadInit() {
+        Knowledge.tools = gameObject.GetComponent<Tools>();
         Knowledge.setSaveNumber(0);
     }
     public void loadCharacters() {
         CharacterCreator a = Knowledge.getCharBlueprint("genericCharacter");
-        a.createCharacter();
+        GameSaver.npcs.Add(a.createCharacter());
         a.team = 1;
     }
     private void loadPlayer() {
@@ -33,8 +34,8 @@ public class NewSceneManager : MonoBehaviour {
         CharacterCreator playerBP = Knowledge.getPlayerSave(); // << playercharacter instead (get playerCharacter save path)
         Knowledge.player = playerBP.createPlayerFrom(playerCharacter, escUI, invUI, statsUI, hotbars).GetComponent<Character>();
         gameObject.GetComponent<CameraFollow>().playerPos = Knowledge.player.gameObject.transform;
-        Knowledge.tools = gameObject.GetComponent<Tools>();
         
-        PlayerLoader.loadInventory();
+        
+        GameSaver.loadInventory();
     }
 }

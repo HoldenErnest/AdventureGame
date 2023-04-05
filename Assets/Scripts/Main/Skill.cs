@@ -126,7 +126,7 @@ public class Skill : MonoBehaviour {
         if (damageType == "summon") {
             CharacterCreator cc = Knowledge.getCharBlueprint(prefabName);
             cc.setSpawn(target);
-            visual = cc.createCharacter();
+            visual = cc.createCharacter().gameObject;
         } else {
             visual = Instantiate(Knowledge.getSkillPrefab(prefabName), target, Quaternion.identity);
         }
