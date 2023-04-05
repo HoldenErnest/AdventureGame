@@ -1,0 +1,7 @@
+{"id":0,"name":"Player","title":"Uneducated","baseHealth":50,"team":0,
+"stats":{"constitution":1,"strength":1,"dexterity":1,"intelligence":1,"evasion":0,"speed":1,"armor":0,"xp":10000,"poisonResist":0,"psychResist":0},
+"homePos":[0.0,0.0],
+"equipment":["green_shirt","red_cap"],
+"items":["SavedObjects/Items/apple","SavedObjects/Items/orange","SavedObjects/Items/apple","SavedObjects/Items/orange"],
+"startingSkills":["magic"],
+"bodyTexture":"HumanMale","icon":""}

@@ -1,7 +1,0 @@
-{"id":0,"name":"Player","title":"The Bun","baseHealth":502,"team":0,
-"stats":{"constitution":18,"strength":19,"dexterity":20,"intelligence":21,"evasion":0,"speed":23,"armor":0,"xp":10000,"poisonResist":0,"psychResist":0},
-"homePos":[-5.0,-5.0],
-"equipment":["green_shirt","red_cap"],
-"items":["SavedObjects/Items/apple","SavedObjects/Items/orange","SavedObjects/Items/apple","SavedObjects/Items/orange"],
-"startingSkills":["magic"],
-"bodyTexture":"HumanMale","icon":""}
