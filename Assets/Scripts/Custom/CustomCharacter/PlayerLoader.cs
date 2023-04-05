@@ -7,26 +7,30 @@ using System.IO;
 
 public static class PlayerLoader {
 
-    private static readonly string savePath = "/Saves/";
-
     // set the players inventory
-    public static void loadInventory(int n) {
-        Knowledge.player.inventory = Knowledge.getInvSave("save" + n);
+    public static void loadInventory() {
+        Knowledge.player.inventory = Knowledge.getInvSave();
         Knowledge.player.inventory.loadLists();
     }
 
-    public static void overwrite(int n) {
-        string path = @$"{getPath()}"; // something/Saves/save0.json
+    public static void overwrite() {
+        string path = Knowledge.getSavePath() + Knowledge.playerPath; // something/Saves/save0/Player/player.json
         string content = Knowledge.player.inventory.overwriteLists();
-        File.WriteAllText($"{path}save{n}.json", content);
+        saveToFile(path, "inventory.json", content);
         string cc = Knowledge.characterToJson(Knowledge.player.toBlueprint());
-        File.WriteAllText($"{path}player{n}.json", cc);
+        saveToFile(path, "player.json", cc);
         
         // save to someplace/PlayerSave/inventory.json
         // Player characterCreator is saved to someplace/PlayerSave/player.json
     }
 
-    private static string getPath() {
-        return Application.persistentDataPath + savePath;
+    private static void saveToFile(string path, string file, string content) {
+        if (!File.Exists(path + file)) { // make sure it exists before creating it
+            Directory.CreateDirectory(path);
+            var myFile = File.Create(path + file);
+            myFile.Close();
+        }
+
+        File.WriteAllText(path + file, content);
     }
 }

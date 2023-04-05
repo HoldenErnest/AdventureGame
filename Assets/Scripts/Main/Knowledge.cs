@@ -14,8 +14,10 @@ public static class Knowledge {
     public static Character player;
     public static Tools tools;
 
-    public static readonly string savesPath = "/Saves/";
-
+    // Any files from Assets/Resources/{path} are only used for new instance files
+    // new files are saved to Application.persistentDataPath/{path}
+    private static string savesPath = $"/Saves/save0/";
+    public static readonly string playerPath = "Player/";
     public static readonly string skillsPath = "SavedObjects/Skills/";
     public static readonly string effectsPath = "SavedObjects/Effects/";
     public static readonly string itemsPath = "SavedObjects/Items/";
@@ -62,21 +64,34 @@ public static class Knowledge {
     }
 
     // all get___ methods take a file based on a specified path and name and generates it as an object of that type
-    public static Inventory getInvSave(string path) {
+    public static Inventory getInvSave() {
         Inventory newInv = new Inventory();
+        string theFile = playerPath + "inventory";
         try {
-            JsonUtility.FromJsonOverwrite(File.ReadAllText(Application.persistentDataPath + savesPath + path + ".json"), newInv);
+            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
+                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newInv);
+            } else {
+                string json = Resources.Load<TextAsset>(theFile).text;
+                JsonUtility.FromJsonOverwrite(json, newInv);
+            }
         } catch (Exception e){
-            Debug.Log("Save \"" + path + ".json\" not found." + e);
+            Debug.Log("Save \"inventory.json\" not found." + e);
         }
         return newInv;
     }
-    public static CharacterCreator getPlayerSave(string path) {
+    public static CharacterCreator getPlayerSave() {
         CharacterCreator cc = new CharacterCreator();
+        string theFile = playerPath + "player";
+        Debug.Log(savesPath + theFile + " is the path");
         try {
-            JsonUtility.FromJsonOverwrite(File.ReadAllText(Application.persistentDataPath + savesPath + path + ".json"), cc);
+            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
+                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), cc);
+            } else {
+                string json = Resources.Load<TextAsset>(theFile).text;
+                JsonUtility.FromJsonOverwrite(json, cc);
+            }
         } catch (Exception e){
-            Debug.Log("Save \"" + path + ".json\" not found." + e);
+            Debug.Log("Save \"player.json\" not found." + e);
         }
         return cc;
     }
@@ -216,4 +231,14 @@ public static class Knowledge {
         return null;
         
     }
+
+
+    // Functions to change Knowledge variables
+    public static void setSaveNumber (int saveNum) {
+        savesPath = $"{Application.persistentDataPath}/Saves/save{saveNum}/";
+    }
+    public static string getSavePath () {
+        return savesPath;
+    }
+
 }

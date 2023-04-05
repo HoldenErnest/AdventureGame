@@ -13,17 +13,20 @@ public class GameManagement : MonoBehaviour{
         Application.Quit();
     }
     public void saveGame() {
-        PlayerLoader.overwrite(currentSave);
+        PlayerLoader.overwrite();
         // create more than one save? be able to load from operable saves?
     }
     public void loadGame() { // load one of the 3 saves!
-        PlayerLoader.loadInventory(currentSave);
+        PlayerLoader.loadInventory();
     }
     public void openSettings() {
         loadGame(); // TEMP REPLACEMENT
     }
     public int getCurrentSaveIndex() {
         return currentSave;
+    }
+    public void setCurrentSave(int n) {
+        currentSave = n;
     }
 
 }
