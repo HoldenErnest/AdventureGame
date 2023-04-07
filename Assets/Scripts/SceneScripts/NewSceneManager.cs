@@ -34,6 +34,7 @@ public class NewSceneManager : MonoBehaviour {
         CharacterCreator playerBP = Knowledge.getPlayerSave(); // << playercharacter instead (get playerCharacter save path)
         Knowledge.player = playerBP.createPlayerFrom(playerCharacter, escUI, invUI, statsUI, hotbars).GetComponent<Character>();
         gameObject.GetComponent<CameraFollow>().playerPos = Knowledge.player.gameObject.transform;
+        gameObject.transform.position = new Vector3(Knowledge.player.gameObject.transform.position.x,Knowledge.player.gameObject.transform.position.y, -10);
         
         
         GameSaver.loadInventory();
