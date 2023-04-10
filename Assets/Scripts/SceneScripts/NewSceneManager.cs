@@ -21,7 +21,7 @@ public class NewSceneManager : MonoBehaviour {
     }
     private void loadInit() {
         Knowledge.tools = gameObject.GetComponent<Tools>();
-        //Knowledge.setSaveNumber(0);
+        Knowledge.questToJson(new Quest());
     }
     public void loadCharacters() {
         CharacterCreator a = Knowledge.getCharBlueprint("genericCharacter");

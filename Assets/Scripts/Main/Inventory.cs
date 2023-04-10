@@ -16,7 +16,7 @@ public class Inventory : MonoBehaviour {
     // saved arrays (DO NO REF, only used for PlayerLoader) >> paths for the savedObjects
     public string[] items;
     public string[] skills;
-    public string[] quests;
+    public QuestSave[] quests;
 
     // these lists are actually called apon.
     private List<Item> inventory = new List<Item>(); // list of items
@@ -80,13 +80,11 @@ public class Inventory : MonoBehaviour {
     }
 
     // for player only--------
-    public void setQuests(string[] q) {
+    public void setQuests(QuestSave[] q) {
         if (q == null) return;
         activeQuests.Clear();
-        foreach(string qst in q) {
-            int delimit = qst.LastIndexOf('/')+1;
-            string file = qst.Substring(delimit, qst.Length - delimit);
-            activeQuests.Add(Knowledge.getQuest(file));
+        foreach(QuestSave qst in q) {
+            activeQuests.Add(qst.toQuest());
         }
     }
     public void setLearnedSkills(string[] s) {
@@ -107,10 +105,10 @@ public class Inventory : MonoBehaviour {
         }
         return a;
     }
-    private string[] listToArrayQ(List<Quest> b) {
-        string[] a = new string[b.Count];
+    private QuestSave[] listToArrayQ(List<Quest> b) {
+        QuestSave[] a = new QuestSave[b.Count];
         for (int i = 0; i < b.Count; i++) {
-            a[i] = b[i].getPath();
+            a[i] = b[i].toSave();
         }
         return a;
     }

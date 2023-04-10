@@ -6,7 +6,7 @@ using System;
 [Serializable]
 public class Quest {
 
-    private string path;
+    private string file; // file this was saved under
     public bool isComplete;
     public bool rewardsCollected;
     public string title;
@@ -76,12 +76,31 @@ public class Quest {
     }
 
     // save path object came from
-    public string getPath() {
-        return path;
+    public string getFile() {
+        return file;
     }
-    public void setPath(string p) {
-        path = p;
+    public void setFile(string f) {
+        file = f;
     }
+
+    public QuestSave toSave() {
+        QuestSave qs = new QuestSave();
+        qs.file = file;
+        qs.gotReward = rewardsCollected;
+        qs.itemsDone = getCompleted();
+        return qs;
+    }
+
+    // returns how many quest Items are complete
+    private int getCompleted() {
+        int total = 0;
+        foreach (QuestItem qi in items) {
+            if (!qi.isComplete) return total;
+            total++;
+        }
+        return total;
+    }
+
 }
 
 [Serializable]

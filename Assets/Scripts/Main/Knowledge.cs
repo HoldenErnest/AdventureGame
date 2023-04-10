@@ -125,7 +125,7 @@ public static class Knowledge {
         } catch {
             Debug.Log("Quest \"" + questName + ".json\" not found.");
         }
-        newQuest.setPath(theFile);
+        newQuest.setFile(questName);
         return newQuest;
     }
     public static Effect getEffect(string effectName, int effectTier) {
