@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class GameManagement : MonoBehaviour{
 
-    private int currentSave = 0; // CHANGE WITH EACH SAVE
-
     public void exitGame() {
         //saveGame();
         Application.Quit();
@@ -23,12 +21,6 @@ public class GameManagement : MonoBehaviour{
     }
     public void openSettings() {
 
-    }
-    public int getCurrentSaveIndex() {
-        return currentSave;
-    }
-    public void setCurrentSave(int n) {
-        currentSave = n;
     }
 
 }

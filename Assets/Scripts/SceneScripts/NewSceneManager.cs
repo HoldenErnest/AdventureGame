@@ -21,7 +21,7 @@ public class NewSceneManager : MonoBehaviour {
     }
     private void loadInit() {
         Knowledge.tools = gameObject.GetComponent<Tools>();
-        Knowledge.setSaveNumber(0);
+        //Knowledge.setSaveNumber(0);
     }
     public void loadCharacters() {
         CharacterCreator a = Knowledge.getCharBlueprint("genericCharacter");
@@ -29,7 +29,6 @@ public class NewSceneManager : MonoBehaviour {
         a.team = 1;
     }
     private void loadPlayer() {
-        int n = gameObject.GetComponent<GameManagement>().getCurrentSaveIndex();
         
         CharacterCreator playerBP = Knowledge.getPlayerSave(); // << playercharacter instead (get playerCharacter save path)
         Knowledge.player = playerBP.createPlayerFrom(playerCharacter, escUI, invUI, statsUI, hotbars).GetComponent<Character>();

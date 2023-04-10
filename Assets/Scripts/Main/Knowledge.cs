@@ -10,7 +10,7 @@ using System;
 //A class strictly for remembering the combinations for skills, Effects, ect.
 // Refrence this class when equipping any skill to a character
 public static class Knowledge {
-
+    
     public static Character player;
     public static Tools tools;
 
@@ -32,6 +32,8 @@ public static class Knowledge {
     public static readonly string skillsPrefabPath = "Prefabs/Skills/";
     public static readonly string charsPrefabPath = "Prefabs/Characters/";
     public static readonly string questsPath = "Quests/";
+
+    private static int currentSave = 0;
 
     //any __ToJson method will take an object and print it in json format
     public static void skillToJson(Skill s) {
@@ -265,6 +267,7 @@ public static class Knowledge {
 
     // Functions to change Knowledge variables
     public static void setSaveNumber (int saveNum) {
+        currentSave = saveNum;
         savesPath = $"{Application.persistentDataPath}/Saves/save{saveNum}/";
     }
     public static string getSavePath () {

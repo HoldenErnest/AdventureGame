@@ -16,13 +16,26 @@ public class SceneLoader : MonoBehaviour {
 
     }
 
-    public void loadScene() {
+    public void loadGame() {
         SceneManager.LoadScene("GameScene");
     }
-public void loadSceneLoad() {
+    public void loadSceneLoad() {
         SceneManager.LoadScene("LoadScene");
     }
     public void newScene() {
         
+    }
+
+    public void setGame0() {
+        Knowledge.setSaveNumber(0);
+        loadGame();
+    }
+    public void setGame1() {
+        Knowledge.setSaveNumber(1);
+        loadGame();
+    }
+    public void setGame2() {
+        Knowledge.setSaveNumber(2);
+        loadGame();
     }
 }
