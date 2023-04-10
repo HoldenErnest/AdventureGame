@@ -184,6 +184,9 @@ public class Character : MonoBehaviour {
             startingSkills[i] = s[i];
         }
     }
+    public void setDescription(string s) {
+        description = s ?? "Unknown Description";
+    }
     public void setBodyTex(string s) {
         bodyTexture = s;
     }

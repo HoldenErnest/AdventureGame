@@ -2024,8 +2024,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0014953613}
-  m_SizeDelta: {x: -257, y: -144.5}
+  m_AnchoredPosition: {x: 24, y: 0}
+  m_SizeDelta: {x: -650.8642, y: -255.3976}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8493407225711681602
 MonoBehaviour:
@@ -2041,6 +2041,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 8493407225228954120}
   titleText: {fileID: 8493407225152924674}
+  descText: {fileID: 8493407225822690692}
   levelText: {fileID: 8493407226630207310}
   statsText:
   - {fileID: 8493407226405543574}
@@ -2049,6 +2050,7 @@ MonoBehaviour:
   - {fileID: 8493407226215547292}
   - {fileID: 8493407226248631712}
   - {fileID: 8493407225047179172}
+  - {fileID: 3222873407381094841}
   healthBar: {fileID: 5563499815031784304}
   classIcon: {fileID: 2544894307321483570}
   teamIcon: {fileID: 1468123443768303282}

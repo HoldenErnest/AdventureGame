@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class CharacterUI : MonoBehaviour {
 
@@ -16,6 +17,7 @@ public class CharacterUI : MonoBehaviour {
 
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI titleText;
+    public TextMeshProUGUI descText;
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI[] statsText;// con, str, dex, int, evd, spd, amr
     public CustomSlider healthBar;
@@ -52,6 +54,7 @@ public class CharacterUI : MonoBehaviour {
         theCharacter = c;
         setName(c.name);
         setTitle(c.title);
+        setDesc(c.description);
         setStats(c.userStats);
         setHealth(c.getHp(), c.userStats.getMaxHp(c.baseMaxHp));
         setLevel(c.userStats.getLevel());
@@ -76,6 +79,9 @@ public class CharacterUI : MonoBehaviour {
     }
     private void setTitle(string s) {
         titleText.text = s;
+    }
+    private void setDesc(string s) {
+        descText.text = s;
     }
     private void setLevel(int l) {
         levelText.text = "" + l;
@@ -102,7 +108,11 @@ public class CharacterUI : MonoBehaviour {
     }
 
     private void setStat(int stat, int points) { // changes the specified stat in the statsText array, how many points should it be set to
-        statsText[stat].text = points.ToString();
+        try  {
+            statsText[stat].text = points.ToString();
+        } catch (Exception e) {
+            Debug.Log(e);
+        }
 
         //statsText[stat].color = getColorFromPoints(points);
     }
