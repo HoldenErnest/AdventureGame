@@ -1,1 +1,6 @@
-{"sid":"orange","itemName":"Orange","ammount":1}
+{"itemName":"Orange",
+"description":"its an orange brother..",
+"amount":1,
+"consumeEffect":"",
+"dropChance":1.0
+}

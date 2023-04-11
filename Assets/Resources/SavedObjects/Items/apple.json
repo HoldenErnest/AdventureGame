@@ -1,1 +1,7 @@
-{"sid":"apple","itemName":"Apple","ammount":1}
+{"itemName":"Apple",
+"description":"its an apple..",
+"amount":1,
+"altIcon":"generic_food",
+"consumeEffect":"",
+"dropChance":1.0
+}

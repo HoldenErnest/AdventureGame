@@ -3,5 +3,5 @@
 "homePos":[0,0],
 "equipment":[],
 "items":[{"sid":"apple"},{"sid":"orange"},{"sid":"apple"},{"sid":"orange"}],
-"startingSkills":[],
+"startingSkills":["testTeleport"],
 "bodyTexture":"HumanMale","icon":""}
