@@ -1,4 +1,4 @@
-{"id":0,"name":"New Player","title":"Child","description":"A new adventure awaits you..\n I wonder how this one will go.","baseHealth":50,"team":0,
+{"id":0,"name":"Player","title":"---","description":"\n\nA new adventure awaits you..\n I wonder how this one will go.","baseHealth":50,"team":0,
 "stats":{"constitution":0,"strength":0,"dexterity":0,"intelligence":0,"evasion":0,"speed":0,"armor":0,"xp":0,"poisonResist":0,"psychResist":0},
 "homePos":[0,0],
 "equipment":[],

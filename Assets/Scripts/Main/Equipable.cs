@@ -11,29 +11,14 @@ using System;
 [Serializable]
 public class Equipable : Item
 {
-    public string texture; //only used to initialize tex
+    //public string texture; //only used to initialize tex (TEXTURE FOR THE CHARACTER)
     public string itemType; // Tell which slot its able to be equiped in?
     public string skillName; // only used to initialize grantSkill v
+    public int damage = 0; // base damage for this weapon attack, has nothing to do with skills
+    public Stats stats;
 
     private Texture2D tex; // a spritesheet texture that animates with the player >> NOT to be confused with 'Item.icon'.
     private Skill grantSkill;
-
-    //Weapon base stats
-    public int damage = 0; // base damage for this weapon attack, has nothing to do with skills
-    public int armorStat = 0;
-
-    public int weight = 0; // weight only matters for equipped things, no items in storage slow the user down
-
-    // boost stats >> based on reforges
-    public int speedStat = 0;
-    public int constStat = 0;
-    public int intelStat = 0;
-    public int strengthStat = 0;
-    public int evadeStat = 0;
-
-    public int poisonResist = 0;
-    public int necroResist = 0;
-    public int psychResist = 0;
 
     private bool isEqppd = false; // used to display an icon if the item is currently equipped
 
@@ -41,17 +26,7 @@ public class Equipable : Item
     public Equipable() {
         itemType = "weapon";
     }
-
-    public void setStats(int sped, int con, int intel, int str, int evd, int poiRes, int necRes, int psyRes) {
-        speedStat = sped;
-        constStat = con;
-        intelStat = intel;
-        strengthStat = str;
-        evadeStat = evd;
-        poisonResist = poiRes;
-        necroResist = necRes;
-        psychResist = psyRes;
-    }
+    
     public void randomizeEquipStats(int rarity) {
         //randomize the new equip with a certain ammount of stats based on rarity (good and bad stats)
     }
@@ -71,6 +46,7 @@ public class Equipable : Item
         return tex;
     }
     public bool updateTexture() { // returns if the texture is found
+        string texture = getFileName();
         if (texture == "") return false;
         tex = Knowledge.getEquipTexture(texture);
         return tex != null;
@@ -82,21 +58,6 @@ public class Equipable : Item
     }
     public void updateDamage() {
         grantSkill.setDamage(damage);
-    }
-    public int getSpeedStat() {
-        return speedStat;
-    }
-    public int getConstStat() {
-        return constStat;
-    }
-    public int getIntelStat() {
-        return intelStat;
-    }
-    public int getStrengthStat() {
-        return strengthStat;
-    }
-    public int getEvadeStat() {
-        return evadeStat;
     }
     public Skill getGrantSkill() {
         return grantSkill;
@@ -110,13 +71,32 @@ public class Equipable : Item
     }
 
     public bool hasTexture() { // might not neccessarly find the texture but it does have a request for one
-        return texture != "";
+        return updateTexture();
     }
     public bool hasSkill() {
         return skillName != "";
     }
 
+    public bool isEqual(Equipable e) {
+        bool a = getPath() == e.getPath();
+        bool b = itemName.Equals(e.itemName);
+        bool c = stats.isEqual(e.stats);
+        return a && b && c;
+    }
+    public override bool isEquip() {
+        return true;
+    }
     public override string ToString() {
         return itemName + " [" + itemType + "] for " + damage + " base attack";
+    }
+
+    public EquipSave toEquipSave() {
+        EquipSave e = new EquipSave();
+        e.path = getFileName();
+        e.amount = amount;
+        e.customName = itemName;
+        e.stats = stats;
+
+        return e;
     }
 }

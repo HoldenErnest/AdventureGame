@@ -103,6 +103,12 @@ public class Stats {
     public int getAvailableAttr() {
         return (getTotalAttr() - getTotalAttrUsed());
     }
+    public bool isEqual(Stats s) {
+        bool a = s.strength.Equals(strength) && s.evasion.Equals(evasion);
+        bool b = s.constitution.Equals(constitution) && s.intelligence.Equals(intelligence);
+        bool c = s.dexterity.Equals(dexterity) && s.speed.Equals(speed);
+        return a && b && c;
+    }
 
     public void resetAllAttr() {
         constitution = 0;

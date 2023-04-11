@@ -1,1 +1,11 @@
-{"items":["SavedObjects/Items/apple","SavedObjects/Items/orange","SavedObjects/Items/apple","SavedObjects/Items/orange","SavedObjects/Equips/pointed_stick","SavedObjects/Equips/blue_pants","SavedObjects/Items/orange","SavedObjects/Items/orange","SavedObjects/Items/apple","SavedObjects/Equips/red_cap","SavedObjects/Items/apple","SavedObjects/Items/orange","SavedObjects/Items/apple","SavedObjects/Equips/red_shirt","SavedObjects/Equips/green_shirt","SavedObjects/Equips/grey_shirt","SavedObjects/Items/apple","SavedObjects/Items/apple","SavedObjects/Items/apple"],"skills":[],"quests":[{"file":"hunter","itemsDone":0,"gotReward":false},{"file":"intro","itemsDone":1,"gotReward":false}]}
+{
+    "invItems":[{"path":"apple","amount":2},{"path":"orange","amount":3},{"path":"apple","amount":2}],
+    "invEquips":[
+        {"path":"blue_pants","amount":1,"customName":"Blue pants","stats":{"constitution":1,"strength":1,"dexterity":1,"intelligence":1,"evasion":1,"speed":1,"armor":0,"xp":0,"poisonResist":0,"psychResist":0}},
+        {"path":"red_cap","amount":1,"customName":"Red Cap","stats":{"constitution":5,"strength":2,"dexterity":0,"intelligence":1,"evasion":0,"speed":1,"armor":0,"xp":0,"poisonResist":0,"psychResist":0}},
+        {"path":"pointed_stick","amount":1,"customName":"Very pointy stick","stats":{"constitution":0,"strength":0,"dexterity":0,"intelligence":0,"evasion":0,"speed":0,"armor":0,"xp":0,"poisonResist":0,"psychResist":0}}],
+    "skills":[],
+    "quests":[
+        {"file":"hunter","itemsDone":0,"gotReward":false},
+        {"file":"intro","itemsDone":1,"gotReward":false}]
+    }

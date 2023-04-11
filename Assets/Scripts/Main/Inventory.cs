@@ -14,7 +14,8 @@ using System;
 [Serializable]
 public class Inventory : MonoBehaviour {
     // saved arrays (DO NO REF, only used for PlayerLoader) >> paths for the savedObjects
-    public string[] items;
+    public ItemSave[] invItems;
+    public EquipSave[] invEquips;
     public string[] skills;
     public QuestSave[] quests;
 
@@ -23,12 +24,8 @@ public class Inventory : MonoBehaviour {
     private List<Skill> learnedSkills = new List<Skill>(); // list of skills
     private List<Quest> activeQuests = new List<Quest>(); // list of quests
 
-    void Start() {
-        
-    }
-
     public string overwriteLists() {
-        items = listToArrayI(inventory);
+        overWriteInvArrs(inventory);
         skills = listToArrayS(learnedSkills);
         quests = listToArrayQ(activeQuests);
 
@@ -41,13 +38,15 @@ public class Inventory : MonoBehaviour {
     }
     // loading a new player will load with new items[] skills[] quests[] and then invoke this.
     public void loadLists() {
-        setInventory(items);
+        setInventory(invItems);
+        addInventory(invEquips);
         setLearnedSkills(skills);
         setQuests(quests);
         delInitArrs();
     }
     private void delInitArrs() {
-        items = null;
+        invItems = null;
+        invEquips = null;
         skills = null;
         quests = null;
     }
@@ -62,20 +61,21 @@ public class Inventory : MonoBehaviour {
     }
 
     //reset inventory from saved arrays
-    public void setInventory(string[] i) {
+    public void setInventory(ItemSave[] i) {
         if (i == null) return;
         try {
             inventory.Clear();
         } catch (Exception e) {
             inventory = new List<Item>();
         }
-        foreach(string itm in i) {
-            int delimit = itm.LastIndexOf('/') + 1;
-            string file = itm.Substring(delimit, itm.Length - delimit);
-            if (itm.Substring(0,delimit).Equals("SavedObjects/Items/")) // if the path says its in the Items/ folder
-                inventory.Add(Knowledge.getItem(file));
-            else // its in the Equipables/ folder
-                inventory.Add(Knowledge.getEquipable(file));
+        foreach(ItemSave itm in i) {
+            inventory.Add(itm.toItem());
+        }
+    }
+    private void addInventory(EquipSave[] e) {
+        if (e == null) return;
+        foreach(EquipSave itm in e) {
+            inventory.Add(itm.toEquip());
         }
     }
 
@@ -98,12 +98,19 @@ public class Inventory : MonoBehaviour {
     }
 
     // OVERWRITE STRING ARRAYS
-    private string[] listToArrayI(List<Item> b) {
-        string[] a = new string[b.Count];
-        for (int i = 0; i < b.Count; i++) {
-            a[i] = b[i].getPath();
+    private void overWriteInvArrs(List<Item> c) {
+        int eLen = totalEquips();
+        invItems = new ItemSave[c.Count - eLen];
+        invEquips = new EquipSave[eLen];
+        int equipsPassed = 0;
+        for (int i = 0; i < c.Count; i++) {
+            if (c[i].isEquip()) {
+                invEquips[equipsPassed] = ((Equipable)c[i]).toEquipSave();
+                equipsPassed++;
+            } else {
+                invItems[i - equipsPassed] = c[i].toItemSave();
+            }
         }
-        return a;
     }
     private QuestSave[] listToArrayQ(List<Quest> b) {
         QuestSave[] a = new QuestSave[b.Count];
@@ -118,6 +125,15 @@ public class Inventory : MonoBehaviour {
             a[i] = b[i].getPath();
         }
         return a;
+    }
+
+    //returns the number of equips out of all equips and items
+    private int totalEquips() {
+        int count = 0;
+        foreach (Item i in inventory) {
+            if (i.isEquip()) count++;
+        }
+        return count;
     }
 
     //items

@@ -20,7 +20,7 @@ public class CharacterCreator : MonoBehaviour {
     public float[] homePos; // home position (depending, can be used to spawn here)
 
     public string[] equipment; // equipment to equip
-    public string[] items; // (extra items or materials to drop on death)
+    public ItemSave[] items; // (extra items or materials to drop on death)
     public string[] startingSkills; // currently/last equipped skills in hotbar
     public string bodyTexture; // Resources/Textures/Bodies/<bodyTexture>.png
     public string icon; // a character icon for dialogues (might not be seen ever so you this is optional)

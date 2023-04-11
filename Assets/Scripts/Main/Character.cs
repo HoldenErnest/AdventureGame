@@ -173,7 +173,7 @@ public class Character : MonoBehaviour {
         }
         equipAll(es);
     }
-    public void setItems(string[] i) {
+    public void setItems(ItemSave[] i) {
         if (!inventory)
         inventory = new Inventory();
         inventory.setInventory(i);
@@ -311,7 +311,7 @@ public class Character : MonoBehaviour {
 
     private int indexFromList(List<Equipable> l, Equipable e) {
         for (int i = 0; i < l.Count; i++) {
-            if (l[i].sid == e.sid && l[i].itemName == e.itemName) return i; // must be compared with the internal values rather than pointers or it will believe all Equippables are "e"
+            if (l[i].isEqual(e)) return i; // must be compared with the internal values rather than pointers or it will believe all Equippables are "e"
         }
         return -1;
     }
@@ -412,7 +412,7 @@ public class Character : MonoBehaviour {
         cc.homePos[0] = gameObject.transform.position.x;
         cc.homePos[1] = gameObject.transform.position.y;
         cc.equipment = equipsToString();
-        cc.items = new string[0]; //TODO SET ITEMS FOR NON-PLAYERS!!!!!
+        cc.items = new ItemSave[0]; //TODO SET ITEMS FOR NON-PLAYERS!!!!!
         cc.startingSkills = usingSkillsToString();
         cc.bodyTexture = bodyTexture;
         //TODO cc.icon = new string for current icon 

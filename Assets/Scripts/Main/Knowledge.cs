@@ -147,12 +147,8 @@ public static class Knowledge {
         Equipable newEquip = new Equipable();
         string theFile = equipsPath + equipName;
         try {
-            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
-                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newEquip);
-            } else {
-                string json = Resources.Load<TextAsset>(theFile).text;
-                JsonUtility.FromJsonOverwrite(json, newEquip); // instead of rewriting a new Skill() try rewriting the skill currently in use
-            }
+            string json = Resources.Load<TextAsset>(theFile).text;
+            JsonUtility.FromJsonOverwrite(json, newEquip); // instead of rewriting a new Skill() try rewriting the skill currently in use
         } catch {
             Debug.Log("Equipable \"" + equipName + ".json\" not found.");
         }
@@ -163,12 +159,8 @@ public static class Knowledge {
         Item newItem = new Item();
         string theFile = itemsPath + itemName;
         try {
-            if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
-                JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newItem);
-            } else {
-                string json = Resources.Load<TextAsset>(theFile).text;
-                JsonUtility.FromJsonOverwrite(json, newItem); // instead of rewriting a new Skill() try rewriting the skill currently in use
-            }
+            string json = Resources.Load<TextAsset>(theFile).text;
+            JsonUtility.FromJsonOverwrite(json, newItem); // instead of rewriting a new Skill() try rewriting the skill currently in use
         } catch {
             Debug.Log("Item \"" + itemName + ".json\" not found.");
         }

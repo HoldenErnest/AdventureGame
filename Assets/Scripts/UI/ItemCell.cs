@@ -26,10 +26,10 @@ public class ItemCell : InventoryCell // shows UI of each item in the inventoryU
     }
 
     private void updateText() {
-        textUI.text = item.ammount + " - " + item.itemName;
+        textUI.text = item.amount + " - " + item.itemName;
     }
     private void updateIcon() {
-        Texture2D tex = Knowledge.getItemIcon(item.sid);
+        Texture2D tex = Knowledge.getItemIcon(item.getIconName());
         
         GetComponent<Image>().sprite = Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f,0.5f)); // create a new sprite to put in from the knowledge
     }
