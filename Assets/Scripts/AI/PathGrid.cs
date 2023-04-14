@@ -19,6 +19,7 @@ public class PathGrid : MonoBehaviour {
 
     void Start() {
         objectMap = GetComponent<MapFromImage>();
+        player = Knowledge.player.gameObject;
     }
     public void createGrid(Vector2 center) {
         //range = newRange;

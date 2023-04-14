@@ -85,6 +85,7 @@ public class Pathing : MonoBehaviour {
     //trace the path back to the start node(only works if the end nodes been found)
     //adds nodes in order to thePath list.
     private void formatPathList(PathNode nextNode, PathNode backNode) {
+        if (backNode.unwalkable) return;
         PathNode current = getFarthestNode(nextNode, backNode); // the node closest to nextNode(startNode)
         if (!current.isEqual(backNode)) {
             formatPathList(current, backNode); // if you didnt format the last node, format again

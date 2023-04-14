@@ -8,17 +8,12 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour {
 
-    public string saveFile;
-
     private readonly string savesPath = "Resources/saves/";
-
-    void Start() {
-
-    }
 
     public void loadGame() {
         SceneManager.LoadScene("GameScene");
     }
+    // the scene with the loads selection
     public void loadSceneLoad() {
         SceneManager.LoadScene("LoadScene");
     }
@@ -37,5 +32,10 @@ public class SceneLoader : MonoBehaviour {
     public void setGame2() {
         Knowledge.setSaveNumber(2);
         loadGame();
+    }
+
+    // go to the editor
+    public void setEditor() {
+        SceneManager.LoadScene("EditorScene");
     }
 }

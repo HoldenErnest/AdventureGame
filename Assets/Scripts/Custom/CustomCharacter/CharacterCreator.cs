@@ -100,7 +100,8 @@ public class CharacterCreator : MonoBehaviour {
         c.setBodyTex(bodyTexture);
         c.setEquips(equipment);
         c.setStartingSkills(startingSkills);
-        c.setHotbar(hotbars);
+        if (hotbars != null)
+            c.setHotbar(hotbars);
         c.setCharIcon(icon);
         Controller charCont = character.GetComponent<Controller>();
         charCont.invUI = invUI;
