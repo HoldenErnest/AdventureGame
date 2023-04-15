@@ -32,6 +32,7 @@ public static class Knowledge {
     public static readonly string skillsPrefabPath = "Prefabs/Skills/";
     public static readonly string charsPrefabPath = "Prefabs/Characters/";
     public static readonly string questsPath = "Quests/";
+    public static readonly string tilesPath = "Tiles/";
 
     private static int currentSave = 0;
 
@@ -217,6 +218,15 @@ public static class Knowledge {
             return Resources.Load<Texture2D>(skillsIconPath + s);
         } catch {
             Debug.Log("Skill icon \"" + s + ".png\" not found.");
+        }
+        return null;
+    }
+    public static Sprite[] getAllSpritesFromTexture(string s) {
+        try {
+            //Texture2D theImg = Resources.Load<Texture2D>(tilesPath + s);
+            return Resources.LoadAll<Sprite>(tilesPath + s);
+        } catch {
+            Debug.Log("Multi-Texture \"" + s + ".png\" not found.");
         }
         return null;
     }

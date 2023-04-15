@@ -28,6 +28,8 @@ public class TilesDisplay : MonoBehaviour {
 
     private List<GameObject> cells = new List<GameObject>();
 
+    private Sprite[] objects;
+
     void Start() {
         contentTranform.localScale = new Vector3(cellSize, cellSize, 1);
     }
@@ -41,10 +43,13 @@ public class TilesDisplay : MonoBehaviour {
     // creates the cells into the scroll view based on what group it is
     private void loadCells(int id) {
         // load objects that want to be displayed into an array
+        Debug.Log("ID is: " + id);
         switch (id) {
             case 0:
+                objects = Knowledge.getAllSpritesFromTexture("Ground");
                 break;
             case 1:
+                objects = Knowledge.getAllSpritesFromTexture("Walls");
                 break;
             case 2:
                 break;
@@ -57,7 +62,7 @@ public class TilesDisplay : MonoBehaviour {
 
     private void generateCells() {
         clearCells();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < objects.Length; i++) {
             createCell(i);
         }
     }
@@ -70,7 +75,7 @@ public class TilesDisplay : MonoBehaviour {
 
     private void createCell(int pos) {
         GameObject cell = Instantiate(cellPrefab, contentTranform);
-        cell.GetComponent<DisplayCell>().setCell("bruh", true, defaultImg);
+        cell.GetComponent<DisplayCell>().setCell(objects[pos].name, true, objects[pos]);
         cell.transform.position = getLocationFromIndex(pos);
         cells.Add(cell);
     }
@@ -79,8 +84,8 @@ public class TilesDisplay : MonoBehaviour {
         int locInRow = (l%itemsPerRow);
         int locInCol = -(l/itemsPerRow);
 
-        float x = locInRow + (locInRow*cellOffsetX) + contentTranform.position.x + tableOffsetX;
-        float y = locInCol + (locInCol*cellOffsetY) + contentTranform.position.y + tableOffsetY;
+        float x = locInRow + (cellOffsetX * locInRow) + contentTranform.position.x + tableOffsetX;
+        float y = locInCol + (cellOffsetY * locInCol) + contentTranform.position.y + tableOffsetY;
         return new Vector3(x, y, 0);
     }
 
