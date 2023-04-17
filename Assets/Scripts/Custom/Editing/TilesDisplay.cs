@@ -30,8 +30,10 @@ public class TilesDisplay : MonoBehaviour {
 
     private Sprite[] objects;
 
+    private List<Sprite> foundObjects = new List<Sprite>();
+
     void Start() {
-        contentTranform.localScale = new Vector3(cellSize, cellSize, 1);
+        //contentTranform.localScale = new Vector3(cellSize, cellSize, 1);
     }
 
     // event when the player changes the group
@@ -62,8 +64,24 @@ public class TilesDisplay : MonoBehaviour {
 
     private void generateCells() {
         clearCells();
-        for (int i = 0; i < objects.Length; i++) {
+        updateKeyObjects();
+        for (int i = 0; i < foundObjects.Count; i++) {
             createCell(i);
+        }
+    }
+
+    private void updateKeyObjects() {
+        foundObjects.Clear();
+        string key = getKey();
+        Debug.Log("kjey is " + key);
+        foreach (Sprite s in objects) {
+            
+            if (key.Equals("")){
+                foundObjects.Add(s);
+                continue;
+            }
+            if (s.name.ToLower().Contains(key.ToLower()))
+                foundObjects.Add(s);
         }
     }
     private void clearCells() {
@@ -75,8 +93,12 @@ public class TilesDisplay : MonoBehaviour {
 
     private void createCell(int pos) {
         GameObject cell = Instantiate(cellPrefab, contentTranform);
-        cell.GetComponent<DisplayCell>().setCell(objects[pos].name, true, objects[pos]);
-        cell.transform.position = getLocationFromIndex(pos);
+        cell.GetComponent<DisplayCell>().setCell(foundObjects[pos].name, true, foundObjects[pos]);
+        //cell.transform.position = getLocationFromIndex(pos);
+        Vector3 v = getLocationFromIndex(pos);
+        cell.GetComponent<RectTransform>().offsetMin = new Vector2(v.x,0);
+        cell.GetComponent<RectTransform>().offsetMax = new Vector2(0, v.y);
+        cell.GetComponent<RectTransform>().sizeDelta = new Vector2 (cellSize, cellSize);
         cells.Add(cell);
     }
     // the position of the cell on the grid
@@ -84,9 +106,9 @@ public class TilesDisplay : MonoBehaviour {
         int locInRow = (l%itemsPerRow);
         int locInCol = -(l/itemsPerRow);
 
-        float x = locInRow + (cellOffsetX * locInRow) + contentTranform.position.x + tableOffsetX;
-        float y = locInCol + (cellOffsetY * locInCol) + contentTranform.position.y + tableOffsetY;
-        return new Vector3(x, y, 0);
+        float x = locInRow + (cellOffsetX * locInRow) /*+ contentTranform.position.x*/ + tableOffsetX;
+        float y = locInCol + (cellOffsetY * locInCol) /*+ contentTranform.position.y*/ + tableOffsetY;
+        return new Vector3(x, y, 0) * cellSize;
     }
 
     private int getGroupNumber() {
