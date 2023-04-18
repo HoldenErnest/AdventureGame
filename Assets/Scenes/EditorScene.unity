@@ -570,6 +570,7 @@ GameObject:
   - component: {fileID: 34754924}
   - component: {fileID: 34754923}
   - component: {fileID: 34754922}
+  - component: {fileID: 34754925}
   m_Layer: 5
   m_Name: InputField (TMP)
   m_TagString: Untagged
@@ -659,16 +660,52 @@ MonoBehaviour:
   m_CharacterLimit: 0
   m_OnEndEdit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 34754925}
+        m_TargetAssemblyTypeName: DisableInput, Assembly-CSharp
+        m_MethodName: stopEditingText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls: []
   m_OnSelect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 34754925}
+        m_TargetAssemblyTypeName: DisableInput, Assembly-CSharp
+        m_MethodName: editingText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnDeselect:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 34754925}
+        m_TargetAssemblyTypeName: DisableInput, Assembly-CSharp
+        m_MethodName: stopEditingText
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTextSelection:
     m_PersistentCalls:
       m_Calls: []
@@ -680,7 +717,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 946136195}
         m_TargetAssemblyTypeName: TilesDisplay, Assembly-CSharp
-        m_MethodName: updateGroup
+        m_MethodName: updateKey
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -746,6 +783,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34754920}
   m_CullTransparentMesh: 1
+--- !u!114 &34754925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34754920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb194fc0cc73668488c2ad5ac197b646, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &38162080
 GameObject:
   m_ObjectHideFlags: 0
@@ -25804,6 +25853,7 @@ GameObject:
   - component: {fileID: 946136193}
   - component: {fileID: 946136192}
   - component: {fileID: 946136195}
+  - component: {fileID: 946136196}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -25852,7 +25902,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 10
   m_Viewport: {fileID: 1966911362}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1042008099}
@@ -25924,6 +25974,32 @@ MonoBehaviour:
   tableOffsetY: -1.2
   itemsPerRow: 4
   contentTranform: {fileID: 772954012}
+--- !u!61 &946136196
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946136190}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &947111699
 GameObject:
   m_ObjectHideFlags: 0
@@ -27262,7 +27338,7 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 4.700012, y: 0}
   m_SizeDelta: {x: 20.592, y: 0}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &1042008099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27305,7 +27381,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1202948306}
   m_HandleRect: {fileID: 1202948305}
-  m_Direction: 3
+  m_Direction: 2
   m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
@@ -37363,7 +37439,6 @@ GameObject:
   - component: {fileID: 1712398608}
   - component: {fileID: 1712398617}
   - component: {fileID: 1712398618}
-  - component: {fileID: 1712398619}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -37567,35 +37642,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb45b38509a4f747b376011b9644c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1712398619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712398607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates:
-  - eventID: 7
-    callback:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1712398618}
-          m_TargetAssemblyTypeName: ScrollZoom, Assembly-CSharp
-          m_MethodName: Scroll
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
 --- !u!1 &1713702763
 GameObject:
   m_ObjectHideFlags: 0

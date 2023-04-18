@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class TilesDisplay : MonoBehaviour {
+public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler {
 
     public GameObject cellPrefab;
     public Sprite defaultImg;
@@ -26,11 +27,11 @@ public class TilesDisplay : MonoBehaviour {
 
     public Transform contentTranform;
 
-    private List<GameObject> cells = new List<GameObject>();
+    private List<GameObject> cells = new List<GameObject>(); // the actual gameobjects for the cells
 
-    private Sprite[] objects;
+    private DisplayInfo[] objects; // all cells info in the current group
 
-    private List<Sprite> foundObjects = new List<Sprite>();
+    private List<DisplayInfo> foundObjects = new List<DisplayInfo>(); // all cells info in 'objects' that also have the key
 
     void Start() {
         //contentTranform.localScale = new Vector3(cellSize, cellSize, 1);
@@ -38,28 +39,42 @@ public class TilesDisplay : MonoBehaviour {
 
     // event when the player changes the group
     public void updateGroup() {
-        
         loadCells(getGroupNumber());
+    }
+    public void updateKey() {
+        generateCells();
     }
 
     // creates the cells into the scroll view based on what group it is
     private void loadCells(int id) {
         // load objects that want to be displayed into an array
-        Debug.Log("ID is: " + id);
         switch (id) {
             case 0:
-                objects = Knowledge.getAllSpritesFromTexture("Ground");
+                objects = getInfoFromArray(Knowledge.getAllSpritesFromTexture("Ground"));
                 break;
             case 1:
-                objects = Knowledge.getAllSpritesFromTexture("Walls");
+                objects = getInfoFromArray(Knowledge.getAllSpritesFromTexture("Walls"));
                 break;
             case 2:
                 break;
             default:
                 break;
         }
-        // create the display cells based off this array of random objects
+        // if you reset the group, reset the key
+        keyInput.text = "";
         generateCells();
+        //resize the content y to fit the
+        RectTransform rectTransform = ((RectTransform)contentTranform);
+        rectTransform.offsetMin = new Vector2(rectTransform.offsetMin.x, -cellSize*(cells.Count/itemsPerRow));
+        //contentTranform.localScale = new Vector3(contentTranform.localScale.x, (cells.Count/itemsPerRow), contentTranform.localScale.z);
+    }
+
+    private DisplayInfo[] getInfoFromArray(Sprite[] s) {
+        DisplayInfo[] dis = new DisplayInfo[s.Length];
+        for (int i = 0; i < s.Length; i++) {
+            dis[i] = new DisplayInfo(s[i]);
+        }
+        return dis;
     }
 
     private void generateCells() {
@@ -71,17 +86,20 @@ public class TilesDisplay : MonoBehaviour {
     }
 
     private void updateKeyObjects() {
+        if (objects == null) {
+            loadCells(0);
+            return;
+        }
         foundObjects.Clear();
         string key = getKey();
-        Debug.Log("kjey is " + key);
-        foreach (Sprite s in objects) {
+        foreach (DisplayInfo di in objects) {
             
             if (key.Equals("")){
-                foundObjects.Add(s);
+                foundObjects.Add(di);
                 continue;
             }
-            if (s.name.ToLower().Contains(key.ToLower()))
-                foundObjects.Add(s);
+            if (di.getTitle().ToLower().Contains(key.ToLower()))
+                foundObjects.Add(di);
         }
     }
     private void clearCells() {
@@ -93,11 +111,11 @@ public class TilesDisplay : MonoBehaviour {
 
     private void createCell(int pos) {
         GameObject cell = Instantiate(cellPrefab, contentTranform);
-        cell.GetComponent<DisplayCell>().setCell(foundObjects[pos].name, true, foundObjects[pos]);
+        cell.GetComponent<DisplayCell>().setCell(foundObjects[pos].getTitle(), true, foundObjects[pos].getSprite());
         //cell.transform.position = getLocationFromIndex(pos);
         Vector3 v = getLocationFromIndex(pos);
-        cell.GetComponent<RectTransform>().offsetMin = new Vector2(v.x,0);
-        cell.GetComponent<RectTransform>().offsetMax = new Vector2(0, v.y);
+        cell.GetComponent<RectTransform>().offsetMin = new Vector2(v.x,0);//from left
+        cell.GetComponent<RectTransform>().offsetMax = new Vector2(0, v.y); // from top
         cell.GetComponent<RectTransform>().sizeDelta = new Vector2 (cellSize, cellSize);
         cells.Add(cell);
     }
@@ -117,5 +135,15 @@ public class TilesDisplay : MonoBehaviour {
     private string getKey() {
         return keyInput.text;
     }
-
+    
+    //EVENTS
+    public void OnPointerEnter(PointerEventData eventData){
+        //Debug.Log("cant scroll");
+        Camera.main.gameObject.GetComponent<ScrollZoom>().setCanScroll(false);
+    }
+    public void OnPointerExit(PointerEventData eventData){
+        //Debug.Log("can now scroll");
+        Camera.main.gameObject.GetComponent<ScrollZoom>().setCanScroll(true);
+    }
+    
 }

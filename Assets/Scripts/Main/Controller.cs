@@ -18,6 +18,8 @@ public class Controller : MonoBehaviour
     public float dashSpeed = 1;
     public bool onWall = false;
 
+
+    private bool editingText = false;
     void Awake()
     {
         anim = GetComponent<Animator>();
@@ -27,10 +29,20 @@ public class Controller : MonoBehaviour
     }
 
     public virtual void Update() {
+        if (!canRecieveInput()) {
+            stopMoving();
+            Debug.Log("cant do anything");
+            return;
+        }
         attackInputs();
         UIInputs();
     }
     public virtual void FixedUpdate() {
+        if (!canRecieveInput()) {
+            stopMoving();
+            Debug.Log("cant do anything");
+            return;
+        }
         updateMovement();
     }
 
@@ -83,6 +95,9 @@ public class Controller : MonoBehaviour
     public void move() {
         rb.velocity = movement * user.getSpeed() * (140) * Time.fixedDeltaTime;
     }
+    public void stopMoving() {
+        anim.SetBool("buttonDown", false);
+    } 
     public void dash(Vector2 targetPos, float spd) { // dash with - speed for - seconds
         if (spd == 0f) { // a teleport, so check where youre landing so its not in a wall
             Collider2D[] hitColliders = Physics2D.OverlapCircleAll(targetPos, 0.3f);
@@ -198,5 +213,12 @@ public class Controller : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         if (onWall)
             moveOverride = false;
+    }
+
+    private bool canRecieveInput() {
+        return !editingText;
+    }
+    public void setEditingText(bool b) {
+        editingText = b;
     }
 }
