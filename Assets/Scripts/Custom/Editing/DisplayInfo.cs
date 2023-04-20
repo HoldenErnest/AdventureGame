@@ -8,10 +8,17 @@ public class DisplayInfo : MonoBehaviour {
     
     private Sprite icon;
     private string title;
+    private int pos; // the position 
 
-    public DisplayInfo(Sprite s) {
+    public DisplayInfo(int p, Sprite s) {
+        pos = p;
         icon = s;
         title = s.name;
+    }
+    public DisplayInfo(int p, Character c) {
+        pos = p;
+        //icon = c.icon;
+        title = c.name;
     }
     
     public virtual string getTitle() {
@@ -19,5 +26,8 @@ public class DisplayInfo : MonoBehaviour {
     }
     public virtual Sprite getSprite() {
         return icon;
+    }
+    public int getPosition() {
+        return pos;
     }
 }

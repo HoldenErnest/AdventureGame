@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -2277,8 +2277,8 @@ TextureImporter:
       Stairs11: -714947237
       Path28: -1448085609
       Door4: -1677188390
-      Door6: 1361777847
       Path18: -278493726
+      Door6: 1361777847
       Ground_3: 193862803
       Path19: 1610092998
       Stairs1: -1703983605

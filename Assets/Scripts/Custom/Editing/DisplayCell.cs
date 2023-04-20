@@ -9,9 +9,11 @@ using TMPro;
 
 public class DisplayCell : MonoBehaviour {
     
+    private int arrayLocation; // for getting the actual object back out of the arary it was initially in.
     private string title; // the item name or whatever
     private bool showTitle = true; // whether or not the title is displayed under the texture
     private Sprite texture; // the texture displayed (optional)
+    private TilesDisplay table;
 
     public TMP_Text cellText;
     public Image cellIcon;
@@ -23,14 +25,13 @@ public class DisplayCell : MonoBehaviour {
         //cellIcon = this.gameObject.GetComponent<Image>();
     }
 
-    public void setCell(string name, bool showT, Sprite tex) {
+    public void setCell(int loc, string name, bool showT, Sprite tex, TilesDisplay t) {
+        arrayLocation = loc;
         title = name;
         showTitle = showT;
         texture = tex;
+        table = t;
         updateCell();
-    }
-    public void setCell(string name) {
-        setCell(name, true, null);
     }
 
     // Display the cell
@@ -47,5 +48,10 @@ public class DisplayCell : MonoBehaviour {
     }
     private void updateTexture() {
         cellIcon.sprite = texture;
+    }
+
+    public void onClick() {
+        Debug.Log(title);
+        table.setSelected(arrayLocation);
     }
 }

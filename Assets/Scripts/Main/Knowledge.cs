@@ -196,6 +196,10 @@ public static class Knowledge {
         character.setPath(charName);
         return character;
     }
+    public static CharacterCreator[] getAllCharBP() {
+        CharacterCreator[] cca = new CharacterCreator[5];
+        return cca;
+    }
     public static Texture2D getEquipTexture(string s) {
         try {
             return Resources.Load<Texture2D>(equipsTexturePath + s);

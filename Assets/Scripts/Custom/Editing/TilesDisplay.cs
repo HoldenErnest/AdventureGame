@@ -28,14 +28,9 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     public Transform contentTranform;
 
     private List<GameObject> cells = new List<GameObject>(); // the actual gameobjects for the cells
-
-    private DisplayInfo[] objects; // all cells info in the current group
-
+    private Sprite[] SObjects; // all cells info in the current group
+    private Sprite[] OObjects; // all cells info in the current group
     private List<DisplayInfo> foundObjects = new List<DisplayInfo>(); // all cells info in 'objects' that also have the key
-
-    void Start() {
-        //contentTranform.localScale = new Vector3(cellSize, cellSize, 1);
-    }
 
     // event when the player changes the group
     public void updateGroup() {
@@ -50,10 +45,10 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         // load objects that want to be displayed into an array
         switch (id) {
             case 0:
-                objects = getInfoFromArray(Knowledge.getAllSpritesFromTexture("Ground"));
+                SObjects = Knowledge.getAllSpritesFromTexture("Ground");
                 break;
             case 1:
-                objects = getInfoFromArray(Knowledge.getAllSpritesFromTexture("Walls"));
+                SObjects = Knowledge.getAllSpritesFromTexture("Walls");
                 break;
             case 2:
                 break;
@@ -69,14 +64,6 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         //contentTranform.localScale = new Vector3(contentTranform.localScale.x, (cells.Count/itemsPerRow), contentTranform.localScale.z);
     }
 
-    private DisplayInfo[] getInfoFromArray(Sprite[] s) {
-        DisplayInfo[] dis = new DisplayInfo[s.Length];
-        for (int i = 0; i < s.Length; i++) {
-            dis[i] = new DisplayInfo(s[i]);
-        }
-        return dis;
-    }
-
     private void generateCells() {
         clearCells();
         updateKeyObjects();
@@ -85,21 +72,35 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         }
     }
 
+    // put the selected group into an array of data to be turned into displayCells
     private void updateKeyObjects() {
-        if (objects == null) {
+        if (SObjects == null && OObjects == null) {
             loadCells(0);
             return;
         }
+
         foundObjects.Clear();
-        string key = getKey();
-        foreach (DisplayInfo di in objects) {
-            
-            if (key.Equals("")){
-                foundObjects.Add(di);
-                continue;
+        string key = getKey(); // prep the array and set the key
+        if (SObjects != null) { // fill the sprite array
+            for (int i = 0; i< SObjects.Length; i++) {
+                DisplayInfo d = new DisplayInfo(i,SObjects[i]);
+                if (key.Equals("")){
+                    foundObjects.Add(d);
+                    continue;
+                }
+                if (d.getTitle().ToLower().Contains(key.ToLower()))
+                    foundObjects.Add(d);
             }
-            if (di.getTitle().ToLower().Contains(key.ToLower()))
-                foundObjects.Add(di);
+        } else { // otherwise fill the object array
+            for (int i = 0; i< OObjects.Length; i++) {
+                DisplayInfo d = new DisplayInfo(i,OObjects[i]);
+                if (key.Equals("")){
+                    foundObjects.Add(d);
+                    continue;
+                }
+                if (d.getTitle().ToLower().Contains(key.ToLower()))
+                    foundObjects.Add(d);
+            }
         }
     }
     private void clearCells() {
@@ -111,7 +112,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
 
     private void createCell(int pos) {
         GameObject cell = Instantiate(cellPrefab, contentTranform);
-        cell.GetComponent<DisplayCell>().setCell(foundObjects[pos].getTitle(), true, foundObjects[pos].getSprite());
+        cell.GetComponent<DisplayCell>().setCell(pos, foundObjects[pos].getTitle(), true, foundObjects[pos].getSprite(), this);
         //cell.transform.position = getLocationFromIndex(pos);
         Vector3 v = getLocationFromIndex(pos);
         cell.GetComponent<RectTransform>().offsetMin = new Vector2(v.x,0);//from left
@@ -129,11 +130,19 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         return new Vector3(x, y, 0) * cellSize;
     }
 
-    private int getGroupNumber() {
+    public int getGroupNumber() {
         return groupDropdown.value;
     }
     private string getKey() {
         return keyInput.text;
+    }
+
+    public void setSelected(int pos) {
+        Debug.Log( "found " + foundObjects[pos].getPosition());
+        if (OObjects != null)
+            Camera.main.gameObject.GetComponent<EditPlacer>().setSelected(OObjects[foundObjects[pos].getPosition()]);
+        else if (SObjects != null)
+            Camera.main.gameObject.GetComponent<EditPlacer>().setSelected(SObjects[foundObjects[pos].getPosition()]);
     }
     
     //EVENTS

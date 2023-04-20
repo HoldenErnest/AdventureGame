@@ -206,7 +206,7 @@ public class Character : MonoBehaviour {
         if (isPlayer()) {
             updateHotbarIcons();
         }
-        fullHealth();   
+        fullHealth();
         createCharacter();
     }
     private void updateSkillsUsers() { // once a skill is obtained set its user to it works properly

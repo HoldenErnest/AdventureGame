@@ -19270,6 +19270,7 @@ GameObject:
   - component: {fileID: 417735499}
   - component: {fileID: 417735498}
   - component: {fileID: 417735497}
+  - component: {fileID: 417735500}
   m_Layer: 0
   m_Name: CustomGround
   m_TagString: Untagged
@@ -19654,6 +19655,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &417735500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 417735495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  img: {fileID: 2800000, guid: 330745793981efe4b93a68777fcac63a, type: 3}
+  tiles: []
+  layer: 0
 --- !u!1 &433175659
 GameObject:
   m_ObjectHideFlags: 0
@@ -25902,7 +25918,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 10
+  m_ScrollSensitivity: 15
   m_Viewport: {fileID: 1966911362}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1042008099}
@@ -25967,7 +25983,7 @@ MonoBehaviour:
   defaultImg: {fileID: 21300000, guid: ecb7b91ad3369064c8294afaee43dcf1, type: 3}
   groupDropdown: {fileID: 888776859}
   keyInput: {fileID: 34754922}
-  cellSize: 30
+  cellSize: 35
   cellOffsetX: 1.2
   cellOffsetY: 1.2
   tableOffsetX: 1.2
@@ -26308,6 +26324,7 @@ GameObject:
   - component: {fileID: 983517719}
   - component: {fileID: 983517718}
   - component: {fileID: 983517717}
+  - component: {fileID: 983517721}
   m_Layer: 3
   m_Name: CustomWalls
   m_TagString: Untagged
@@ -26660,6 +26677,21 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &983517721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983517715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  img: {fileID: 2800000, guid: 9dc2aa0070ed9744cbfa029f608900a4, type: 3}
+  tiles: []
+  layer: 1
 --- !u!1 &989126430
 GameObject:
   m_ObjectHideFlags: 0
@@ -37439,6 +37471,7 @@ GameObject:
   - component: {fileID: 1712398608}
   - component: {fileID: 1712398617}
   - component: {fileID: 1712398618}
+  - component: {fileID: 1712398619}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -37642,6 +37675,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adb45b38509a4f747b376011b9644c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1712398619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1712398607}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d350bf48a45f51a418a19380c691b5ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grids:
+  - {fileID: 417735500}
+  - {fileID: 983517721}
+  sectionTable: {fileID: 946136195}
 --- !u!1 &1713702763
 GameObject:
   m_ObjectHideFlags: 0
