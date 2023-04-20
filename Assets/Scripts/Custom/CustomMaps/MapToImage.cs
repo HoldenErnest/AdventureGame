@@ -55,8 +55,8 @@ public class MapToImage : MonoBehaviour
     }
 
     private Vector2Int worldToGridPoint(float x, float y) {
-        int nx = Mathf.RoundToInt(x) - ((int)(width/2))*-1;
-        int ny = Mathf.RoundToInt(y) - ((int)(height/2))*-1;
+        int nx = Mathf.RoundToInt(x-0.5f) - ((int)(width/2))*-1;
+        int ny = Mathf.RoundToInt(y-0.5f) - ((int)(height/2))*-1;
         Debug.Log(x + ", " + y + ". is mouse");
         return new Vector2Int(nx,ny);
     }
