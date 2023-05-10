@@ -31,18 +31,12 @@ public class Controller : MonoBehaviour
     public virtual void Update() {
         if (!canRecieveInput()) {
             stopMoving();
-            Debug.Log("cant do anything");
             return;
         }
         attackInputs();
         UIInputs();
     }
     public virtual void FixedUpdate() {
-        if (!canRecieveInput()) {
-            stopMoving();
-            Debug.Log("cant do anything");
-            return;
-        }
         updateMovement();
     }
 
@@ -138,7 +132,7 @@ public class Controller : MonoBehaviour
             skillInUse = 4;
         }
 
-        if (Input.GetMouseButtonDown(1)) {
+        if (Input.GetKeyDown(KeyCode.Return)) {
             Dialogue.next();
         }
 

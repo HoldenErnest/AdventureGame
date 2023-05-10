@@ -19269,7 +19269,6 @@ GameObject:
   - component: {fileID: 417735496}
   - component: {fileID: 417735499}
   - component: {fileID: 417735498}
-  - component: {fileID: 417735497}
   - component: {fileID: 417735500}
   m_Layer: 0
   m_Name: CustomGround
@@ -19286,88 +19285,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 417735495}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 32, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2068903579}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &417735497
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 417735495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 875b18a4c1c747b4580e4670078dabd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  img: {fileID: 2800000, guid: 330745793981efe4b93a68777fcac63a, type: 3}
-  tiles:
-  - color: {r: 0.52156866, g: 1, b: 0.4627451, a: 1}
-    type: random
-    tiles:
-    - {fileID: 11400000, guid: 85439e6ba78d8594c98f11ff2dacd427, type: 2}
-    - {fileID: 11400000, guid: f7d733bac702aec4fb69aa7d939e237b, type: 2}
-    - {fileID: 11400000, guid: cc8b8505c2e09f4489c451f35b2ae276, type: 2}
-    - {fileID: 11400000, guid: f522738203d41c040b6d69d114ca1691, type: 2}
-    - {fileID: 11400000, guid: f81a43d6ee8c92749888950811f9f94a, type: 2}
-    - {fileID: 11400000, guid: 5b6006c871bd5304ab198f98c35a1d78, type: 2}
-    - {fileID: 11400000, guid: b6cacba6b9c24c842805270895c3a96c, type: 2}
-    - {fileID: 11400000, guid: b3ebea6f75c542649b01c0ae06690196, type: 2}
-    - {fileID: 11400000, guid: e15d2198d52c9804382a878705c3511c, type: 2}
-    - {fileID: 11400000, guid: ece9871ef29f65442bd07771f163f8b5, type: 2}
-    - {fileID: 11400000, guid: ecb95db673533ac418acdba97e9d44e6, type: 2}
-    - {fileID: 11400000, guid: 31aa499cffd8e17459d0b3403ca85bb6, type: 2}
-    - {fileID: 11400000, guid: f41e10c2b1d89d4479d0d7ca0f2a90ee, type: 2}
-    - {fileID: 11400000, guid: d0a1fa29ef9d487438a7af2d74d6ae7a, type: 2}
-    - {fileID: 11400000, guid: 514b84acb8725be48ae7ad0d72dd9c15, type: 2}
-    - {fileID: 11400000, guid: 68d36119ea2b27c4b9af13fc3ec203d0, type: 2}
-    - {fileID: 11400000, guid: 1c5b88f7d8b0f9c4f90f0f8769d31309, type: 2}
-    - {fileID: 11400000, guid: 86fb52cbd79519c428f8eb5b6ee43802, type: 2}
-    - {fileID: 11400000, guid: a071935854ca6d9438e0e854d8f761be, type: 2}
-    - {fileID: 11400000, guid: 6f6d721394daa454196ec099657d043b, type: 2}
-    - {fileID: 11400000, guid: 35de97ecba4b4784da6e12160013e938, type: 2}
-    - {fileID: 11400000, guid: 5237447c0b3d3434598aebaaac7f3e89, type: 2}
-    - {fileID: 11400000, guid: d232c5e51f00f6542ad1c582fa8014d7, type: 2}
-    - {fileID: 11400000, guid: a473929c2b8aa604c82010e8341ebbfe, type: 2}
-    - {fileID: 11400000, guid: 6d4590e4216df2644b9505537140fea8, type: 2}
-    - {fileID: 11400000, guid: 95b064b5962e69f40b04ae6f10c7050d, type: 2}
-    - {fileID: 11400000, guid: eb51b8f3b8e94b84593f4844bfa22657, type: 2}
-    - {fileID: 11400000, guid: 5f2647b840105ff4d8a97bee8dd26019, type: 2}
-    - {fileID: 11400000, guid: dfa85a98f29625f459b948ce6ca3cf4c, type: 2}
-    - {fileID: 11400000, guid: 180d2152bc2afc04a9224eb0a379bb46, type: 2}
-    - {fileID: 11400000, guid: 1363e27bd821c1e4997dbc826b1864a5, type: 2}
-    - {fileID: 11400000, guid: fafc75b38c2d9b9499b0bade94d43f23, type: 2}
-  - color: {r: 0, g: 0, b: 0.91764706, a: 1}
-    type: single
-    tiles:
-    - {fileID: 11400000, guid: af33d0089718867429498832208fc2f2, type: 2}
-  - color: {r: 0.95686275, g: 0.9529412, b: 0.5372549, a: 1}
-    type: single
-    tiles:
-    - {fileID: 11400000, guid: 5872702b9e633c744bbf24803171780b, type: 2}
-  - color: {r: 0.5921569, g: 0.5764706, b: 0.56078434, a: 1}
-    type: random
-    tiles:
-    - {fileID: 11400000, guid: 315ac6699faf40d44a12642292fabe5b, type: 2}
-    - {fileID: 11400000, guid: 13c315d52e4bbb04d9c2144647c386bf, type: 2}
-    - {fileID: 11400000, guid: 315ac6699faf40d44a12642292fabe5b, type: 2}
-    - {fileID: 11400000, guid: 381a98694b35c9a469474e954d613034, type: 2}
-    - {fileID: 11400000, guid: 064abe9d6bec64f409b84afad8e1f3e2, type: 2}
-    - {fileID: 11400000, guid: 5fd31a5569a5c8140ac344a4958feb42, type: 2}
-    - {fileID: 11400000, guid: 9f7b1ffb74a460c47bef45a58b4ceb63, type: 2}
-    - {fileID: 11400000, guid: 0fe9916a0c516b94aa8411003ffdf867, type: 2}
-    - {fileID: 11400000, guid: 752613926d0960649b45b73fdf9dd660, type: 2}
-    - {fileID: 11400000, guid: 104fba64b1fe4b245ae5a1beadabf2cc, type: 2}
-  - color: {r: 0.3372549, g: 0.23921569, b: 0.05882353, a: 1}
-    type: single
-    tiles:
-    - {fileID: 11400000, guid: d7dd2b569494748409d731818e55ca6d, type: 2}
-  layer: 0
 --- !u!483693784 &417735498
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -19667,7 +19591,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  img: {fileID: 2800000, guid: 330745793981efe4b93a68777fcac63a, type: 3}
   tiles: []
   layer: 0
 --- !u!1 &433175659
@@ -25448,11 +25371,15 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Walls
       m_Image: {fileID: 0}
-    - m_Text: Objects
+    - m_Text: Detail
       m_Image: {fileID: 0}
     - m_Text: Structures
       m_Image: {fileID: 0}
+    - m_Text: Objects
+      m_Image: {fileID: 0}
     - m_Text: Characters
+      m_Image: {fileID: 0}
+    - m_Text: Markers
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -25918,7 +25845,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 15
+  m_ScrollSensitivity: 25
   m_Viewport: {fileID: 1966911362}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 1042008099}
@@ -26322,7 +26249,6 @@ GameObject:
   - component: {fileID: 983517716}
   - component: {fileID: 983517720}
   - component: {fileID: 983517719}
-  - component: {fileID: 983517718}
   - component: {fileID: 983517717}
   - component: {fileID: 983517721}
   m_Layer: 3
@@ -26340,7 +26266,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983517715}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 32, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -26363,33 +26289,6 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
---- !u!114 &983517718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 983517715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 875b18a4c1c747b4580e4670078dabd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  img: {fileID: 2800000, guid: 9dc2aa0070ed9744cbfa029f608900a4, type: 3}
-  tiles:
-  - color: {r: 0, g: 0, b: 0, a: 1}
-    type: single
-    tiles:
-    - {fileID: 11400000, guid: abf4112191586a648ac6ed4241ab02f8, type: 2}
-  - color: {r: 0, g: 0, b: 0.72156864, a: 1}
-    type: single
-    tiles:
-    - {fileID: 11400000, guid: af33d0089718867429498832208fc2f2, type: 2}
-  - color: {r: 0, g: 0.4627451, b: 0.57254905, a: 1}
-    type: single
-    tiles:
-    - {fileID: 11400000, guid: 9b7708885e8056e448e1918f3a0c03bc, type: 2}
-  layer: 1
 --- !u!483693784 &983517719
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -26689,7 +26588,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  img: {fileID: 2800000, guid: 9dc2aa0070ed9744cbfa029f608900a4, type: 3}
   tiles: []
   layer: 1
 --- !u!1 &989126430
@@ -42350,9 +42248,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManagement, Assembly-CSharp
-        m_MethodName: openSettings
+      - m_Target: {fileID: 1712398619}
+        m_TargetAssemblyTypeName: EditPlacer, Assembly-CSharp
+        m_MethodName: loadMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -42444,9 +42342,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameManagement, Assembly-CSharp
-        m_MethodName: saveGame
+      - m_Target: {fileID: 1712398619}
+        m_TargetAssemblyTypeName: EditPlacer, Assembly-CSharp
+        m_MethodName: saveMap
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

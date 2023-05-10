@@ -15,10 +15,10 @@ public class PathGrid : MonoBehaviour {
     private Vector2Int middlePos;
 
     public GameObject player; // TEMP!!!!!!!!!!!! for testing coords
-    private MapFromImage objectMap; // the image
+    private MapToSave objectMap; // the image
 
     void Start() {
-        objectMap = GetComponent<MapFromImage>();
+        objectMap = GetComponent<MapToSave>();
         player = Knowledge.player.gameObject;
     }
     public void createGrid(Vector2 center) {
