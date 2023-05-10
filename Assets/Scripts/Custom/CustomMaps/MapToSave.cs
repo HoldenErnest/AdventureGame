@@ -155,4 +155,12 @@ public class MapToSave : MonoBehaviour
     public bool activeTile(Vector2Int v) {
         return map.HasTile(new Vector3Int(v.x,v.y,0));
     }
+
+    // for when this map isnt the currently selected group
+    public void fadeMap() {
+        map.color = new Color(1f,1f,1f,0.5f);
+    }
+    public void unfadeMap() {
+        map.color = new Color(1f,1f,1f,1f);
+    }
 }

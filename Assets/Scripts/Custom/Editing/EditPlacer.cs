@@ -79,4 +79,13 @@ public class EditPlacer : MonoBehaviour {
             grids[i].loadMap("test");
         }
     }
+
+    public void updateGroup(int g) {
+        for (int i = 0; i < grids.Length; i++) {
+            if (grids[i].layer != g) {
+                grids[i].fadeMap();
+            } else
+                grids[i].unfadeMap();
+        }
+    }
 }

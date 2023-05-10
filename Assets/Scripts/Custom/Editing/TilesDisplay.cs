@@ -34,6 +34,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
 
     // event when the player changes the group
     public void updateGroup() {
+        Camera.main.gameObject.GetComponent<EditPlacer>().updateGroup(getGroupNumber());
         loadCells(getGroupNumber());
     }
     public void updateKey() {
