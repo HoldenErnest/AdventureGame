@@ -91,24 +91,24 @@ public class CharacterCreator : MonoBehaviour {
         Character c = character.GetComponent<Character>();
         Team cTeam = character.GetComponent<Team>();
         try {
-        c.setName(name);
-        c.setTitle(title);
-        c.setDescription(description);
-        c.setBaseHp(baseHealth);
-        c.setStats(stats);
-        cTeam.setTeam(team);
-        c.setBodyTex(bodyTexture);
-        c.setEquips(equipment);
-        c.setStartingSkills(startingSkills);
-        if (hotbars != null)
-            c.setHotbar(hotbars);
-        c.setCharIcon(icon);
-        Controller charCont = character.GetComponent<Controller>();
-        charCont.invUI = invUI;
-        charCont.escUI = escUI;
-        charCont.gameObject.transform.position = new Vector2(homePos[0], homePos[1]); // sets the players transform to the home position
-        c.setStatsUI(statsUI);
-        c.setPlayer(); // setplayer inherintly does updateAll()
+            c.setName(name);
+            c.setTitle(title);
+            c.setDescription(description);
+            c.setBaseHp(baseHealth);
+            c.setStats(stats);
+            cTeam.setTeam(team);
+            c.setBodyTex(bodyTexture);
+            c.setEquips(equipment);
+            c.setStartingSkills(startingSkills);
+            if (hotbars != null)
+                c.setHotbar(hotbars);
+            c.setCharIcon(icon);
+            Controller charCont = character.GetComponent<Controller>();
+            charCont.invUI = invUI;
+            charCont.escUI = escUI;
+            charCont.gameObject.transform.position = new Vector2(homePos[0], homePos[1]); // sets the players transform to the home position
+            c.setStatsUI(statsUI);
+            c.setPlayer(); // setplayer inherintly does updateAll()
         } catch (Exception e) {
             Debug.Log("PLAYER CANT BE CREATED: " + e);
         }

@@ -28,7 +28,7 @@ public class Hotbar : MonoBehaviour
 
     public void updateIcon(Texture2D tex) {
         try {
-        GetComponent<SpriteRenderer>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 32f);
+            GetComponent<SpriteRenderer>().sprite = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 32f);
         } catch (Exception e) {
             Debug.Log("cant set hotbar icon");
         }

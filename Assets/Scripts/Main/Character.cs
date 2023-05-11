@@ -84,7 +84,7 @@ public class Character : MonoBehaviour {
         charIsPlayer = true;
         updateAll();
 
-         // temp nonesense for OPness
+        // temp nonesense for OPness
         userStats.speed = 10;
         updateSpeed();
     }
@@ -216,10 +216,13 @@ public class Character : MonoBehaviour {
         }
     }
     public void updateHotbarIcons() {
+        
         for (int i = 0; i < usingSkills.Length; i++) {
             Texture2D tex = tex = Knowledge.getSkillIcon("noSkill");
-            if (!usingSkills[i].isEmpty())
-                tex = Knowledge.getSkillIcon(usingSkills[i].skillName);
+            if (!usingSkills[i].isEmpty()) {
+                Debug.Log(usingSkills[i].skillName + " was gathered");
+                tex = Knowledge.getSkillIcon(usingSkills[i].getPath());
+            }
             hotbarItems[i].updateIcon(tex);
         }
     }
