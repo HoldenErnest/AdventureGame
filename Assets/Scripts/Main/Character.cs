@@ -221,7 +221,8 @@ public class Character : MonoBehaviour {
             Texture2D tex = tex = Knowledge.getSkillIcon("noSkill");
             if (!usingSkills[i].isEmpty()) {
                 Debug.Log(usingSkills[i].skillName + " was gathered");
-                tex = Knowledge.getSkillIcon(usingSkills[i].getPath());
+                string n = usingSkills[i].getPath();
+                tex = Knowledge.getSkillIcon(n.Substring(n.LastIndexOf("/")+1));
             }
             hotbarItems[i].updateIcon(tex);
         }
