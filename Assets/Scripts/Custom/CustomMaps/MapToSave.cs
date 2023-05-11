@@ -102,7 +102,7 @@ public class MapToSave : MonoBehaviour
         return null;
     }
 
-    private Vector2Int worldToGridPoint(float x, float y) {
+    public Vector2Int worldToGridPoint(float x, float y) {
         int nx = Mathf.RoundToInt(x-0.5f);// - ((int)(width/2))*-1;
         int ny = Mathf.RoundToInt(y-0.5f);// - ((int)(height/2))*-1;
         //Debug.Log(x + ", " + y + ". is mouse");

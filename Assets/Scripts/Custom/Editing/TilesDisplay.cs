@@ -126,8 +126,8 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         int locInRow = (l%itemsPerRow);
         int locInCol = -(l/itemsPerRow);
 
-        float x = locInRow + (cellOffsetX * locInRow) /*+ contentTranform.position.x*/ + tableOffsetX;
-        float y = locInCol + (cellOffsetY * locInCol) /*+ contentTranform.position.y*/ + tableOffsetY;
+        float x = locInRow + (cellOffsetX * locInRow) + tableOffsetX;
+        float y = locInCol + (cellOffsetY * locInCol) + tableOffsetY;
         return new Vector3(x, y, 0) * cellSize;
     }
 
@@ -139,7 +139,6 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     }
 
     public void setSelected(int pos) {
-        Debug.Log( "found " + foundObjects[pos].getPosition());
         if (OObjects != null)
             Camera.main.gameObject.GetComponent<EditPlacer>().setSelected(OObjects[foundObjects[pos].getPosition()]);
         else if (SObjects != null)
