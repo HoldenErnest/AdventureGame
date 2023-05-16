@@ -49,13 +49,26 @@ public class MapToSave : MonoBehaviour
         writer.Close();
     }
 
+
+    public void setTile(float x, float y, Tile t) {
+        Vector2Int v = worldToGridPoint(x,y);
+        map.SetTile(new Vector3Int(v.x,v.y,0), t);
+    }
     public void setTile(float x, float y, Sprite s) {
         Vector2Int v = worldToGridPoint(x,y);
         map.SetTile(new Vector3Int(v.x,v.y,0), spriteToTile(s));
     }
+    public void removeTile(float x, float y) {
+        Vector2Int v = worldToGridPoint(x,y);
+        map.SetTile(new Vector3Int(v.x,v.y,0), null);
+    }
     public void floodPlace(float x, float y, Sprite s) { // the fill command
         Vector2Int v = worldToGridPoint(x,y);
         map.FloodFill(new Vector3Int(v.x,v.y,0),spriteToTile(s));
+    }
+    public void floodPlace(float x, float y, Tile t) { // the fill command
+        Vector2Int v = worldToGridPoint(x,y);
+        map.FloodFill(new Vector3Int(v.x,v.y,0),t);
     }
 
     //LOAD MAP
@@ -86,7 +99,7 @@ public class MapToSave : MonoBehaviour
         return theTile;
     }
 
-    private Sprite[] getSprites() {// load the sprites that should to be displayed into an array
+    private Sprite[] getSprites() {// load the sprites that should to be displayed into an array !!THIS MUST CHANGE WITH ALL TilesDisplay METHOD CHANGES !!
         switch (layer) {
             case 0:
                 return Knowledge.getAllSpritesFromTexture("Ground");
@@ -95,6 +108,7 @@ public class MapToSave : MonoBehaviour
                 return Knowledge.getAllSpritesFromTexture("Walls");
                 break;
             case 2:
+                return Knowledge.getAllSpritesFromTexture("Detail");
                 break;
             default:
                 break;

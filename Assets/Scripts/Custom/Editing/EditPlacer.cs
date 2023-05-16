@@ -4,13 +4,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class EditPlacer : MonoBehaviour {
 
     [SerializeField]
     private MapToSave[] grids;
     
-    private GameObject selectedObject; // the object to place
+    private Tile selectedSpecialTile; // the object to place
     private Sprite selectedTile; // the tile to place  <^ these are interchangable
 
     [SerializeField]
@@ -41,38 +42,46 @@ public class EditPlacer : MonoBehaviour {
 
     private void place() {
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (selectedTile != null) {
+        if (selectedSpecialTile == null) {
             grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedTile);
-        } else if (selectedObject != null) {
+        } else {
             Debug.Log("is an object");
-            //grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedObject);
+            grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedSpecialTile);
         }
     }
     private void floodPlace() {
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (selectedTile != null) {
+        if (selectedSpecialTile == null) {
             grids[sectionTable.getGroupNumber()].floodPlace(wp.x, wp.y, selectedTile);
-        } else if (selectedObject != null) {
+        } else {
             Debug.Log("is an object");
-            //grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedObject);
+            // COMMENT BACK IN TO FLOOD PLACE SPECIAL TILES! (I removed it because it seemed unnecessary)
+            //grids[sectionTable.getGroupNumber()].floodPlace(wp.x, wp.y, selectedSpecialTile);
         }
     }
     private void remove() {
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (grids[sectionTable.getGroupNumber()].activeTile(wp.x,wp.y))
-            grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, null);
-        else Debug.Log("not active");
+            grids[sectionTable.getGroupNumber()].removeTile(wp.x, wp.y);
+        // otherwise the tile isnt active
     }
 
     public void setSelected(Sprite s) {
-        selectedObject = null;
+        selectedSpecialTile = null;
         selectedTile = s;
         updateVisual();
     }
-    public void setSelected(GameObject g) {
-        selectedTile = null;
-        selectedObject = g;
-        //updateVisual();
+    public void setSelected(Tile t) {
+        selectedSpecialTile = t;
+        selectedTile = t.sprite;
+        updateVisual();
+    }
+    public void setSelected(CharacterCreator c) {
+        CharacterTile t = new CharacterTile(c);
+        t.sprite = c.getIcon();
+        selectedSpecialTile = t;
+        selectedTile = t.sprite;
+        updateVisual();
     }
     private void updateVisual() {
         visual.GetComponent<SpriteRenderer>().sprite = selectedTile;
@@ -113,6 +122,9 @@ public class EditPlacer : MonoBehaviour {
     }
 
     public void updateGroup(int g) {
+        selectedTile = null;
+        selectedSpecialTile = null;
+        updateVisual();
         for (int i = 0; i < grids.Length; i++) {
             if (grids[i].layer != g) {
                 grids[i].fadeMap();
@@ -124,5 +136,15 @@ public class EditPlacer : MonoBehaviour {
         for (int i = 0; i < grids.Length; i++) {
             grids[i].unfadeMap();
         }
+    }
+
+    //key the groups into tile types !! there is also one of these in TilesDisplay -- make sure to edit that as well !!
+    private int currentArrayType() {
+        int n = sectionTable.getGroupNumber();
+        if (n <= 2)
+            return 0;
+        if (n == 3 || n == 4 || n == 6)
+            return 1;
+        return 2;
     }
 }

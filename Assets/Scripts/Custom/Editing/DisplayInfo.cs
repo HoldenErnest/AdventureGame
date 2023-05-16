@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class DisplayInfo : MonoBehaviour {
     
@@ -15,7 +16,12 @@ public class DisplayInfo : MonoBehaviour {
         icon = s;
         title = s.name;
     }
-    public DisplayInfo(int p, Character c) {
+    public DisplayInfo(int p, Tile c) {
+        pos = p;
+        //icon = c.icon;
+        title = c.name;
+    }
+    public DisplayInfo(int p, CharacterCreator c) {
         pos = p;
         //icon = c.icon;
         title = c.name;

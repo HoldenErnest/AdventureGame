@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.Tilemaps;
 
 public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler {
 
@@ -29,7 +30,8 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
 
     private List<GameObject> cells = new List<GameObject>(); // the actual gameobjects for the cells
     private Sprite[] SObjects; // all cells info in the current group
-    private Sprite[] OObjects; // all cells info in the current group
+    private Tile[] OObjects; // all cells info in the current group
+    private CharacterCreator[] CObjects;
     private List<DisplayInfo> foundObjects = new List<DisplayInfo>(); // all cells info in 'objects' that also have the key
 
     // event when the player changes the group
@@ -46,12 +48,25 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         // load objects that want to be displayed into an array
         switch (id) {
             case 0:
-                SObjects = Knowledge.getAllSpritesFromTexture("Ground");
+                SObjects = Knowledge.getAllSpritesFromTexture("Ground"); // all background tiles
                 break;
             case 1:
-                SObjects = Knowledge.getAllSpritesFromTexture("Walls");
+                SObjects = Knowledge.getAllSpritesFromTexture("Walls"); // collidable tiles (excluding objects)
                 break;
             case 2:
+                SObjects = Knowledge.getAllSpritesFromTexture("Detail"); // top layer tiles
+                break;
+            case 3:
+                //SObjects = Knowledge.getAllSpritesFromTexture("Structures");
+                break;
+            case 4:
+                //OObjects = Knowledge.getAllObjectsInFolder("SavedObjects/Objects");
+                break;
+            case 5:
+                CObjects = Knowledge.getAllCharacters(); // These are used ONLY to set characters initital positions, 
+                break;
+            case 6:
+                //OObjects = Knowledge.getAllObjectsInFolder("SavedObjects/Markers");
                 break;
             default:
                 break;
@@ -73,16 +88,21 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         }
     }
 
+    private int currentArrayType() {
+        int n = getGroupNumber();
+        if (n <= 2)
+            return 0;
+        if (n == 3 || n == 4 || n == 6)
+            return 1;
+        return 2;
+    }
+
     // put the selected group into an array of data to be turned into displayCells
     private void updateKeyObjects() {
-        if (SObjects == null && OObjects == null) {
-            loadCells(0);
-            return;
-        }
 
         foundObjects.Clear();
         string key = getKey(); // prep the array and set the key
-        if (SObjects != null) { // fill the sprite array
+        if (currentArrayType() == 0) { // fill the sprite array
             for (int i = 0; i< SObjects.Length; i++) {
                 DisplayInfo d = new DisplayInfo(i,SObjects[i]);
                 if (key.Equals("")){
@@ -92,7 +112,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
                 if (d.getTitle().ToLower().Contains(key.ToLower()))
                     foundObjects.Add(d);
             }
-        } else { // otherwise fill the object array
+        } else if (currentArrayType() == 1) { // otherwise fill the object array
             for (int i = 0; i< OObjects.Length; i++) {
                 DisplayInfo d = new DisplayInfo(i,OObjects[i]);
                 if (key.Equals("")){
@@ -102,7 +122,18 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
                 if (d.getTitle().ToLower().Contains(key.ToLower()))
                     foundObjects.Add(d);
             }
+        } else { // otherwise fill the object array
+            for (int i = 0; i< CObjects.Length; i++) {
+                DisplayInfo d = new DisplayInfo(i,CObjects[i]);
+                if (key.Equals("")){
+                    foundObjects.Add(d);
+                    continue;
+                }
+                if (d.getTitle().ToLower().Contains(key.ToLower()))
+                    foundObjects.Add(d);
+            }
         }
+        
     }
     private void clearCells() {
         foreach (GameObject cell in cells) {
@@ -139,10 +170,12 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     }
 
     public void setSelected(int pos) {
-        if (OObjects != null)
+        if (currentArrayType() == 1)
             Camera.main.gameObject.GetComponent<EditPlacer>().setSelected(OObjects[foundObjects[pos].getPosition()]);
-        else if (SObjects != null)
+        else if (currentArrayType() == 0)
             Camera.main.gameObject.GetComponent<EditPlacer>().setSelected(SObjects[foundObjects[pos].getPosition()]);
+        else // selected is character tiles
+            Camera.main.gameObject.GetComponent<EditPlacer>().setSelected(CObjects[foundObjects[pos].getPosition()]);
     }
     
     //EVENTS

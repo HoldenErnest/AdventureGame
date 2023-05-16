@@ -85,7 +85,7 @@ public class Character : MonoBehaviour {
         updateAll();
 
         // temp nonesense for OPness
-        userStats.speed = 10;
+        userStats.speed = 20;
         updateSpeed();
     }
     public float getHealthPercentage() {
@@ -151,9 +151,27 @@ public class Character : MonoBehaviour {
 
     // SETTERS ONLY CALLED WHEN CREATING CHARACTER::
     public void setName(string n) {
+        if (n.StartsWith("{!"))
+        switch (n) {
+            case "{!random}":
+                name = "get random name here";
+                return;
+            case "{!randomBad}":
+                name = "get random bad name here";
+                return;
+            
+        }
         name = n ?? "Unknown";
     }
     public void setTitle(string s) {
+        if (s.StartsWith("{!")) {
+            switch (s) {
+                case "{!A}": // ambiguous titles
+                    name = "get random title here";
+                    return;
+                
+            }
+        }
         title = s ?? "";
     }
     public void setBaseHp(int n) {

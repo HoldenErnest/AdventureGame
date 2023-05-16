@@ -165,4 +165,9 @@ public class CharacterCreator : MonoBehaviour {
     public void setPath(string p) {
         path = p;
     }
+
+    // in case youre just working with the creators, not actual characters
+    public Sprite getIcon() {
+        return (icon != "") ? Knowledge.getCharIcon(icon): Knowledge.getCharIcon("noicon");
+    }
 }

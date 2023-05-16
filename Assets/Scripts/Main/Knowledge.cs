@@ -19,6 +19,7 @@ public static class Knowledge {
     private static string savesPath = $"{Application.persistentDataPath}/Saves/save0/";
     public static readonly string playerPath = "Player/";
     public static readonly string skillsPath = "SavedObjects/Skills/";
+    public static readonly string charsPath = "SavedObjects/Characters/";
     public static readonly string effectsPath = "SavedObjects/Effects/";
     public static readonly string itemsPath = "SavedObjects/Items/";
     public static readonly string equipsPath = "SavedObjects/Equips/";
@@ -29,6 +30,7 @@ public static class Knowledge {
     public static readonly string effectsIconPath = "Icons/Effects/";
     public static readonly string itemsIconPath = "Icons/Items/";
     public static readonly string skillsIconPath = "Icons/Skills/";
+    public static readonly string charsIconPath = "Icons/Characters/";
     public static readonly string skillsPrefabPath = "Prefabs/Skills/";
     public static readonly string charsPrefabPath = "Prefabs/Characters/";
     public static readonly string questsPath = "Quests/";
@@ -216,7 +218,14 @@ public static class Knowledge {
         }
         return null;
     }
-
+    public static Sprite getCharIcon(string s) {
+        try {
+            return Resources.Load<Sprite>(charsIconPath + s);
+        } catch {
+            Debug.Log("Character icon \"" + s + ".png\" not found.");
+        }
+        return null;
+    }
     public static Texture2D getSkillIcon(string s) {
         try {
             return Resources.Load<Texture2D>(skillsIconPath + s);
@@ -233,6 +242,31 @@ public static class Knowledge {
             Debug.Log("Multi-Texture \"" + s + ".png\" not found.");
         }
         return null;
+    }
+    public static GameObject[] getAllObjectsInFolder(string path) {
+        try {
+            return Resources.LoadAll<GameObject>(charsPath);
+        } catch {
+            Debug.Log("Folder at \"" + path + "\" does not contain any characters.");
+        }
+        return null;
+    }
+    public static CharacterCreator[] getAllCharacters() {
+        CharacterCreator[] allChars = null;
+        try {
+            TextAsset[] fileArray = Resources.LoadAll<TextAsset>(charsPath);
+            allChars = new CharacterCreator[fileArray.Length];
+            for (int i = 0; i < fileArray.Length; i++) {
+                string json = fileArray[i].text;
+                CharacterCreator cc = new CharacterCreator();
+                JsonUtility.FromJsonOverwrite(json, cc);
+                allChars[i] = cc;
+            }
+            return allChars;
+        } catch {
+            Debug.Log("Folder at \"" + charsPath + "\" does not contain any characters.");
+        }
+        return allChars;
     }
     public static Texture2D getItemIcon(string s) { // Equips and Items both use this for Icons only
         Texture2D temp = Resources.Load<Texture2D>(itemsIconPath + s);
