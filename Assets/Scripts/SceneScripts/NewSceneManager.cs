@@ -13,11 +13,16 @@ public class NewSceneManager : MonoBehaviour {
     public GameObject escUI;
     public GameObject invUI;
     public Hotbar[] hotbars;
+    public string currentMap;
+
+    [SerializeField]
+    private MapToSave[] grids;
 
     void Start() {
         loadInit();
         loadPlayer();
         loadCharacters(); // LOAD ALL NPCS
+        loadMap();
     }
     private void loadInit() {
         Knowledge.tools = gameObject.GetComponent<Tools>();
@@ -36,5 +41,10 @@ public class NewSceneManager : MonoBehaviour {
         
         
         GameSaver.loadInventory();
+    }
+    private void loadMap () {
+        foreach (MapToSave m in grids) {
+            m.loadMap("test");
+        }
     }
 }

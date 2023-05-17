@@ -219,20 +219,22 @@ public static class Knowledge {
         return null;
     }
     public static Sprite getCharIcon(string s) {
+        if (s != "")
         try {
             return Resources.Load<Sprite>(charsIconPath + s);
         } catch {
             Debug.Log("Character icon \"" + s + ".png\" not found.");
         }
-        return null;
+        return Resources.Load<Sprite>(charsIconPath + "noicon");
     }
     public static Texture2D getSkillIcon(string s) {
+        if (s != "")
         try {
             return Resources.Load<Texture2D>(skillsIconPath + s);
         } catch {
             Debug.Log("Skill icon \"" + s + ".png\" not found.");
         }
-        return null;
+        return Resources.Load<Texture2D>(skillsIconPath + "noSkill");
     }
     public static Sprite[] getAllSpritesFromTexture(string s) {
         try {

@@ -431,8 +431,15 @@ public class Character : MonoBehaviour {
         cc.team = gameObject.GetComponent<Team>().getTeam();
         cc.stats = userStats;
         cc.homePos = new float[2];
-        cc.homePos[0] = gameObject.transform.position.x;
-        cc.homePos[1] = gameObject.transform.position.y;
+        cc.lastMap = Camera.main.gameObject.GetComponent<NewSceneManager>().currentMap;
+        if (isPlayer()) { // if player, update last position
+            cc.homePos[0] = gameObject.transform.position.x;
+            cc.homePos[1] = gameObject.transform.position.y;
+        } else { // if not player just keep their home where it is
+            AIController contr = gameObject.GetComponent<AIController>();
+            cc.homePos[0] = contr.homePosition.x;
+            cc.homePos[1] = contr.homePosition.y;
+        }
         cc.equipment = equipsToString();
         cc.items = new ItemSave[0]; //TODO SET ITEMS FOR NON-PLAYERS!!!!!
         cc.startingSkills = usingSkillsToString();

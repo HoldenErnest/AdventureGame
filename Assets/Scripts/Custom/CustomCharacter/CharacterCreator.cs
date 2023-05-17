@@ -18,6 +18,7 @@ public class CharacterCreator : MonoBehaviour {
     public Stats stats; // const, str, dex, int, evade, armor, spd, xp, poiRst, psyRst
     public int team; // character team
     public float[] homePos; // home position (depending, can be used to spawn here)
+    public string lastMap; // what map were you previously in (usually not changed or even refrenced)(keep "" to spawn with original map)
 
     public string[] equipment; // equipment to equip
     public ItemSave[] items; // (extra items or materials to drop on death)
@@ -30,40 +31,15 @@ public class CharacterCreator : MonoBehaviour {
     public CharacterCreator() {
         
     }
-    public Character createCharacter() { // Create a character from the base character GameObject / model
-        GameObject character = Instantiate(Knowledge.getCharacterPrefab("genericCharacter"), new Vector2(homePos[0], homePos[1]), Quaternion.identity);
-        Character c = character.GetComponent<Character>();
-        if (!c.isPlayer()) {
-            AIController control = character.GetComponent<AIController>();
-            if (homePos == null || homePos.Length >= 2) { // set home position
-                control.homePosition = new Vector2(homePos[0], homePos[1]);
-            } else control.homePosition = new Vector2(0,0);
-        }
-        Team cTeam = character.GetComponent<Team>();
-
-        c.setPath(path);
-        c.setName(name);
-        c.setTitle(title);
-        c.setDescription(description);
-        c.setBaseHp(baseHealth);
-        c.setStats(stats);
-        cTeam.setTeam(team);
-        c.setBodyTex(bodyTexture);
-        c.setEquips(equipment);
-        c.setItems(items);  // << need a new inventory for this character
-        c.setStartingSkills(startingSkills);
-        c.setCharIcon(icon);
-
-        c.updateAll();
-
-        return c;
+    public Character createCharacter() { // Create a character
+        return createCharacterFrom(Knowledge.getCharacterPrefab("genericCharacter"));
     }
     public Character createCharacterFrom(GameObject characterBase) { // Create a character from the base character GameObject / model
         GameObject character = Instantiate(characterBase);
         Character c = character.GetComponent<Character>();
         if (!c.isPlayer()) {
             AIController control = character.GetComponent<AIController>();
-            if (homePos == null || homePos.Length >= 2) { // set home position
+            if (homePos == null || homePos.Length != 2) { // set home position
                 control.homePosition = new Vector2(homePos[0], homePos[1]);
             } else control.homePosition = new Vector2(0,0);
         }
@@ -168,6 +144,6 @@ public class CharacterCreator : MonoBehaviour {
 
     // in case youre just working with the creators, not actual characters
     public Sprite getIcon() {
-        return (icon != "") ? Knowledge.getCharIcon(icon): Knowledge.getCharIcon("noicon");
+        return Knowledge.getCharIcon(icon);
     }
 }

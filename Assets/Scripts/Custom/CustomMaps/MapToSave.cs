@@ -7,24 +7,23 @@ using System;
 
 public class MapToSave : MonoBehaviour
 {
-    //public Texture2D img;
-    public pixelMap[] tiles;
     public int layer;
 
     private Tilemap map;
 
     Sprite[] tileOptions; // all the different possible sprites for this map
 
-    void Start() {
+    void Awake() {
 
         map = this.GetComponent<Tilemap>();
         //GenerateMap();
 
     }
-    public void saveMap(string file) { // saves the map and the metadata to the map
-        file += layer+".txt";
+    public void saveMap(string save) { // saves the map and the metadata to the map
         string filePath = Path.Combine(Application.streamingAssetsPath,"Maps");
-        filePath = Path.Combine(filePath,file);
+        filePath = Path.Combine(filePath,save);
+        Directory.CreateDirectory (filePath);
+        filePath += "/"+layer+".txt";
 
         StreamWriter writer = new StreamWriter(filePath);
         
@@ -73,7 +72,7 @@ public class MapToSave : MonoBehaviour
 
     //LOAD MAP
     public void loadMap(string file) {
-        file = "Maps/"+file+layer;
+        file = "Maps/"+file+"/"+layer;
         generateMap(file);
     }
     private void generateMap(string file) {
@@ -83,9 +82,12 @@ public class MapToSave : MonoBehaviour
         for (int i = 0; i < allTiles.Length; i++) { // go through all tiles in the map
             string[] line = allTiles[i].Split(",");
             try {
+                Debug.Log(allTiles[i]);
+                
                 generateTile(Int32.Parse(line[2]),Int32.Parse(line[0]),Int32.Parse(line[1]));
-            } catch {
-                Debug.Log("not a number");
+            } catch (Exception e) {
+                Debug.Log("not a number");//line[0] + ">>"+line[1]+">>"+line[2] + 
+                Debug.Log(e);
             }
         }
     }
@@ -93,9 +95,14 @@ public class MapToSave : MonoBehaviour
         map.SetTile(new Vector3Int(x,y,0), spriteToTile(tileOptions[i]));
     }
     private Tile spriteToTile (Sprite s) {
+        try {
         if (System.Object.ReferenceEquals(s, null)) return null;
+        } catch (Exception e) {
+            Debug.Log(e);
+        }
         Tile theTile = new Tile();
         theTile.sprite = s;
+        
         return theTile;
     }
 

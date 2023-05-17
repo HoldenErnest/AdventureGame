@@ -20794,6 +20794,8 @@ MonoBehaviour:
   - {fileID: 597104544}
   - {fileID: 503858708}
   - {fileID: 2075666939}
+  currentMap: 
+  grids: []
 --- !u!114 &1712398618
 MonoBehaviour:
   m_ObjectHideFlags: 0
