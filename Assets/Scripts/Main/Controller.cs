@@ -132,8 +132,8 @@ public class Controller : MonoBehaviour
             skillInUse = 4;
         }
 
-        if (Input.GetKeyDown(KeyCode.Return)) {
-            Dialogue.next();
+        if (Input.GetKeyDown(KeyCode.Return)) { // move to the next dialogue if there is one
+            DialogueManager.next();
         }
 
         if (Input.GetMouseButton(0)) {

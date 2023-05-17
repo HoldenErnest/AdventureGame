@@ -103,6 +103,7 @@ GameObject:
   - component: {fileID: 3348805729384887353}
   - component: {fileID: 3091926558684222695}
   - component: {fileID: -2239132532569658477}
+  - component: {fileID: -3400252396532374442}
   m_Layer: 0
   m_Name: genericCharacter
   m_TagString: Untagged
@@ -367,3 +368,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allowHoverUI: 1
+--- !u!114 &-3400252396532374442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8215924147482751325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d08d38ee24882c241a6288488a7ddc5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

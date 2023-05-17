@@ -26,6 +26,8 @@ public class CharacterCreator : MonoBehaviour {
     public string bodyTexture; // Resources/Textures/Bodies/<bodyTexture>.png
     public string icon; // a character icon for dialogues (might not be seen ever so you this is optional)
 
+    public string[] questsToGive; // a list of the quests they will give to the player on interaction
+
     // IMPORTANT!!!!!!!!!
     // if anything is not specified make sure it has a default value so it wont break
     public CharacterCreator() {
@@ -42,6 +44,8 @@ public class CharacterCreator : MonoBehaviour {
             if (homePos == null || homePos.Length != 2) { // set home position
                 control.homePosition = new Vector2(homePos[0], homePos[1]);
             } else control.homePosition = new Vector2(0,0);
+            Speaker sp = character.GetComponent<Speaker>();
+            sp.setQuestsToGive(questsToGive);
         }
         Team cTeam = character.GetComponent<Team>();
         

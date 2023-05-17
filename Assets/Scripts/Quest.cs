@@ -29,13 +29,16 @@ public class Quest {
         items = new QuestItem[] {new QuestItem(), new QuestItem(), new QuestItem()};
     }
 
+    public string getNextDialoguePath() { // returns the next dialogue piece depending on how many items youve completed
+        return Knowledge.questsPath + file + "/item" + itemsDone;
+    }
+
     public bool itemsHasType(string t) { // if this quest has an item of a certain type (used to turn on or off testing for certain interactions)
         foreach (QuestItem item in items) {
             if (item.type.Equals(t) && !item.isComplete) return true;
         }
         return false;
     }
-
     public void updateCompletion() {
         itemsDone = 0;
         foreach (QuestItem item in items) {
@@ -49,13 +52,11 @@ public class Quest {
         completeQuest();
         
     }
-
     public void completeQuest() {
         isComplete = true;
         Debug.Log($"Completed Quest ({title}): {itemsDone} / {items.Length}");
         collectAllRewards(); // rewards given as soon as quest is completed.. maybe change to redeem rewards in quest menu.
     }
-
     public void collectAllRewards() {
         if (rewardsCollected) return;
 
@@ -64,11 +65,9 @@ public class Quest {
         }
         rewardsCollected = true;
     }
-
     public int getProgress() { // quest progress, how many quest items are completed
         return itemsDone;
     }
-
     public void update(string type, string objective) { // type of questitem to see if its even applicable --> after talking to a guy >> update("talk", "bilbo");
         if (itemsDone >= items.Length)  { updateCompletion(); return; }
         items[itemsDone].updateCompletion(this, type, objective);
@@ -95,7 +94,7 @@ public class Quest {
     private int getCompleted() {
         int total = 0;
         foreach (QuestItem qi in items) {
-            if (!qi.isComplete) return total;
+            if (!qi.isComplete) break;
             total++;
         }
         return total;
@@ -152,6 +151,9 @@ public class QuestReward {
         switch (rewardType) {
             case "xp":
                 Knowledge.player.addXp(ammount);
+                break;
+            case "quest":
+                Knowledge.player.inventory.addAvailableQuest(rewardName);
                 break;
             case "item":
                 Knowledge.player.inventory.addItems(rewardName, ammount);

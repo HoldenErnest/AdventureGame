@@ -1,0 +1,25 @@
+<info>
+    <dialogue>
+
+        <item>
+            <speaker>22222222</speaker>
+            <text>you did it! congrats</text>
+        </item>
+
+        <item>
+            <speaker>Mr. Bunson22</speaker>
+            <text>I am off on dsgsdgsdsdgsdgsdgl {player.name} {player.title}!</text>
+        </item>
+
+        <item>
+            <speaker>Rewards:</speaker>
+            <text>you have recieved your rewards</text>
+        </item>
+
+    </dialogue>
+    
+    <font>
+        <size>10</size>
+        <style>normal</style>
+    </font>
+</info>

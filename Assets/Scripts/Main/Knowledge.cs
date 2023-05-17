@@ -117,7 +117,7 @@ public static class Knowledge {
     }
     public static Quest getQuest(string questName) {
         Quest newQuest = new Quest();
-        string theFile = questsPath + questName;
+        string theFile = questsPath + questName + "/quest";
         try {
             if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
                 JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newQuest);
@@ -126,7 +126,7 @@ public static class Knowledge {
                 JsonUtility.FromJsonOverwrite(json, newQuest); // instead of rewriting a new Skill() try rewriting the skill currently in use
             }
         } catch {
-            Debug.Log("Quest \"" + questName + ".json\" not found.");
+            Debug.Log("Quest \"" + questName + "/quest.json\" not found.");
         }
         newQuest.setFile(questName);
         return newQuest;

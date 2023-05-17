@@ -17,7 +17,10 @@ public class Inventory : MonoBehaviour {
     public ItemSave[] invItems;
     public EquipSave[] invEquips;
     public string[] skills;
+
+    // for the player only
     public QuestSave[] quests;
+    public string[] availableQuests; // list of quests for which the prereqs have been met
 
     // these lists are actually called apon.
     private List<Item> inventory = new List<Item>(); // list of items
@@ -193,10 +196,24 @@ public class Inventory : MonoBehaviour {
         // if (!newQuest.activeQuest()) // might need a check so quests cant get activated more than once. << including if its completed.
         activeQuests.Add(newQuest);
     }
+    public void addQuest(Quest q) {
+        activeQuests.Add(q);
+    }
     public void updateAllQuests(string type, string objective) {
         foreach (Quest q in activeQuests) {
             q.update(type, objective);
         }
+    }
+    public void addAvailableQuest (string s) {
+        lengthenArray(ref availableQuests, 1);
+        availableQuests[availableQuests.Length-1] = s;
+    }
+    private void lengthenArray(ref string[] orig, int n) {
+        string[] newA = new string[orig.Length+n];
+        for (int i = 0; i < orig.Length; i++) {
+            newA[i] = orig[i];
+        }
+        orig = newA;
     }
 
 }
