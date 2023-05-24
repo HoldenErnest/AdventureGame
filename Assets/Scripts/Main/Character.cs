@@ -40,6 +40,8 @@ public class Character : MonoBehaviour {
     private Coroutine hideHPRoutine;
     private float closeTime = 10.0f; // time for hp to hide after not taking damage
 
+    private bool isDead = false;
+
     private Character lastHitCharacter;
 
     void Awake() {
@@ -266,10 +268,12 @@ public class Character : MonoBehaviour {
         xpUI.updateSlider(userStats.getXp(), userStats.getMaxXp());
     }
     private void updateDeath() {
+        if (isDead) return;
         if (hp <= 0) {
+            isDead = true;
             giveXpToLastHit();
             if (lastHitCharacter.isPlayer()) { // player killed this character.
-                inventory.updateAllQuests("kill", name);
+                Knowledge.player.inventory.updateAllQuests("kill", name);
             }
             Destroy(this.gameObject);
         }
@@ -414,10 +418,10 @@ public class Character : MonoBehaviour {
         return m;
     }
 
-    public void damage(int damage) { // deal damage to the player with either a physical or magical attack
+    public void damage(int damage) { // deal raw damage to this character
         if (damage == 0) return;
         hp -= damage;
-        Debug.Log(name + " damaged for it " + damage);
+        //Debug.Log(name + " damaged for it " + damage);
         updateHpSlider();
         updateDeath();
     }

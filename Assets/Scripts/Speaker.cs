@@ -22,6 +22,7 @@ public class Speaker : MonoBehaviour, IPointerClickHandler {
     }
 
     private void startQuest(string q) {
+        Knowledge.player.inventory.removeAvailableQuest(q);
         Quest startingQuest = Knowledge.getQuest(q);
         DialogueManager.startNewDialogue(startingQuest.getNextDialoguePath());
         Knowledge.player.inventory.addQuest(startingQuest);
@@ -32,9 +33,14 @@ public class Speaker : MonoBehaviour, IPointerClickHandler {
     }
 
     private string getAvailableQuest() { // if the speaker can give a quest, emmit that quests starting dialogue instead
+        if (quests == null) return "";
         foreach (string s in quests) {
-            foreach(string s2 in Knowledge.player.inventory.availableQuests) { // assuming these quests are sorted by priority
-                if (s.Equals(s2)) return s;
+            for (int i = 0; i < Knowledge.player.inventory.availableQuests.Length; i++) { // assuming these quests are sorted by priority
+                if (s.Equals(Knowledge.player.inventory.availableQuests[i])) {
+
+                    return s;
+                }
+
             }
         }
         return "";

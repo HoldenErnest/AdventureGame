@@ -29,8 +29,14 @@ public class NewSceneManager : MonoBehaviour {
     }
     public void loadCharacters() {
         CharacterCreator a = Knowledge.getCharBlueprint("genericCharacter");
-        GameSaver.npcs.Add(a.createCharacter());
+        CharacterCreator b = Knowledge.getCharBlueprint("fred");
+        //GameSaver.npcs.Add(a.createCharacter());
         a.team = 1;
+        GameSaver.npcs.Add(a.createCharacter());
+        GameSaver.npcs.Add(a.createCharacter());
+        GameSaver.npcs.Add(a.createCharacter());
+        GameSaver.npcs.Add(a.createCharacter());//{"file":"hunter","itemsDone":1,"gotReward":false}
+        GameSaver.npcs.Add(b.createCharacter());
     }
     private void loadPlayer() {
         

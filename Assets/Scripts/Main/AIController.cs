@@ -343,7 +343,7 @@ public class AIController : Controller {
 
     public void attackPosition(Vector2 v) { // generic attack, if in range with any available attacks, use that skill
         if (!canSee(targetPos)) return;
-        Debug.Log("casting skill " + usingSkill.skillName + " at position: " + v);
+        //Debug.Log("casting skill " + usingSkill.skillName + " at position: " + v);
         usingSkill.updateTargetPosition(v);
         usingSkill.useSkill();
     }

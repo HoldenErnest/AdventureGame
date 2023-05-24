@@ -43,7 +43,7 @@ public class Item : MonoBehaviour {
         return sid;
     }
     public string getIconName() {
-        Debug.Log(altIcon ?? getFileName());
+        //Debug.Log(altIcon ?? getFileName());
         return altIcon ?? getFileName();
     }
 

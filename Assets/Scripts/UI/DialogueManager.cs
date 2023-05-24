@@ -22,6 +22,10 @@ public class DialogueManager : MonoBehaviour
         if (active) return;
         active = true;
         dialogue = ImportXml<DialogueXML>(name);
+        if (dialogue == null) {
+            active = false;
+            return;
+        }
         dialogueItemNum = 0;
         setDialogueBox(0);
     }
@@ -55,7 +59,7 @@ public class DialogueManager : MonoBehaviour
                 return (T)serializer.Deserialize(stream);
             }
         } catch (Exception e) {
-            Debug.LogError("Exception importing xml file: " + e);
+            Debug.Log("Exception importing xml file: (File might not have been found)" + path);
             return default;
         }
     }

@@ -6,7 +6,7 @@ using System;
 [Serializable]
 public class Quest {
 
-    private string file; // file this was saved under
+    public string file; // file this was saved under
     public bool isComplete;
     public bool rewardsCollected;
     public string title;
@@ -39,23 +39,25 @@ public class Quest {
         }
         return false;
     }
-    public void updateCompletion() {
+    public bool updateCompletion() {
         itemsDone = 0;
         foreach (QuestItem item in items) {
             if (!item.isComplete)  {
                 isComplete = false;
                 Debug.Log($"Overall Quest quota ({title}): {itemsDone} / {items.Length}");
-                return;
+                return false;
             }
             itemsDone++;
         }
         completeQuest();
+        return true;
         
     }
     public void completeQuest() {
         isComplete = true;
         Debug.Log($"Completed Quest ({title}): {itemsDone} / {items.Length}");
         collectAllRewards(); // rewards given as soon as quest is completed.. maybe change to redeem rewards in quest menu.
+
     }
     public void collectAllRewards() {
         if (rewardsCollected) return;
@@ -68,10 +70,11 @@ public class Quest {
     public int getProgress() { // quest progress, how many quest items are completed
         return itemsDone;
     }
-    public void update(string type, string objective) { // type of questitem to see if its even applicable --> after talking to a guy >> update("talk", "bilbo");
-        if (itemsDone >= items.Length)  { updateCompletion(); return; }
-        items[itemsDone].updateCompletion(this, type, objective);
-
+    public bool update(string type, string objective) { // type of questitem to see if its even applicable --> after talking to a guy >> update("talk", "bilbo");
+        Debug.Log("testing whether there is any quests to update");
+        if (itemsDone >= items.Length)  { return updateCompletion(); } // << returns whether the quest is complete
+        items[itemsDone].updateCompletion(this, type, objective); // update the current questItem 
+        return updateCompletion();
     }
 
     // save path object came from
@@ -123,12 +126,14 @@ public class QuestItem {
 
     //the "events" to run after every of these t types of interactions.
     public void updateCompletion(Quest q, string t, string o) {
+        Debug.Log("testing whether this is applicable kill");
         if (!type.Equals(t) || !objective.Equals(o)) return; // make sure the current quest item is this type anyway.
         current++;
         Debug.Log($"Item quota for Quest ({q.title}): {current} / {total} : by {t}ing a {o}");
         if (current >= total) { // quest item quota met.
             isComplete = true;
             q.updateCompletion();
+            DialogueManager.startNewDialogue(q.getNextDialoguePath()); // try to play the next dialogue for this quest if there is one
         }
     }
 }
@@ -147,7 +152,7 @@ public class QuestReward {
     }
 
     public void redeem() {
-
+        Debug.Log(rewardType + " being claimed");
         switch (rewardType) {
             case "xp":
                 Knowledge.player.addXp(ammount);
@@ -168,6 +173,6 @@ public class QuestReward {
                 Knowledge.player.inventory.learnSkill(rewardName);
                 break;
         }
-        Debug.Log("reward given from a quest(I asssume)");
+        
     }
 }

@@ -200,17 +200,45 @@ public class Inventory : MonoBehaviour {
         activeQuests.Add(q);
     }
     public void updateAllQuests(string type, string objective) {
-        foreach (Quest q in activeQuests) {
-            q.update(type, objective);
+        for (int i = 0; i < activeQuests.Count; i++) {
+            if (activeQuests[i].update(type, objective)) { // if the updated quest is completed
+                Debug.Log("Quest " + activeQuests[i].title + " was removed");
+                activeQuests.RemoveAt(i);
+                i--;
+            }
         }
     }
     public void addAvailableQuest (string s) {
+        Debug.Log(availableQuests.Length + availableQuests[0]);
         lengthenArray(ref availableQuests, 1);
         availableQuests[availableQuests.Length-1] = s;
+        Debug.Log(availableQuests.Length + availableQuests[0]);
+    }
+    public void removeAvailableQuest (string s) { // remove only the first instance of this AVAILABLE quest to be removed
+        for (int i = 0; i < availableQuests.Length-1; i++) {
+            if (s.Equals(availableQuests[i])) availableQuests[i] = "";
+            if (availableQuests[i].Equals("")) { // push an empty quest to the back which will get removed then resizing the array
+                availableQuests[i] = availableQuests[i+1];
+                availableQuests[i+1] = "";
+            }
+        }
+        shortenArray(ref availableQuests, 1);
     }
     private void lengthenArray(ref string[] orig, int n) {
         string[] newA = new string[orig.Length+n];
         for (int i = 0; i < orig.Length; i++) {
+            newA[i] = orig[i];
+        }
+        orig = newA;
+    }        
+    
+    private void shortenArray(ref string[] orig, int n) {
+        if (orig.Length-n <= 0) {
+            orig[0] = "";
+            return;
+        }
+        string[] newA = new string[orig.Length-n];
+        for (int i = 0; i < newA.Length; i++) {
             newA[i] = orig[i];
         }
         orig = newA;
