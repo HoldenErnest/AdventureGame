@@ -84,7 +84,6 @@ public class MapToSave : MonoBehaviour
             try {
                 generateTile(Int32.Parse(line[2]),Int32.Parse(line[0]),Int32.Parse(line[1]));
             } catch (Exception e) {
-                Debug.Log("not a number");//line[0] + ">>"+line[1]+">>"+line[2] + 
                 Debug.Log(e);
             }
         }

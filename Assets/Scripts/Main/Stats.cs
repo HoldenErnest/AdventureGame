@@ -73,9 +73,6 @@ public class Stats {
             resetAllAttr();
         }
         Debug.Log($"added {amt} xp");
-        //Debug.Log("level: " + level + ", with " + xp + " xp!");
-        //Debug.Log("current XP: " + getXp() + " out of " + getMaxXp());
-        
     }
     public int getXp() { // xp gained in the current level (!! NOT TOTAL XP !!)
         return xp - (int)Math.Floor(Math.Pow(level - 1, 3));

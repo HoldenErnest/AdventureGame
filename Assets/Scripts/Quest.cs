@@ -67,11 +67,24 @@ public class Quest {
         }
         rewardsCollected = true;
     }
+    public string getProgressionInfo() { // returns a string that shows te quest completion progress in an insightful way
+        string res = "";
+
+        foreach (QuestItem qitm in items) { // Kill 5 bats or something 3/5
+            res += qitm.desc + " ";
+            if (!qitm.isComplete)
+                res += "(" + qitm.current + "/" + qitm.total + ")";
+            else
+                res += "(DONE)";
+            res += "\n";
+        }
+
+        return res;
+    }
     public int getProgress() { // quest progress, how many quest items are completed
         return itemsDone;
     }
     public bool update(string type, string objective) { // type of questitem to see if its even applicable --> after talking to a guy >> update("talk", "bilbo");
-        Debug.Log("testing whether there is any quests to update");
         if (itemsDone >= items.Length)  { return updateCompletion(); } // << returns whether the quest is complete
         items[itemsDone].updateCompletion(this, type, objective); // update the current questItem 
         return updateCompletion();
@@ -126,7 +139,6 @@ public class QuestItem {
 
     //the "events" to run after every of these t types of interactions.
     public void updateCompletion(Quest q, string t, string o) {
-        Debug.Log("testing whether this is applicable kill");
         if (!type.Equals(t) || !objective.Equals(o)) return; // make sure the current quest item is this type anyway.
         current++;
         Debug.Log($"Item quota for Quest ({q.title}): {current} / {total} : by {t}ing a {o}");

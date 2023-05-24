@@ -158,8 +158,12 @@ public class InventoryUI : MonoBehaviour {
         //the item 
     }
     private void updateSelectedInfo(Quest q) { // update whatever info needed for the currently selected cell
-        questDesc.text = q.desc;
         questTitle.text = q.title;
+        questDesc.text = q.desc + "\n\n";
+        questDesc.text += q.getProgressionInfo();
+    }
+    public void updateCurrentSelected() {
+        setSelectedCell(selectedCell);
     }
     private void updateCellOrder() { // update the cells if theyre moved in the array.
         

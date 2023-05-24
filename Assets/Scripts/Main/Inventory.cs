@@ -27,6 +27,8 @@ public class Inventory : MonoBehaviour {
     private List<Skill> learnedSkills = new List<Skill>(); // list of skills
     private List<Quest> activeQuests = new List<Quest>(); // list of quests
 
+    private InventoryUI invUI;
+
     public string overwriteLists() {
         overWriteInvArrs(inventory);
         skills = listToArrayS(learnedSkills);
@@ -46,6 +48,10 @@ public class Inventory : MonoBehaviour {
         setLearnedSkills(skills);
         setQuests(quests);
         delInitArrs();
+
+        InventoryUI[] tempaa = GameObject.FindObjectsOfType<InventoryUI>(true);
+        Debug.Log(tempaa.Length + " is the length"); ////////////////////AHBISIUFHASUIGBILWEEUIFASJODIUYfgbuWDJKEFJUSVGBYHWGEFJLVDLGIFYWELHFMHNCIYWEIF HELP
+        invUI = tempaa[0];
     }
     private void delInitArrs() {
         invItems = null;
@@ -202,17 +208,15 @@ public class Inventory : MonoBehaviour {
     public void updateAllQuests(string type, string objective) {
         for (int i = 0; i < activeQuests.Count; i++) {
             if (activeQuests[i].update(type, objective)) { // if the updated quest is completed
-                Debug.Log("Quest " + activeQuests[i].title + " was removed");
                 activeQuests.RemoveAt(i);
                 i--;
             }
+            invUI.updateCurrentSelected();
         }
     }
     public void addAvailableQuest (string s) {
-        Debug.Log(availableQuests.Length + availableQuests[0]);
         lengthenArray(ref availableQuests, 1);
         availableQuests[availableQuests.Length-1] = s;
-        Debug.Log(availableQuests.Length + availableQuests[0]);
     }
     public void removeAvailableQuest (string s) { // remove only the first instance of this AVAILABLE quest to be removed
         for (int i = 0; i < availableQuests.Length-1; i++) {

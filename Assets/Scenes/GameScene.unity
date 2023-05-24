@@ -5887,7 +5887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_FirstSelected: {fileID: 0}
-  m_sendNavigationEvents: 1
+  m_sendNavigationEvents: 0
   m_DragThreshold: 10
 --- !u!4 &2019873447
 Transform:
@@ -6306,6 +6306,10 @@ PrefabInstance:
     - target: {fileID: 6006655084991150863, guid: 2892bf1f0f53c074880909df170eb557, type: 3}
       propertyPath: m_Name
       value: InventoryScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 6006655084991150863, guid: 2892bf1f0f53c074880909df170eb557, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2892bf1f0f53c074880909df170eb557, type: 3}
