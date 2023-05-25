@@ -29,6 +29,29 @@ public class DialogueManager : MonoBehaviour
         dialogueItemNum = 0;
         setDialogueBox(0);
     }
+    public static void startNewDialogue (string speaker, string allText) { // parse a string 'allText' into a dialogueXML (the format is split by endlines)
+        if (active) return;
+        active = true;
+        dialogue = new DialogueXML();
+
+        if (allText.Equals("")) {
+            active = false;
+            return;
+        }
+        if (speaker.Equals("")) {
+            speaker = "Unknown Speaker";
+        }
+
+        string[] lines = allText.Split("\n");
+        dialogue.dialogueItems = new DialogueItemXml[lines.Length];
+        for (int i = 0; i < lines.Length; i++) {
+            dialogue.dialogueItems[i] = new DialogueItemXml();
+            dialogue.dialogueItems[i].speaker = speaker;
+            dialogue.dialogueItems[i].text = lines[i];
+        }
+        dialogueItemNum = 0;
+        setDialogueBox(0);
+    }
     private static void setDialogueBox(int num) { // sets the actual text from one of the dialogue items
         
         textUI.text = $"{dialogue.dialogueItems[num].speaker} \n  {escapeVars(dialogue.dialogueItems[num].text)}";

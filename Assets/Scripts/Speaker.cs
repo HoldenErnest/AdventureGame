@@ -22,14 +22,13 @@ public class Speaker : MonoBehaviour, IPointerClickHandler {
     }
 
     private void startQuest(string q) {
-        Knowledge.player.inventory.removeAvailableQuest(q);
-        Quest startingQuest = Knowledge.getQuest(q);
+        Quest startingQuest = Knowledge.player.inventory.addQuest(q);
         DialogueManager.startNewDialogue(startingQuest.getNextDialoguePath());
-        Knowledge.player.inventory.addQuest(startingQuest);
     }
 
     private void startRandomDialogue() {
-        DialogueManager.startNewDialogue("Dialogue/greeting");
+        string allText = Knowledge.getTextList("greeting").getRandom();
+        DialogueManager.startNewDialogue(gameObject.GetComponent<Character>().name,allText);// THIS WONT WORK WITH TALKING TO OBJECTS!!!!!!
     }
 
     private string getAvailableQuest() { // if the speaker can give a quest, emmit that quests starting dialogue instead
@@ -37,10 +36,8 @@ public class Speaker : MonoBehaviour, IPointerClickHandler {
         foreach (string s in quests) {
             for (int i = 0; i < Knowledge.player.inventory.availableQuests.Length; i++) { // assuming these quests are sorted by priority
                 if (s.Equals(Knowledge.player.inventory.availableQuests[i])) {
-
                     return s;
                 }
-
             }
         }
         return "";

@@ -72,7 +72,7 @@ public class Stats {
         } else if (levelsAdded < 0) { // character somehow lost levels
             resetAllAttr();
         }
-        Debug.Log($"added {amt} xp");
+        //Debug.Log($"added {amt} xp");
     }
     public int getXp() { // xp gained in the current level (!! NOT TOTAL XP !!)
         return xp - (int)Math.Floor(Math.Pow(level - 1, 3));

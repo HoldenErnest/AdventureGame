@@ -44,7 +44,7 @@ public class Quest {
         foreach (QuestItem item in items) {
             if (!item.isComplete)  {
                 isComplete = false;
-                Debug.Log($"Overall Quest quota ({title}): {itemsDone} / {items.Length}");
+                //Debug.Log($"Overall Quest quota ({title}): {itemsDone} / {items.Length}");
                 return false;
             }
             itemsDone++;
@@ -55,7 +55,7 @@ public class Quest {
     }
     public void completeQuest() {
         isComplete = true;
-        Debug.Log($"Completed Quest ({title}): {itemsDone} / {items.Length}");
+        //Debug.Log($"Completed Quest ({title}): {itemsDone} / {items.Length}");
         collectAllRewards(); // rewards given as soon as quest is completed.. maybe change to redeem rewards in quest menu.
 
     }

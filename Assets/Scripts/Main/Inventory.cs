@@ -50,7 +50,6 @@ public class Inventory : MonoBehaviour {
         delInitArrs();
 
         InventoryUI[] tempaa = GameObject.FindObjectsOfType<InventoryUI>(true);
-        Debug.Log(tempaa.Length + " is the length"); ////////////////////AHBISIUFHASUIGBILWEEUIFASJODIUYfgbuWDJKEFJUSVGBYHWGEFJLVDLGIFYWELHFMHNCIYWEIF HELP
         invUI = tempaa[0];
     }
     private void delInitArrs() {
@@ -197,13 +196,12 @@ public class Inventory : MonoBehaviour {
     }
 
     //quests
-    public void addQuest(string q) {
+    public Quest addQuest(string q) {
         Quest newQuest = Knowledge.getQuest(q);
-        // if (!newQuest.activeQuest()) // might need a check so quests cant get activated more than once. << including if its completed.
+        // if (!newQuest.activeQuest()) // might need a check so quests cant get activated more than once. << including if its completed. 
         activeQuests.Add(newQuest);
-    }
-    public void addQuest(Quest q) {
-        activeQuests.Add(q);
+        removeAvailableQuest(q); // whenever you add a new quest make sure it is removed from the available quests so that it cannot be gotten again
+        return newQuest;
     }
     public void updateAllQuests(string type, string objective) {
         for (int i = 0; i < activeQuests.Count; i++) {
@@ -221,11 +219,12 @@ public class Inventory : MonoBehaviour {
     public void removeAvailableQuest (string s) { // remove only the first instance of this AVAILABLE quest to be removed
         for (int i = 0; i < availableQuests.Length-1; i++) {
             if (s.Equals(availableQuests[i])) availableQuests[i] = "";
-            if (availableQuests[i].Equals("")) { // push an empty quest to the back which will get removed then resizing the array
+            if (availableQuests[i].Equals("") && !s.Equals(availableQuests[i+1])) { // swap to push the empty quests to the back of the list !> do not pull s back in the list ever 
                 availableQuests[i] = availableQuests[i+1];
                 availableQuests[i+1] = "";
             }
         }
+
         shortenArray(ref availableQuests, 1);
     }
     private void lengthenArray(ref string[] orig, int n) {
