@@ -176,6 +176,7 @@ public class InventoryUI : MonoBehaviour {
     public void setSelectedCell(GameObject g) { // The OnClick event for the cells
         selectedCell = g;
         if (GameObject.ReferenceEquals(g,null)) return;
+        if (g == null) return;
         switch (currentMenu) {
             case 0:
                 Item item = g.GetComponent<ItemCell>().getItem();

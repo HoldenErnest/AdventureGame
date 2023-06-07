@@ -66,6 +66,7 @@ public class DialogueManager : MonoBehaviour
 
     // once the dialogue is in, you cant get any more dialogue until you finish this one.
     public static void next() { // updates text to the next dialogue item in the file
+    if (dialogue == null) return;
         if (dialogueItemNum < dialogue.dialogueItems.Length-1) {
             dialogueItemNum++;
             setDialogueBox(dialogueItemNum);

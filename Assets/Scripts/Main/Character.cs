@@ -278,6 +278,9 @@ public class Character : MonoBehaviour {
             Destroy(this.gameObject);
         }
     }
+    public bool isCurrentlyDead() { // you destroy the gameObject but no certain way of knowing if its dead
+        return isDead;
+    }
     private void giveXpToLastHit() {
         if (lastHitCharacter) {
             lastHitCharacter.addXp(userStats.getOnKillXp());

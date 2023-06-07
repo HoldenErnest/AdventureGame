@@ -27,7 +27,10 @@ public static class GameSaver {
 
     public static void overwriteNPCS() {
         foreach(Character c in npcs) {
-            Debug.Log("another NPC");
+            if (GameObject.ReferenceEquals(c, null)) return;
+            if (c.isCurrentlyDead()) return;
+            Debug.Log(c);
+            Debug.Log("another NPC being saved");
             string path = Knowledge.getSavePath() + Knowledge.charactersPath;
             string cc = Knowledge.characterToJson(c.toBlueprint());
             saveToFile(path, (c.getPath() + ".json"), cc);

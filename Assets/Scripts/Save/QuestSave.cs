@@ -27,6 +27,7 @@ public class QuestSave {
         for (int i = 0; i < itemsDone; i++) {
             q.items[i].isComplete = true;
         }
+        q.updateCompletion();
     }
 
 }
