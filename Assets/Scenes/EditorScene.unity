@@ -5327,7 +5327,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles: []
   layer: 0
 --- !u!1 &433175659
 GameObject:
@@ -6559,7 +6558,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles: []
   layer: 5
 --- !u!483693784 &556839316
 TilemapRenderer:
@@ -12452,7 +12450,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles: []
   layer: 1
 --- !u!1 &989126430
 GameObject:
@@ -14557,7 +14554,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles: []
   layer: 2
 --- !u!1 &1157349358
 GameObject:
@@ -21972,7 +21968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bc9fbec03b7442488c11c37d9cf9f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiles: []
   layer: 4
 --- !u!1 &1793895203
 GameObject:

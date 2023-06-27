@@ -23,7 +23,7 @@ public class DisplayInfo : MonoBehaviour {
     }
     public DisplayInfo(int p, CharacterCreator c) {
         pos = p;
-        //icon = c.icon;
+        icon = c.getIcon();
         title = c.name;
     }
     

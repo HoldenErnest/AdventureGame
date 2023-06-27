@@ -122,7 +122,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
                 if (d.getTitle().ToLower().Contains(key.ToLower()))
                     foundObjects.Add(d);
             }
-        } else { // otherwise fill the object array
+        } else { // otherwise fill the character array
             for (int i = 0; i< CObjects.Length; i++) {
                 DisplayInfo d = new DisplayInfo(i,CObjects[i]);
                 if (key.Equals("")){

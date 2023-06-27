@@ -53,8 +53,8 @@ public class DialogueManager : MonoBehaviour
         setDialogueBox(0);
     }
     private static void setDialogueBox(int num) { // sets the actual text from one of the dialogue items
-        
-        textUI.text = $"{dialogue.dialogueItems[num].speaker} \n  {escapeVars(dialogue.dialogueItems[num].text)}";
+        if (textUI)
+            textUI.text = $"{dialogue.dialogueItems[num].speaker} \n  {escapeVars(dialogue.dialogueItems[num].text)}";
         
     }
     private static string escapeVars(string txt) { // escape variables

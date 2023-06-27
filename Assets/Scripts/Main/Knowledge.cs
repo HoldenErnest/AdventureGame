@@ -198,6 +198,9 @@ public static class Knowledge {
         character.setPath(charName);
         return character;
     }
+    public static CharacterCreator getCharBlueprint(int charId) {
+        return getCharBlueprint(""+charId);
+    }
     public static CharacterCreator[] getAllCharBP() {
         CharacterCreator[] cca = new CharacterCreator[5];
         return cca;
@@ -227,6 +230,9 @@ public static class Knowledge {
         }
         return Resources.Load<Sprite>(charsIconPath + "noicon");
     }
+    public static Sprite getCharIcon(int i) {
+        return getAllCharSprites()[i];
+    }
     public static Texture2D getSkillIcon(string s) {
         if (s != "")
         try {
@@ -242,6 +248,14 @@ public static class Knowledge {
             return Resources.LoadAll<Sprite>(tilesPath + s);
         } catch {
             Debug.Log("Multi-Texture \"" + s + ".png\" not found.");
+        }
+        return null;
+    }
+    public static Sprite[] getAllCharSprites() {
+        try {
+            return Resources.LoadAll<Sprite>(charsIconPath + "allCharacters");
+        } catch {
+            Debug.Log("Multi-Texture \"" + ".png\" not found.");
         }
         return null;
     }

@@ -28,8 +28,8 @@ public class NewSceneManager : MonoBehaviour {
         Knowledge.tools = gameObject.GetComponent<Tools>();
     }
     public void loadCharacters() {
-        CharacterCreator a = Knowledge.getCharBlueprint("genericCharacter");
-        CharacterCreator b = Knowledge.getCharBlueprint("fred");
+        CharacterCreator a = Knowledge.getCharBlueprint("2");
+        CharacterCreator b = Knowledge.getCharBlueprint("0");
         //GameSaver.npcs.Add(a.createCharacter());
         a.team = 1;
         GameSaver.npcs.Add(a.createCharacter());

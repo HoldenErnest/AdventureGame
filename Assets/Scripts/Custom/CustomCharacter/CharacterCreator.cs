@@ -24,7 +24,7 @@ public class CharacterCreator : MonoBehaviour {
     public ItemSave[] items; // (extra items or materials to drop on death)
     public string[] startingSkills; // currently/last equipped skills in hotbar
     public string bodyTexture; // Resources/Textures/Bodies/<bodyTexture>.png
-    public string icon; // a character icon for dialogues (might not be seen ever so you this is optional)
+    public string icon; // a character icon for dialogues (might not be seen ever so you this is optional) LEGACY -- all icons are gotten from the id
 
     public string[] questsToGive; // a list of the quests they will give to the player on interaction
 
@@ -148,6 +148,6 @@ public class CharacterCreator : MonoBehaviour {
 
     // in case youre just working with the creators, not actual characters
     public Sprite getIcon() {
-        return Knowledge.getCharIcon(icon);
+        return Knowledge.getCharIcon(id);
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 public class MapToSave : MonoBehaviour
 {
@@ -36,18 +37,21 @@ public class MapToSave : MonoBehaviour
                 Tile tile = map.GetTile<Tile>(new Vector3Int(x,y,0));
                 if (tile != null) {
                     string tileKey = tile.sprite.name;
-                    for (int i = 0; i < tileOptions.Length; i++) { // go through all sprites it could be, find the index where this sprite is
-                        if (tileOptions[i].name.Equals(tileKey)) {
-                            writer.WriteLine((x)+","+(y)+","+(i));
-                            break;
+                    if (layer != 5) {
+                        for (int i = 0; i < tileOptions.Length; i++) { // go through all sprites it could be, find the index where this sprite is
+                            if (tileOptions[i].name.Equals(tileKey)) {
+                                writer.WriteLine((x)+","+(y)+","+(i));
+                                break;
+                            }
                         }
+                    } else { // the objects save their actual savefiles
+                        writer.WriteLine((x)+","+(y)+","+(tileKey.Substring(14)));
                     }
                 }
             }
         }
         writer.Close();
     }
-
 
     public void setTile(float x, float y, Tile t) {
         Vector2Int v = worldToGridPoint(x,y);
@@ -77,18 +81,27 @@ public class MapToSave : MonoBehaviour
     }
     private void generateMap(string file) {
         TextAsset txt = Resources.Load(file) as TextAsset;
+        if (txt==null || txt.text.Length < 1) return;
         string[] allTiles = txt.text.Split("\n");
         tileOptions = getSprites();
         for (int i = 0; i < allTiles.Length; i++) { // go through all tiles in the map
             string[] line = allTiles[i].Split(",");
             try {
-                generateTile(Int32.Parse(line[2]),Int32.Parse(line[0]),Int32.Parse(line[1]));
+                if (SceneManager.GetActiveScene().name.Equals("EditorScene") || layer != 5) // if you need to place a tile(for editing purposes)
+                    generateTile(Int32.Parse(line[2]),Int32.Parse(line[0]),Int32.Parse(line[1]));
+                else { // otherwise place whatever object it coorasponds to
+                    if (layer == 5) {
+                        CharacterCreator theChar = Knowledge.getCharBlueprint(Int32.Parse(line[2]));
+                        theChar.homePos = new float[] {(float)Int32.Parse(line[0]),(float)Int32.Parse(line[1])};
+                        theChar.createCharacter();
+                    }
+                }
             } catch (Exception e) {
                 Debug.Log(e);
             }
         }
     }
-    private void generateTile(int i, int x, int y) {
+    private void generateTile(int i, int x, int y) { // get a tile based on the index saved for the tileOptions for this specific map
         map.SetTile(new Vector3Int(x,y,0), spriteToTile(tileOptions[i]));
     }
     private Tile spriteToTile (Sprite s) {
@@ -113,6 +126,9 @@ public class MapToSave : MonoBehaviour
                 break;
             case 2:
                 return Knowledge.getAllSpritesFromTexture("Detail");
+                break;
+            case 5:
+                return Knowledge.getAllCharSprites();
                 break;
             default:
                 break;
