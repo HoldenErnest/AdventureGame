@@ -14,13 +14,15 @@ public class MapToSave : MonoBehaviour
 
     Sprite[] tileOptions; // all the different possible sprites for this map
 
+    List<SpecialObject> specialObjects = new List<SpecialObject>();
+
     void Awake() {
 
         map = this.GetComponent<Tilemap>();
         //GenerateMap();
 
     }
-    public void saveMap(string save) { // saves the map and the metadata to the map
+    public void saveMap(string save) { // saves the map (based off of tiles on the tilemap)
         string filePath = Path.Combine(Application.streamingAssetsPath,"Maps");
         filePath = Path.Combine(filePath,save);
         Directory.CreateDirectory (filePath);
@@ -31,6 +33,16 @@ public class MapToSave : MonoBehaviour
         BoundsInt bounds = map.cellBounds;
 
         tileOptions = getSprites();
+
+        if (layer == 4) { // if saving objects, load into json instead
+
+            for (int i = 0; i < specialObjects.Count; i++) {
+                string spo = Knowledge.specialObjectToJson(specialObjects[i]);
+                writer.WriteLine(spo);
+            }
+            writer.Close();
+            return;
+        }
 
         for (int x = bounds.x; x < bounds.size.x; x++) { // loops through every tile in the map array
             for (int y = bounds.y; y < bounds.size.y; y++) {
@@ -61,6 +73,11 @@ public class MapToSave : MonoBehaviour
         Vector2Int v = worldToGridPoint(x,y);
         map.SetTile(new Vector3Int(v.x,v.y,0), spriteToTile(s));
     }
+    public void setTile(float x, float y, GameObject g) {
+        Vector2Int v = worldToGridPoint(x,y); //TODO: MAKE SURE THIS POINT IS CORRECT!
+        // TODO: instantiate g at position;
+        specialObjects.Add(g.GetComponent<SpecialObject>());
+    }
     public void removeTile(float x, float y) {
         Vector2Int v = worldToGridPoint(x,y);
         map.SetTile(new Vector3Int(v.x,v.y,0), null);
@@ -79,7 +96,7 @@ public class MapToSave : MonoBehaviour
         file = "Maps/"+file+"/"+layer;
         generateMap(file);
     }
-    private void generateMap(string file) {
+    private void generateMap(string file) { // load tiles from the text file
         TextAsset txt = Resources.Load(file) as TextAsset;
         if (txt==null || txt.text.Length < 1) return;
         string[] allTiles = txt.text.Split("\n");
@@ -94,6 +111,12 @@ public class MapToSave : MonoBehaviour
                         CharacterCreator theChar = Knowledge.getCharBlueprint(Int32.Parse(line[2]));
                         theChar.homePos = new float[] {(float)Int32.Parse(line[0]),(float)Int32.Parse(line[1])};
                         theChar.createCharacter();
+                    } else if (layer == 4) { // objects
+
+                        // TODO:
+                        //load all lines into SpecialObject[] with json conversion
+                        //instantiate these into new gameobjects at the specified position
+
                     }
                 }
             } catch (Exception e) {
@@ -106,7 +129,7 @@ public class MapToSave : MonoBehaviour
     }
     private Tile spriteToTile (Sprite s) {
         try {
-        if (System.Object.ReferenceEquals(s, null)) return null;
+            if (System.Object.ReferenceEquals(s, null)) return null;
         } catch (Exception e) {
             Debug.Log(e);
         }
@@ -120,16 +143,12 @@ public class MapToSave : MonoBehaviour
         switch (layer) {
             case 0:
                 return Knowledge.getAllSpritesFromTexture("Ground");
-                break;
             case 1:
                 return Knowledge.getAllSpritesFromTexture("Walls");
-                break;
             case 2:
                 return Knowledge.getAllSpritesFromTexture("Detail");
-                break;
             case 5:
                 return Knowledge.getAllCharSprites();
-                break;
             default:
                 break;
         }

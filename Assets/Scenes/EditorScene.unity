@@ -11223,7 +11223,7 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Detail
       m_Image: {fileID: 0}
-    - m_Text: Structures
+    - m_Text: Teleports
       m_Image: {fileID: 0}
     - m_Text: Objects
       m_Image: {fileID: 0}
@@ -21881,20 +21881,20 @@ Tilemap:
     m_Data:
       e00: 0
       e01: 0
-      e02: 0
-      e03: 3.80943e-17
+      e02: 3.8750038
+      e03: 3.8750038
       e10: 0
       e11: 0
-      e12: 0
-      e13: 3.11e-43
-      e20: 0
-      e21: 0
-      e22: 0
-      e23: 0
-      e30: 0
+      e12: 8.28e-43
+      e13: 8.28e-43
+      e20: -4.1345896e-25
+      e21: 1e-45
+      e22: -4.8974786e-29
+      e23: 1.182696e-39
+      e30: 4.5905e-41
       e31: 0
-      e32: 0
-      e33: 0
+      e32: 8.28e-43
+      e33: 8.32e-43
   m_TileColorArray:
   - m_RefCount: 0
     m_Data: {r: 3.9402e-41, g: 3.9402e-41, b: 3.9402e-41, a: 3.9402e-41}
@@ -21931,8 +21931,10 @@ Tilemap:
   - m_RefCount: 0
     m_Data: {r: 3.8735e-41, g: 3.8735e-41, b: 3.8735e-41, a: 3.8735e-41}
   - m_RefCount: 0
-    m_Data: {r: 3.89e-41, g: 3.89e-41, b: 3.89e-41, a: 3.89e-41}
-  m_TileObjectToInstantiateArray: []
+    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
+  m_TileObjectToInstantiateArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -35, y: -40, z: 0}

@@ -21,6 +21,11 @@ public class DisplayInfo : MonoBehaviour {
         //icon = c.icon;
         title = c.name;
     }
+    public DisplayInfo(int p, GameObject g) {
+        pos = p;
+        icon = g.GetComponent<SpriteRenderer>().sprite;
+        title = g.name;
+    }
     public DisplayInfo(int p, CharacterCreator c) {
         pos = p;
         icon = c.getIcon();

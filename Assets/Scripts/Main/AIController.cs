@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
+using UnityEditor.SceneManagement;
 
 public class AIController : Controller {
 
@@ -41,6 +43,7 @@ public class AIController : Controller {
         targetLastSeenPos = homePosition;
     }
     public override void FixedUpdate() {
+        if (SceneManager.GetActiveScene().name.Equals("EditorScene")) return;
         updatePrefDistances();
         performStateActions();
     }

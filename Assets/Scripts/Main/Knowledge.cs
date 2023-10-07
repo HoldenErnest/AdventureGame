@@ -47,6 +47,10 @@ public static class Knowledge {
         string json = JsonUtility.ToJson(s);
         Debug.Log(json);
     }
+    public static string specialObjectToJson(SpecialObject s) {
+        string json = JsonUtility.ToJson(s);
+        return json;
+    }
     public static void effectToJson(Effect e) {
         string json = JsonUtility.ToJson(e);
         Debug.Log(json);

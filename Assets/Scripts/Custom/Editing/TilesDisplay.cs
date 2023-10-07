@@ -30,7 +30,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
 
     private List<GameObject> cells = new List<GameObject>(); // the actual gameobjects for the cells
     private Sprite[] SObjects; // all cells info in the current group
-    private Tile[] OObjects; // all cells info in the current group
+    private GameObject[] OObjects; // all cells info in the current group
     private CharacterCreator[] CObjects;
     private List<DisplayInfo> foundObjects = new List<DisplayInfo>(); // all cells info in 'objects' that also have the key
 
@@ -60,7 +60,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
                 //SObjects = Knowledge.getAllSpritesFromTexture("Structures");
                 break;
             case 4:
-                //OObjects = Knowledge.getAllObjectsInFolder("SavedObjects/Objects");
+                OObjects = Knowledge.getAllObjectsInFolder("SavedObjects/Objects");
                 break;
             case 5:
                 CObjects = Knowledge.getAllCharacters(); // These are used ONLY to set characters initital positions, 
@@ -93,7 +93,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         if (n <= 2)
             return 0;
         if (n == 3 || n == 4 || n == 6)
-            return 1;
+            return 1;   
         return 2;
     }
 
@@ -169,7 +169,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         return keyInput.text;
     }
 
-    public void setSelected(int pos) {
+    public void setSelected(int pos) { // set a selected tile called from DisplayCell. Used in EditPlacer
         if (currentArrayType() == 1)
             Camera.main.gameObject.GetComponent<EditPlacer>().setSelected(OObjects[foundObjects[pos].getPosition()]);
         else if (currentArrayType() == 0)

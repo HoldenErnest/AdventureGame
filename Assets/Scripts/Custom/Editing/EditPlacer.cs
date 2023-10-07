@@ -11,6 +11,7 @@ public class EditPlacer : MonoBehaviour {
     [SerializeField]
     private MapToSave[] grids;
     
+    private GameObject selectedGameOb;
     private Tile selectedSpecialTile; // the object to place
     private Sprite selectedTile; // the tile to place  <^ these are interchangable
 
@@ -42,16 +43,23 @@ public class EditPlacer : MonoBehaviour {
 
     private void place() {
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (selectedSpecialTile == null) {
-            grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedTile);
-        } else {
-            Debug.Log("is an object");
+        if (selectedSpecialTile != null) {
             grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedSpecialTile);
+        } else if (selectedGameOb != null) {
+            Debug.Log("placed an object");
+            grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedGameOb);
+            //TODO:
+            
+
+            //grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedSpecialTile);
+        } else {
+            Debug.Log("placed a normal tile");
+            grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedTile);
         }
     }
     private void floodPlace() {
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if (selectedSpecialTile == null) {
+        if (selectedSpecialTile == null && selectedGameOb == null) {
             grids[sectionTable.getGroupNumber()].floodPlace(wp.x, wp.y, selectedTile);
         } else {
             Debug.Log("is an object");
@@ -60,6 +68,10 @@ public class EditPlacer : MonoBehaviour {
         }
     }
     private void remove() {
+
+        //TODO:
+        // if object grid, remove it from the array!
+
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (grids[sectionTable.getGroupNumber()].activeTile(wp.x,wp.y))
             grids[sectionTable.getGroupNumber()].removeTile(wp.x, wp.y);
@@ -67,13 +79,21 @@ public class EditPlacer : MonoBehaviour {
     }
 
     public void setSelected(Sprite s) {
+        selectedGameOb = null;
         selectedSpecialTile = null;
         selectedTile = s;
         updateVisual();
     }
     public void setSelected(Tile t) {
+        selectedGameOb = null;
         selectedSpecialTile = t;
         selectedTile = t.sprite;
+        updateVisual();
+    }
+    public void setSelected(GameObject g) {
+        selectedGameOb = g;
+        selectedSpecialTile = null;
+        selectedTile = g.GetComponent<SpriteRenderer>().sprite;
         updateVisual();
     }
     public void setSelected(CharacterCreator c) {
