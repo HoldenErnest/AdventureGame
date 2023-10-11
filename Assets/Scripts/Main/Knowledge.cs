@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine.U2D.Animation;
 using System.IO;
 using System;
+using System.Diagnostics;
 
 //A class strictly for remembering the combinations for skills, Effects, ect.
 // Refrence this class when equipping any skill to a character
@@ -41,27 +42,26 @@ public static class Knowledge {
     //any __ToJson method will take an object and print it in json format
     public static void skillToJson(Skill s) {
         string json = JsonUtility.ToJson(s);
-        Debug.Log(json);
+        UnityEngine.Debug.Log(json);
     }
     public static void questToJson(Quest s) {
         string json = JsonUtility.ToJson(s);
-        Debug.Log(json);
+        UnityEngine.Debug.Log(json);
     }
     public static string specialObjectToJson(SpecialObject s) {
-        string json = JsonUtility.ToJson(s);
-        return json;
+        return s.toJson();
     }
     public static void effectToJson(Effect e) {
         string json = JsonUtility.ToJson(e);
-        Debug.Log(json);
+        UnityEngine.Debug.Log(json);
     }
     public static void equipToJson(Equipable e) {
         string json = JsonUtility.ToJson(e);
-        Debug.Log(json);
+        UnityEngine.Debug.Log(json);
     }
     public static void itemToJson(Item i) {
         string json = JsonUtility.ToJson(i);
-        Debug.Log(json);
+        UnityEngine.Debug.Log(json);
     }
     public static string characterToJson(CharacterCreator c) {
         string json = JsonUtility.ToJson(c);
@@ -69,7 +69,7 @@ public static class Knowledge {
     }
     public static string inventoryToJson(Inventory i) {
         string json = JsonUtility.ToJson(i);
-        return json;//Debug.Log(json);
+        return json;//UnityEngine.Debug.Log(json);
     }
 
     // all get___ methods take a file based on a specified path and name and generates it as an object of that type
@@ -84,7 +84,7 @@ public static class Knowledge {
                 JsonUtility.FromJsonOverwrite(json, newInv);
             }
         } catch (Exception e){
-            Debug.Log("Save \"inventory.json\" not found." + e);
+            UnityEngine.Debug.Log("Save \"inventory.json\" not found." + e);
         }
         return newInv;
     }
@@ -99,7 +99,7 @@ public static class Knowledge {
                 JsonUtility.FromJsonOverwrite(json, cc);
             }
         } catch (Exception e){
-            Debug.Log("Save \"player.json\" not found." + e);
+            UnityEngine.Debug.Log("Save \"player.json\" not found." + e);
         }
         return cc;
     }
@@ -114,7 +114,7 @@ public static class Knowledge {
                 JsonUtility.FromJsonOverwrite(json, newSkill); // instead of rewriting a new Skill() try rewriting the skill currently in use
             }
         } catch {
-            Debug.Log("Skill \"" + skillName + ".json\" not found.");
+            UnityEngine.Debug.Log("Skill \"" + skillName + ".json\" not found.");
         }
         newSkill.setPath(theFile);
         return newSkill;
@@ -130,7 +130,7 @@ public static class Knowledge {
                 JsonUtility.FromJsonOverwrite(json, newQuest); // instead of rewriting a new Skill() try rewriting the skill currently in use
             }
         } catch {
-            Debug.Log("Quest \"" + questName + "/quest.json\" not found.");
+            UnityEngine.Debug.Log("Quest \"" + questName + "/quest.json\" not found.");
         }
         newQuest.setFile(questName);
         return newQuest;
@@ -146,7 +146,7 @@ public static class Knowledge {
                 JsonUtility.FromJsonOverwrite(json, newEffect); // instead of rewriting a new Skill() try rewriting the skill currently in use
             }
         } catch {
-            Debug.Log("Effect \"" + effectName + effectTier + ".json\" not found.");
+            UnityEngine.Debug.Log("Effect \"" + effectName + effectTier + ".json\" not found.");
         }
         return newEffect;
     }
@@ -157,7 +157,7 @@ public static class Knowledge {
             string json = Resources.Load<TextAsset>(theFile).text;
             JsonUtility.FromJsonOverwrite(json, newEquip); // instead of rewriting a new Skill() try rewriting the skill currently in use
         } catch {
-            Debug.Log("Equipable \"" + equipName + ".json\" not found.");
+            UnityEngine.Debug.Log("Equipable \"" + equipName + ".json\" not found.");
         }
         newEquip.setPath(theFile);
         return newEquip;
@@ -169,7 +169,7 @@ public static class Knowledge {
             string json = Resources.Load<TextAsset>(theFile).text;
             JsonUtility.FromJsonOverwrite(json, newItem); // instead of rewriting a new Skill() try rewriting the skill currently in use
         } catch {
-            Debug.Log("Item \"" + itemName + ".json\" not found.");
+            UnityEngine.Debug.Log("Item \"" + itemName + ".json\" not found.");
         }
         newItem.setPath(theFile);
         return newItem;
@@ -181,7 +181,7 @@ public static class Knowledge {
             string json = Resources.Load<TextAsset>(textPath + textName).text;
             JsonUtility.FromJsonOverwrite(json, list);
         } catch {
-            Debug.Log("Text \"" + textName + ".json\" not found.");
+            UnityEngine.Debug.Log("Text \"" + textName + ".json\" not found.");
         }
         return list;
     }
@@ -197,7 +197,7 @@ public static class Knowledge {
                 JsonUtility.FromJsonOverwrite(json, character); // instead of rewriting a new Skill() try rewriting the skill currently in use
             }
         } catch {
-            Debug.Log("Character \"" + charName + ".json\" not found.");
+            UnityEngine.Debug.Log("Character \"" + charName + ".json\" not found.");
         }
         character.setPath(charName);
         return character;
@@ -213,7 +213,7 @@ public static class Knowledge {
         try {
             return Resources.Load<Texture2D>(equipsTexturePath + s);
         } catch {
-            Debug.Log("Equip texture \"" + s + ".png\" not found.");
+            UnityEngine.Debug.Log("Equip texture \"" + s + ".png\" not found.");
         }
         return null;
     }
@@ -221,7 +221,7 @@ public static class Knowledge {
         try {
             return Resources.Load<Texture2D>(bodyTexturePath + s);
         } catch {
-            Debug.Log("Body texture \"" + s + ".png\" not found.");
+            UnityEngine.Debug.Log("Body texture \"" + s + ".png\" not found.");
         }
         return null;
     }
@@ -230,7 +230,7 @@ public static class Knowledge {
         try {
             return Resources.Load<Sprite>(charsIconPath + s);
         } catch {
-            Debug.Log("Character icon \"" + s + ".png\" not found.");
+            UnityEngine.Debug.Log("Character icon \"" + s + ".png\" not found.");
         }
         return Resources.Load<Sprite>(charsIconPath + "noicon");
     }
@@ -242,7 +242,7 @@ public static class Knowledge {
         try {
             return Resources.Load<Texture2D>(skillsIconPath + s);
         } catch {
-            Debug.Log("Skill icon \"" + s + ".png\" not found.");
+            UnityEngine.Debug.Log("Skill icon \"" + s + ".png\" not found.");
         }
         return Resources.Load<Texture2D>(skillsIconPath + "noSkill");
     }
@@ -251,7 +251,7 @@ public static class Knowledge {
             //Texture2D theImg = Resources.Load<Texture2D>(tilesPath + s);
             return Resources.LoadAll<Sprite>(tilesPath + s);
         } catch {
-            Debug.Log("Multi-Texture \"" + s + ".png\" not found.");
+            UnityEngine.Debug.Log("Multi-Texture \"" + s + ".png\" not found.");
         }
         return null;
     }
@@ -259,15 +259,15 @@ public static class Knowledge {
         try {
             return Resources.LoadAll<Sprite>(charsIconPath + "allCharacters");
         } catch {
-            Debug.Log("Multi-Texture \"" + ".png\" not found.");
+            UnityEngine.Debug.Log("Multi-Texture \"" + ".png\" not found.");
         }
         return null;
     }
-    public static GameObject[] getAllObjectsInFolder(string path) {
+    public static GameObject[] getAllObjectsInFolder(string path) { // load any gameOBjects in a certain folder
         try {
-            return Resources.LoadAll<GameObject>(charsPath);
+            return Resources.LoadAll<GameObject>(path);
         } catch {
-            Debug.Log("Folder at \"" + path + "\" does not contain any characters.");
+            UnityEngine.Debug.Log("Folder at \"" + path + "\" does not contain any objects.");
         }
         return null;
     }
@@ -284,7 +284,7 @@ public static class Knowledge {
             }
             return allChars;
         } catch {
-            Debug.Log("Folder at \"" + charsPath + "\" does not contain any characters.");
+            UnityEngine.Debug.Log("Folder at \"" + charsPath + "\" does not contain any characters.");
         }
         return allChars;
     }
@@ -293,16 +293,24 @@ public static class Knowledge {
         if (temp != null) {
             return temp;
         } else {
-            Debug.Log("Item icon \"" + s + ".png\" not found.");
+            UnityEngine.Debug.Log("Item icon \"" + s + ".png\" not found.");
         }
         return Resources.Load<Texture2D>(itemsIconPath + "no_texture");
     }
 
+    public static GameObject getObject(string fileName) { // load any gameOBjects in a certain folder
+        try {
+            return Resources.Load<GameObject>("SavedObjects/Objects/" + fileName);
+        } catch {
+            UnityEngine.Debug.Log("At \"" + fileName + "\" no object.");
+        }
+        return null;
+    }
     public static GameObject getSkillPrefab(string s) {
         try {
             return Resources.Load<GameObject>(skillsPrefabPath + s);
         } catch {
-            Debug.Log("Gameobject \"" + s + ".prefab\" not found.");
+            UnityEngine.Debug.Log("Gameobject \"" + s + ".prefab\" not found.");
         }
         return null;
     }
@@ -310,7 +318,7 @@ public static class Knowledge {
         try {
             return Resources.Load<GameObject>(charsPrefabPath + s);
         } catch {
-            Debug.Log("Gameobject \"" + s + ".prefab\" not found.");
+            UnityEngine.Debug.Log("Gameobject \"" + s + ".prefab\" not found.");
         }
         return null;
     }
@@ -318,7 +326,7 @@ public static class Knowledge {
         try {
             return Resources.Load<GameObject>("Prefabs/UI/HealthbarUI");
         } catch {
-            Debug.Log("Gameobject \"Prefabs/UI/HealthbarUI.prefab\" not found.");
+            UnityEngine.Debug.Log("Gameobject \"Prefabs/UI/HealthbarUI.prefab\" not found.");
         }
         return null;
         

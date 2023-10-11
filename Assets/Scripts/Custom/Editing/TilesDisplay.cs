@@ -8,6 +8,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
+using System;
 
 public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler {
 
@@ -60,7 +61,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
                 //SObjects = Knowledge.getAllSpritesFromTexture("Structures");
                 break;
             case 4:
-                OObjects = Knowledge.getAllObjectsInFolder("SavedObjects/Objects");
+                OObjects = Knowledge.getAllObjectsInFolder("SavedObjects/Objects/");
                 break;
             case 5:
                 CObjects = Knowledge.getAllCharacters(); // These are used ONLY to set characters initital positions, 
@@ -93,7 +94,7 @@ public class TilesDisplay : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         if (n <= 2)
             return 0;
         if (n == 3 || n == 4 || n == 6)
-            return 1;   
+            return 1;
         return 2;
     }
 

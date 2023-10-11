@@ -11223,13 +11223,11 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Detail
       m_Image: {fileID: 0}
-    - m_Text: Teleports
+    - m_Text: Something else
       m_Image: {fileID: 0}
     - m_Text: Objects
       m_Image: {fileID: 0}
     - m_Text: Characters
-      m_Image: {fileID: 0}
-    - m_Text: Markers
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

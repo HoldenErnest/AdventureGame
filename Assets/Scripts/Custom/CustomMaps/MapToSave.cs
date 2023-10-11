@@ -5,6 +5,8 @@ using UnityEngine.Tilemaps;
 using System.IO;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.AI;
 
 public class MapToSave : MonoBehaviour
 {
@@ -37,8 +39,8 @@ public class MapToSave : MonoBehaviour
         if (layer == 4) { // if saving objects, load into json instead
 
             for (int i = 0; i < specialObjects.Count; i++) {
-                string spo = Knowledge.specialObjectToJson(specialObjects[i]);
-                writer.WriteLine(spo);
+                SpecialObject spo = specialObjects[i];
+                writer.WriteLine(spo.x+","+spo.y+","+spo.type+","+spo.file+","+spo.toJson());
             }
             writer.Close();
             return;
@@ -52,7 +54,7 @@ public class MapToSave : MonoBehaviour
                     if (layer != 5) {
                         for (int i = 0; i < tileOptions.Length; i++) { // go through all sprites it could be, find the index where this sprite is
                             if (tileOptions[i].name.Equals(tileKey)) {
-                                writer.WriteLine((x)+","+(y)+","+(i));
+                                writer.WriteLine(x+","+y+","+i);
                                 break;
                             }
                         }
@@ -67,6 +69,18 @@ public class MapToSave : MonoBehaviour
 
     public void setTile(float x, float y, Tile t) {
         Vector2Int v = worldToGridPoint(x,y);
+        if (layer == 4) { // if its at the object layer you might need to filter out old results
+            SpecialObject spo = new SpecialObject(x,y,t.gameObject);
+            
+            for (int i = specialObjects.Count-1; i >= 0; i--) {
+                if (specialObjects[i].hasPosition(x,y)) { // this object is at the same spot as the one we want to place
+                    specialObjects.RemoveAt(i);
+                    Debug.Log("removing same pos object");
+                    break;
+                }
+            }
+            specialObjects.Add(spo);
+        }
         map.SetTile(new Vector3Int(v.x,v.y,0), t);
     }
     public void setTile(float x, float y, Sprite s) {
@@ -76,7 +90,8 @@ public class MapToSave : MonoBehaviour
     public void setTile(float x, float y, GameObject g) {
         Vector2Int v = worldToGridPoint(x,y); //TODO: MAKE SURE THIS POINT IS CORRECT!
         // TODO: instantiate g at position;
-        specialObjects.Add(g.GetComponent<SpecialObject>());
+        Tile tempT = new Tile{gameObject = g}; // make a new tile and set its gameOBject
+        setTile(x,y,tempT);
     }
     public void removeTile(float x, float y) {
         Vector2Int v = worldToGridPoint(x,y);
@@ -104,7 +119,7 @@ public class MapToSave : MonoBehaviour
         for (int i = 0; i < allTiles.Length; i++) { // go through all tiles in the map
             string[] line = allTiles[i].Split(",");
             try {
-                if (SceneManager.GetActiveScene().name.Equals("EditorScene") || layer != 5) // if you need to place a tile(for editing purposes)
+                if (SceneManager.GetActiveScene().name.Equals("EditorScene") && layer != 4) // if you need to place a tile (including for editing purposes)
                     generateTile(Int32.Parse(line[2]),Int32.Parse(line[0]),Int32.Parse(line[1]));
                 else { // otherwise place whatever object it coorasponds to
                     if (layer == 5) {
@@ -112,20 +127,35 @@ public class MapToSave : MonoBehaviour
                         theChar.homePos = new float[] {(float)Int32.Parse(line[0]),(float)Int32.Parse(line[1])};
                         theChar.createCharacter();
                     } else if (layer == 4) { // objects
+                        int tx = Int32.Parse(line[0]);
+                        int ty = Int32.Parse(line[1]);
+                        int tid = Int32.Parse(line[2]);
+                        string tfile = line[3];
+                        string json = allTiles[i];
+                        Debug.Log("started making object");
+                        for (int numCommas = 0; numCommas < 4; numCommas++) {
+                            json = json.Substring(json.IndexOf(",")+1);
+                        }
+                        Debug.Log(json + "is the objects json ");
 
-                        // TODO:
-                        //load all lines into SpecialObject[] with json conversion
-                        //instantiate these into new gameobjects at the specified position
+                        GameObject newG = Knowledge.getObject(tfile);
+                        newG.transform.position = new Vector3(tx, ty, 0);
+                        SpecialObject.loadComponentFromJson(newG, tid, json);
+                        newG.GetComponent<SpriteRenderer>().sortingOrder = 3;
+                        generateTile(newG, tx, ty); // create the object in the map
 
                     }
                 }
-            } catch (Exception e) {
+            } catch (Exception e) { // catch if any specific tile or object doesnt want to load
                 Debug.Log(e);
             }
         }
     }
     private void generateTile(int i, int x, int y) { // get a tile based on the index saved for the tileOptions for this specific map
         map.SetTile(new Vector3Int(x,y,0), spriteToTile(tileOptions[i]));
+    }
+    private void generateTile(GameObject g, int x, int y) { // get a tile based on the index saved for the tileOptions for this specific map
+        map.SetTile(new Vector3Int(x,y,0), new Tile{gameObject=g});
     }
     private Tile spriteToTile (Sprite s) {
         try {

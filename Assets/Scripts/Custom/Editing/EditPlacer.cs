@@ -45,13 +45,10 @@ public class EditPlacer : MonoBehaviour {
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (selectedSpecialTile != null) {
             grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedSpecialTile);
+            Debug.Log("placed special tile");
         } else if (selectedGameOb != null) {
             Debug.Log("placed an object");
             grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedGameOb);
-            //TODO:
-            
-
-            //grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedSpecialTile);
         } else {
             Debug.Log("placed a normal tile");
             grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedTile);
