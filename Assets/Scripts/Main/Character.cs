@@ -24,7 +24,7 @@ public class Character : MonoBehaviour {
     public Skill[] usingSkills; // the players 'hotbar' of skills
     public List<Effect> activeEffects = new List<Effect>();
 
-    public string name = "Fella";
+    new public string name = "Fella";
     public string title = "The farmer";
     public string description = "An old buntown farmer from the old times";
     public int baseMaxHp = 100;

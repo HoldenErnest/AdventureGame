@@ -11,7 +11,7 @@ public class CharacterCreator : MonoBehaviour {
 
     private string path;
     public int id; // specified to tell unique characters
-    public string name; // character name
+    new public string name; // character name
     public string title; // character name
     public string description;
     public int baseHealth; // base max health
@@ -41,8 +41,9 @@ public class CharacterCreator : MonoBehaviour {
         Character c = character.GetComponent<Character>();
         if (!c.isPlayer()) {
             AIController control = character.GetComponent<AIController>();
-            if (homePos == null || homePos.Length != 2) { // set home position
+            if (homePos != null && homePos.Length == 2) { // set home position
                 control.homePosition = new Vector2(homePos[0], homePos[1]);
+                character.transform.position = new Vector3(homePos[0], homePos[1], 0);
             } else control.homePosition = new Vector2(0,0);
             Speaker sp = character.GetComponent<Speaker>();
             sp.setQuestsToGive(questsToGive);

@@ -4,6 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class NewSceneManager : MonoBehaviour {
 
@@ -28,15 +29,12 @@ public class NewSceneManager : MonoBehaviour {
         Knowledge.tools = gameObject.GetComponent<Tools>();
     }
     public void loadCharacters() {
+        if (SceneManager.GetActiveScene().name.Equals("EditorScene")) return;
         CharacterCreator a = Knowledge.getCharBlueprint("2");
         CharacterCreator b = Knowledge.getCharBlueprint("0");
         //GameSaver.npcs.Add(a.createCharacter());
         a.team = 1;
-        GameSaver.npcs.Add(a.createCharacter());
-        GameSaver.npcs.Add(a.createCharacter());
-        GameSaver.npcs.Add(a.createCharacter());
-        GameSaver.npcs.Add(a.createCharacter());//{"file":"hunter","itemsDone":1,"gotReward":false}
-        GameSaver.npcs.Add(b.createCharacter());
+        //GameSaver.npcs.Add(a.createCharacter());
     }
     private void loadPlayer() {
         

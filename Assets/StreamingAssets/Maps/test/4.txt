@@ -1,6 +1,4 @@
-3,3,1,Cappy,{"thingToSpawn":{"instanceID":0},"spawnTimer":0.0}
-1,0,1,Cappy,{"thingToSpawn":{"instanceID":0},"spawnTimer":0.0}
-5,0,1,Cappy,{"thingToSpawn":{"instanceID":0},"spawnTimer":0.0}
-3,0,0,Chest,{"bruh":10,"chestName":"someChest"}
-5,3,0,Chest,{"bruh":10,"chestName":"someChest"}
-1,3,0,Triangle,{"bruh":10,"chestName":"someChest"}
+2,3,0,Chest,{"bruh":10,"chestName":"someChest"}
+1,0,0,Chest,{"bruh":10,"chestName":"someChest"}
+2,1,0,Triangle,{"bruh":10,"chestName":"someChest"}
+1,2,0,Triangle,{"bruh":10,"chestName":"someChest"}

@@ -118,6 +118,7 @@ public class MapToSave : MonoBehaviour
         tileOptions = getSprites();
         for (int i = 0; i < allTiles.Length; i++) { // go through all tiles in the map
             string[] line = allTiles[i].Split(",");
+            if (line != null && line.Length > 1) // make sure its a real parsable line
             try {
                 if (SceneManager.GetActiveScene().name.Equals("EditorScene") && layer != 4) // if you need to place a tile (including for editing purposes)
                     generateTile(Int32.Parse(line[2]),Int32.Parse(line[0]),Int32.Parse(line[1]));
