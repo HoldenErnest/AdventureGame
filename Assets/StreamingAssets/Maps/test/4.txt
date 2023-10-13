@@ -1,4 +1,0 @@
-2,3,0,Chest,{"bruh":10,"chestName":"someChest"}
-1,0,0,Chest,{"bruh":10,"chestName":"someChest"}
-2,1,0,Triangle,{"bruh":10,"chestName":"someChest"}
-1,2,0,Triangle,{"bruh":10,"chestName":"someChest"}

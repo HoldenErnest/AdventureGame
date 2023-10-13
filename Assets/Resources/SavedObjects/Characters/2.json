@@ -1,4 +1,4 @@
-{"id":2,"name":"Billy","title":"The Guy","baseHealth":105,"team":0,
+{"id":2,"name":"Billy","title":"The Guy","important":false,"baseHealth":105,"team":0,
 "stats":{"constitution":0,"strength":19,"dexterity":20,"intelligence":21,"evasion":0,"speed":0,"armor":0,"xp":10,"poisonResist":0,"psychResist":0},
 "homePos":[-5.0,-5.0],
 "equipment":["red_shirt","red_cap"],

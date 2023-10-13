@@ -125,8 +125,13 @@ public class MapToSave : MonoBehaviour
                 else { // otherwise place whatever object it coorasponds to
                     if (layer == 5) {
                         CharacterCreator theChar = Knowledge.getCharBlueprint(Int32.Parse(line[2]));
-                        theChar.homePos = new float[] {(float)Int32.Parse(line[0]),(float)Int32.Parse(line[1])};
-                        theChar.createCharacter();
+                        if (!theChar.important || (theChar.homePos[0] == -0.1f && theChar.homePos[1] == -0.1f)) // if this character isnt important keep its map-specified home position
+                            theChar.homePos = new float[] {(float)Int32.Parse(line[0]),(float)Int32.Parse(line[1])};//  additionally if its an important character that hasent been loaded yet, spawn it at its map-specific location
+                        Character newC = theChar.createCharacter();
+                        if (newC.isImportant()) {
+                            Debug.Log("found an important character");
+                            GameSaver.addNpc(newC);
+                        }
                     } else if (layer == 4) { // objects
                         int tx = Int32.Parse(line[0]);
                         int ty = Int32.Parse(line[1]);

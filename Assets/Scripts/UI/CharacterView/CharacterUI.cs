@@ -9,9 +9,9 @@ using System;
 
 public class CharacterUI : MonoBehaviour {
 
-    private string name;
+    new private string name;
     private int health;
-    private int haxHealth;
+    private int maxHealth;
     private int title;
     private Stats stats;
 

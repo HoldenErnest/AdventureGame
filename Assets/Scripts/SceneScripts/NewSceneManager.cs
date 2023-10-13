@@ -29,9 +29,15 @@ public class NewSceneManager : MonoBehaviour {
         Knowledge.tools = gameObject.GetComponent<Tools>();
     }
     public void loadCharacters() {
+        // LEGACY
+        // all characters are loaded through MapSave
+        // if they are an important(single) character save them, otherwise let the map and generic characterCreator load them again next time around
+
         if (SceneManager.GetActiveScene().name.Equals("EditorScene")) return;
         CharacterCreator a = Knowledge.getCharBlueprint("2");
         CharacterCreator b = Knowledge.getCharBlueprint("0");
+
+        // ADD all the npcs that dont spawn with the map
         //GameSaver.npcs.Add(a.createCharacter());
         a.team = 1;
         //GameSaver.npcs.Add(a.createCharacter());

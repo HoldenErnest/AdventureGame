@@ -1,6 +1,6 @@
-{"id":0,"name":"Fred","title":"The MAN","baseHealth":20,"team":0,
+{"id":0,"name":"Fred","title":"The MAN","important":true,"baseHealth":20,"team":0,
 "stats":{"constitution":0,"strength":8,"dexterity":9,"intelligence":10,"evasion":0,"speed":12,"armor":0,"xp":100,"poisonResist":0,"psychResist":0},
-"homePos":[-5.0,-5.0],
+"homePos":[-0.1,-0.1],
 "equipment":["green_shirt"],
 "items":["SavedObjects/Items/apple","SavedObjects/Items/orange"],
 "startingSkills":[""],

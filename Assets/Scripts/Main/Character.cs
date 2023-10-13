@@ -27,6 +27,7 @@ public class Character : MonoBehaviour {
     new public string name = "Fella";
     public string title = "The farmer";
     public string description = "An old buntown farmer from the old times";
+    public bool important = false; // is there only 1 of this Character (for saving purposes)
     public int baseMaxHp = 100;
     public string bodyTexture;
     public Stats userStats = new Stats();
@@ -69,6 +70,9 @@ public class Character : MonoBehaviour {
     }
     public int getLevel() {
         return userStats.getLevel();
+    }
+    public bool isImportant() {
+        return important;
     }
     public Controller GetController() {
         return controls;
@@ -175,6 +179,9 @@ public class Character : MonoBehaviour {
             }
         }
         title = s ?? "";
+    }
+    public void setImportant(bool imp) {
+        important = imp;
     }
     public void setBaseHp(int n) {
         if  (String.IsNullOrEmpty(n.ToString())) n = 100;
@@ -434,6 +441,7 @@ public class Character : MonoBehaviour {
         CharacterCreator cc = new CharacterCreator();
         cc.name = name;
         cc.title = title;
+        cc.important = important;
         cc.baseHealth = baseMaxHp;
         cc.team = gameObject.GetComponent<Team>().getTeam();
         cc.stats = userStats;

@@ -14,6 +14,7 @@ public class CharacterCreator : MonoBehaviour {
     new public string name; // character name
     public string title; // character name
     public string description;
+    public bool important;
     public int baseHealth; // base max health
     public Stats stats; // const, str, dex, int, evade, armor, spd, xp, poiRst, psyRst
     public int team; // character team
@@ -49,7 +50,8 @@ public class CharacterCreator : MonoBehaviour {
             sp.setQuestsToGive(questsToGive);
         }
         Team cTeam = character.GetComponent<Team>();
-        
+        Debug.Log(c.name + " is important: " + important);
+        c.setImportant(important);
         c.setPath(path);
         c.setName(name);
         c.setTitle(title);
@@ -75,6 +77,7 @@ public class CharacterCreator : MonoBehaviour {
             c.setName(name);
             c.setTitle(title);
             c.setDescription(description);
+            c.setImportant(true);
             c.setBaseHp(baseHealth);
             c.setStats(stats);
             cTeam.setTeam(team);
