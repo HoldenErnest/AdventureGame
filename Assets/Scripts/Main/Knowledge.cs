@@ -7,6 +7,7 @@ using UnityEngine.U2D.Animation;
 using System.IO;
 using System;
 using System.Diagnostics;
+using UnityEngine.UI;
 
 //A class strictly for remembering the combinations for skills, Effects, ect.
 // Refrence this class when equipping any skill to a character
@@ -106,6 +107,7 @@ public static class Knowledge {
     public static Skill getSkill(string skillName) {
         Skill newSkill = new Skill();
         string theFile = skillsPath + skillName;
+        if (skillName != null && skillName != "")
         try {
             if (File.Exists(savesPath + theFile + ".json")) { // see if it exists within saved files. if not load the default one
                 JsonUtility.FromJsonOverwrite(File.ReadAllText(savesPath + theFile + ".json"), newSkill);
@@ -184,6 +186,20 @@ public static class Knowledge {
             UnityEngine.Debug.Log("Text \"" + textName + ".json\" not found.");
         }
         return list;
+    }
+    public static TextAsset getMapSave(string file) {
+        TextAsset theText = null;
+        try {
+            if (File.Exists(savesPath + file + ".txt")) { // see if it exists within saved files. if not load the default one
+                theText = new TextAsset(File.ReadAllText(savesPath + file + ".txt"));
+            } else {
+                string theString = Resources.Load<TextAsset>(file).text;
+                theText = new TextAsset(theString);
+            }
+        } catch(Exception e) {
+            UnityEngine.Debug.Log("Map location \"" + file + ".txt\" not found. ERROR: " + e);
+        }
+        return theText;
     }
     // Returns the blueprint for a new character, call createCharacterFrom() to make a new character.
     public static CharacterCreator getCharBlueprint(string charName) {

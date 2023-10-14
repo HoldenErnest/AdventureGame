@@ -42,6 +42,10 @@ public static class GameSaver {
     public static void addNpc(Character c) {
         npcs.Add(c);
     }
+    public static void overwriteMapLayer(MapToSave m) {
+        // right now it only overwrites the objects layer because thats really the only one that changes
+        m.saveMap("test");
+    }
 
 
     private static void saveToFile(string path, string file, string content) {

@@ -45,12 +45,12 @@ public class EditPlacer : MonoBehaviour {
         Vector3 wp = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (selectedSpecialTile != null) {
             grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedSpecialTile);
-            Debug.Log("placed special tile");
+            //Debug.Log("placed special tile");
         } else if (selectedGameOb != null) {
-            Debug.Log("placed an object");
+            //Debug.Log("placed an object");
             grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedGameOb);
         } else {
-            Debug.Log("placed a normal tile");
+            //Debug.Log("placed a normal tile");
             grids[sectionTable.getGroupNumber()].setTile(wp.x, wp.y, selectedTile);
         }
     }
@@ -124,14 +124,14 @@ public class EditPlacer : MonoBehaviour {
         return !hoveringDisplay;
 
     }
-    //saves all tilemaps to a WORLD file (a csv lol)
+    //saves all tilemaps to unique by-layer parsed files
     public void saveMap() {
         Debug.Log("saving map!");
         for (int i = 0; i < grids.Length; i++) {
             grids[i].saveMap("test");
         }
     }
-    public void loadMap() {
+    public void loadMap() { // these methods are events of editor menu push buttons
         Debug.Log("loading map!");
         for (int i = 0; i < grids.Length; i++) {
             grids[i].loadMap("test");

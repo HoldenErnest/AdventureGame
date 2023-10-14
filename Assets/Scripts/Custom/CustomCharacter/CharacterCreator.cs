@@ -50,7 +50,7 @@ public class CharacterCreator : MonoBehaviour {
             sp.setQuestsToGive(questsToGive);
         }
         Team cTeam = character.GetComponent<Team>();
-        Debug.Log(c.name + " is important: " + important);
+        //Debug.Log(c.name + " is important: " + important);
         c.setImportant(important);
         c.setPath(path);
         c.setName(name);

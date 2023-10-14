@@ -57,4 +57,7 @@ public class NewSceneManager : MonoBehaviour {
             m.loadMap("test");
         }
     }
+    public MapToSave getGrid(int i) {
+        return grids[i];
+    }
 }

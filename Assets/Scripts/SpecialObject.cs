@@ -15,10 +15,12 @@ public class SpecialObject : MonoBehaviour {
     public string file;
     public GameObject objToHold;
 
-    public SpecialObject(float x1, float y1, GameObject g)
+    public SpecialObject(int x1, int y1, GameObject g)
     {
-        x = (int)x1;
-        y = (int)y1;
+        
+        x = x1;
+        y = y1;
+        Debug.Log(x1 +">>"+x + ", "+y1+">>"+y);
         objToHold = g;
         file = g.name;
         type = objectToType(g);
@@ -51,7 +53,7 @@ public class SpecialObject : MonoBehaviour {
         }
     }
 
-    public bool hasPosition(float xx, float yy) {
-        return (int)xx == x && (int)yy == y;
+    public bool hasPosition(int xx, int yy) {
+        return xx == x && yy == y;
     }
 }

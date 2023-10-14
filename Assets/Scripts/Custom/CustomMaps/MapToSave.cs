@@ -25,7 +25,7 @@ public class MapToSave : MonoBehaviour
 
     }
     public void saveMap(string save) { // saves the map (based off of tiles on the tilemap)
-        string filePath = Path.Combine(Application.streamingAssetsPath,"Maps");
+        string filePath = Path.Combine(Knowledge.getSavePath(),"Maps");
         filePath = Path.Combine(filePath,save);
         Directory.CreateDirectory (filePath);
         filePath += "/"+layer+".txt";
@@ -69,11 +69,13 @@ public class MapToSave : MonoBehaviour
 
     public void setTile(float x, float y, Tile t) {
         Vector2Int v = worldToGridPoint(x,y);
+        int xx = (int)Mathf.Floor(x);
+        int yy = (int)Mathf.Floor(y);
         if (layer == 4) { // if its at the object layer you might need to filter out old results
-            SpecialObject spo = new SpecialObject(x,y,t.gameObject);
+            SpecialObject spo = new SpecialObject(xx,yy,t.gameObject);
             
             for (int i = specialObjects.Count-1; i >= 0; i--) {
-                if (specialObjects[i].hasPosition(x,y)) { // this object is at the same spot as the one we want to place
+                if (specialObjects[i].hasPosition(xx,yy)) { // this object is at the same spot as the one we want to place
                     specialObjects.RemoveAt(i);
                     Debug.Log("removing same pos object");
                     break;
@@ -112,7 +114,7 @@ public class MapToSave : MonoBehaviour
         generateMap(file);
     }
     private void generateMap(string file) { // load tiles from the text file
-        TextAsset txt = Resources.Load(file) as TextAsset;
+        TextAsset txt = Knowledge.getMapSave(file);
         if (txt==null || txt.text.Length < 1) return;
         string[] allTiles = txt.text.Split("\n");
         tileOptions = getSprites();
@@ -128,8 +130,7 @@ public class MapToSave : MonoBehaviour
                         if (!theChar.important || (theChar.homePos[0] == -0.1f && theChar.homePos[1] == -0.1f)) // if this character isnt important keep its map-specified home position
                             theChar.homePos = new float[] {(float)Int32.Parse(line[0]),(float)Int32.Parse(line[1])};//  additionally if its an important character that hasent been loaded yet, spawn it at its map-specific location
                         Character newC = theChar.createCharacter();
-                        if (newC.isImportant()) {
-                            Debug.Log("found an important character");
+                        if (newC.isImportant()) {// if the character is important make sure it gets saved
                             GameSaver.addNpc(newC);
                         }
                     } else if (layer == 4) { // objects
@@ -138,11 +139,11 @@ public class MapToSave : MonoBehaviour
                         int tid = Int32.Parse(line[2]);
                         string tfile = line[3];
                         string json = allTiles[i];
-                        Debug.Log("started making object");
+                        //Debug.Log("started making object");
                         for (int numCommas = 0; numCommas < 4; numCommas++) {
                             json = json.Substring(json.IndexOf(",")+1);
                         }
-                        Debug.Log(json + "is the objects json ");
+                        //Debug.Log(json + "is the objects json ");
 
                         GameObject newG = Knowledge.getObject(tfile);
                         newG.transform.position = new Vector3(tx, ty, 0);
@@ -162,6 +163,7 @@ public class MapToSave : MonoBehaviour
     }
     private void generateTile(GameObject g, int x, int y) { // get a tile based on the index saved for the tileOptions for this specific map
         map.SetTile(new Vector3Int(x,y,0), new Tile{gameObject=g});
+        specialObjects.Add(new SpecialObject(x,y,g)); // when loading objects make sure to add it back into the array so it can be saved again later
     }
     private Tile spriteToTile (Sprite s) {
         try {

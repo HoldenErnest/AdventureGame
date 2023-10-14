@@ -13,6 +13,7 @@ public class GameManagement : MonoBehaviour{
     public void saveGame() {
         GameSaver.overwritePlayer();
         GameSaver.overwriteNPCS();
+        //GameSaver.overwriteMapLayer(gameObject.GetComponent<NewSceneManager>().getGrid(4));
         //GameSaver.overwriteSomething();
         // create more than one save? be able to load from operable saves?
     }
