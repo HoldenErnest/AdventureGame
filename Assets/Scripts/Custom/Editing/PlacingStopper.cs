@@ -6,9 +6,15 @@ using UnityEngine.EventSystems;
 public class PlacingStopper : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler {
 
     public void OnPointerEnter(PointerEventData eventData){
-        Camera.main.gameObject.GetComponent<EditPlacer>().hoveringDisplay = true;
+        EditPlacer ep;
+        if (Camera.main.gameObject.TryGetComponent(out ep)) {
+            ep.hoveringDisplay = true;
+        }
     }
     public void OnPointerExit(PointerEventData eventData){
-        Camera.main.gameObject.GetComponent<EditPlacer>().hoveringDisplay = false;
+        EditPlacer ep;
+        if (Camera.main.gameObject.TryGetComponent(out ep)) {
+            ep.hoveringDisplay = false;
+        }
     }
 }

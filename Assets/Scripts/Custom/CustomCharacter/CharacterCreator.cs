@@ -20,6 +20,7 @@ public class CharacterCreator : MonoBehaviour {
     public int team; // character team
     public float[] homePos; // home position (depending, can be used to spawn here)
     public string lastMap; // what map were you previously in (usually not changed or even refrenced)(keep "" to spawn with original map)
+    // ^ might be unnessicary, can load with maps (or at least its currently loaded with maps)?
 
     public string[] equipment; // equipment to equip
     public ItemSave[] items; // (extra items or materials to drop on death)
