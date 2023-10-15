@@ -4,4 +4,4 @@
 "equipment":["green_shirt"],
 "items":["SavedObjects/Items/apple","SavedObjects/Items/orange"],
 "startingSkills":[""],
-"bodyTexture":"HumanMale","icon":"fred","questsToGive":["hunter"]}
+"bodyTexture":"HumanMale","questsToGive":["hunter"]}

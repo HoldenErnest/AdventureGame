@@ -26,7 +26,7 @@ public class CharacterCreator : MonoBehaviour {
     public ItemSave[] items; // (extra items or materials to drop on death)
     public string[] startingSkills; // currently/last equipped skills in hotbar
     public string bodyTexture; // Resources/Textures/Bodies/<bodyTexture>.png
-    public string icon; // a character icon for dialogues (might not be seen ever so you this is optional) LEGACY -- all icons are gotten from the id
+    //public string icon; // a character icon for dialogues (might not be seen ever so you this is optional) LEGACY -- all icons are gotten from the id
 
     public string[] questsToGive; // a list of the quests they will give to the player on interaction
 
@@ -64,7 +64,7 @@ public class CharacterCreator : MonoBehaviour {
         c.setEquips(equipment);
         c.setItems(items);  // << need a new inventory for this character
         c.setStartingSkills(startingSkills);
-        c.setCharIcon(icon);
+        //c.setCharIcon(icon);
 
         c.updateAll();
 
@@ -87,7 +87,7 @@ public class CharacterCreator : MonoBehaviour {
             c.setStartingSkills(startingSkills);
             if (hotbars != null)
                 c.setHotbar(hotbars);
-            c.setCharIcon(icon);
+            //c.setCharIcon(icon);
             Controller charCont = character.GetComponent<Controller>();
             charCont.invUI = invUI;
             charCont.escUI = escUI;

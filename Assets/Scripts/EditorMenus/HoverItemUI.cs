@@ -10,7 +10,6 @@ public class HoverItemUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public string description;
 
     public void OnPointerEnter(PointerEventData eventData){
-        Debug.Log(title + " " + description + " asfaskngaskngnas");
         Camera.main.GetComponent<HoverTooltip>().setTooltip(title, description, eventData.position);
     }
     public void OnPointerExit(PointerEventData eventData){

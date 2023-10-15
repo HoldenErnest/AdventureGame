@@ -4,4 +4,4 @@
 "equipment":["red_shirt","red_cap"],
 "items":[{"path":"apple","amount":2},{"path":"apple","amount":3},{"path":"orange","amount":2}],
 "startingSkills":["magic"],
-"bodyTexture":"HumanMale","icon":""}
+"bodyTexture":"HumanMale"}

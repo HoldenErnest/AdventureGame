@@ -176,6 +176,15 @@ public static class Knowledge {
         newItem.setPath(theFile);
         return newItem;
     }
+    public static Item[] getAllItems() {
+        try {
+            //Texture2D theImg = Resources.Load<Texture2D>(tilesPath + s);
+            return Resources.LoadAll<Item>(itemsPath);
+        } catch {
+            UnityEngine.Debug.Log("No Items found.");
+        }
+        return null;
+    }
     // Returns a generic list of strings with methods
     public static TextList getTextList(string textName) {
         TextList list = new TextList();
@@ -222,6 +231,8 @@ public static class Knowledge {
         return getCharBlueprint(""+charId);
     }
     public static CharacterCreator[] getAllCharBP() {
+        // DOES NOTHING RIGHT NOW I GUESS
+        UnityEngine.Debug.Log("Knowledge.getAllCharBP() does nothing");
         CharacterCreator[] cca = new CharacterCreator[5];
         return cca;
     }
@@ -241,17 +252,22 @@ public static class Knowledge {
         }
         return null;
     }
-    public static Sprite getCharIcon(string s) {
+    public static Sprite getCharIcon(string s) { // DEPRECIATED
         if (s != "")
         try {
             return Resources.Load<Sprite>(charsIconPath + s);
         } catch {
             UnityEngine.Debug.Log("Character icon \"" + s + ".png\" not found.");
         }
+        return getNoCharIcon();
+    }
+    public static Sprite getNoCharIcon() {
         return Resources.Load<Sprite>(charsIconPath + "noicon");
     }
     public static Sprite getCharIcon(int i) {
-        return getAllCharSprites()[i];
+        Sprite[] theSprites = getAllCharSprites();
+        if (i < 0 || i >= theSprites.Length) return getNoCharIcon();
+        return theSprites[i];
     }
     public static Texture2D getSkillIcon(string s) {
         if (s != "")
