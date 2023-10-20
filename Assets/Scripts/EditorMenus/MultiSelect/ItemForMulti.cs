@@ -1,5 +1,5 @@
 // Holden Ernest - 10/15/2023
-// a dumb multiselect item UI
+// a really bad way to store values for a multilist
 
 using TMPro;
 using UnityEngine;
@@ -11,14 +11,33 @@ public class ItemForMulti : MonoBehaviour {
     [SerializeField]
     private GameObject theButton;
 
-    public string value; // stored value this item holds
+    // yes I understand this sucks and I should use generic typing, I attempted it but unity inspector doesnt allow typed components?
+    // anyway I gave up
+
+    public Skill skillValue; // stored value this item holds
+    public Item itemValue; // stored value this item holds
+    public string otherValue; // stored value this item holds
 
     private MultiSelectItems thisMultiSelect;
 
-    public void set(MultiSelectItems thisMulti, string s) {
-        value = s;
+    public void set(MultiSelectItems thisMulti, Skill i) {
+        skillValue = i;
         thisMultiSelect = thisMulti;
-        setText(s);
+        setText(i.skillName);
+    }
+    public void set(MultiSelectItems thisMulti, Item i) {
+        itemValue = i;
+        thisMultiSelect = thisMulti;
+        if (i.GetType() == typeof(Equipable)) {
+            setText(i.itemName + " (E)");
+        } else {
+            setText(i.itemName);
+        }
+    }
+    public void set(MultiSelectItems thisMulti, string i) {
+        otherValue = i;
+        thisMultiSelect = thisMulti;
+        setText(i);
     }
 
     public void onButtonPress() {

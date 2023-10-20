@@ -27,6 +27,7 @@ public class NewSceneManager : MonoBehaviour {
     }
     private void loadInit() {
         Knowledge.tools = gameObject.GetComponent<Tools>();
+        Knowledge.loadFolderStruct();
     }
     public void loadCharacters() {
         // LEGACY

@@ -8,6 +8,7 @@ using System.IO;
 using System;
 using System.Diagnostics;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 //A class strictly for remembering the combinations for skills, Effects, ect.
 // Refrence this class when equipping any skill to a character
@@ -15,6 +16,7 @@ public static class Knowledge {
     
     public static Character player;
     public static Tools tools;
+    public static FolderStructure folderStruct;
 
     // Any files from Assets/Resources/{path} are only used for new instance files
     // new files are saved to Application.persistentDataPath/{path}
@@ -177,13 +179,61 @@ public static class Knowledge {
         return newItem;
     }
     public static Item[] getAllItems() {
+        Item[] allItems = null;
         try {
-            //Texture2D theImg = Resources.Load<Texture2D>(tilesPath + s);
-            return Resources.LoadAll<Item>(itemsPath);
+            // resources.loadall doesnt work directly to json files so we have to
+            // get all filenames then overwrite each file
+            TextAsset[] fileArray = Resources.LoadAll<TextAsset>(itemsPath);
+            allItems = new Item[fileArray.Length];
+            for (int i = 0; i < fileArray.Length; i++) {
+                string json = fileArray[i].text;
+                Item itm = new Item();
+                JsonUtility.FromJsonOverwrite(json, itm);
+                allItems[i] = itm;
+            }
         } catch {
-            UnityEngine.Debug.Log("No Items found.");
+            UnityEngine.Debug.Log("Folder at \"" + itemsPath + "\" does not contain any Items.");
         }
-        return null;
+        return allItems;
+    }
+    public static Equipable[] getAllEquips() {
+        Equipable[] allEquips = null;
+        try {
+            // resources.loadall doesnt work directly to json files so we have to
+            // get all filenames then overwrite each file
+            TextAsset[] fileArray = Resources.LoadAll<TextAsset>(equipsPath);
+            allEquips = new Equipable[fileArray.Length];
+            for (int i = 0; i < fileArray.Length; i++) {
+                string json = fileArray[i].text;
+                Equipable eq = new Equipable();
+                JsonUtility.FromJsonOverwrite(json, eq);
+                allEquips[i] = eq;
+            }
+        } catch {
+            UnityEngine.Debug.Log("Folder at \"" + equipsPath + "\" does not contain any Equips.");
+        }
+        return allEquips;
+    }
+    public static Skill[] getAllSkills() {
+        Skill[] allSkills = null;
+        try {
+            // resources.loadall doesnt work directly to json files so we have to
+            // get all filenames then overwrite each file
+            TextAsset[] fileArray = Resources.LoadAll<TextAsset>(skillsPath);
+            allSkills = new Skill[fileArray.Length];
+            for (int i = 0; i < fileArray.Length; i++) {
+                string json = fileArray[i].text;
+                Skill skl = new Skill();
+                JsonUtility.FromJsonOverwrite(json, skl);
+                allSkills[i] = skl;
+            }
+        } catch {
+            UnityEngine.Debug.Log("Folder at \"" + skillsPath + "\" does not contain any Skills.");
+        }
+        return allSkills;
+    }
+    public static string[] getAllQuestFolderNames() {
+        return folderStruct.allQuests;
     }
     // Returns a generic list of strings with methods
     public static TextList getTextList(string textName) {
@@ -229,12 +279,6 @@ public static class Knowledge {
     }
     public static CharacterCreator getCharBlueprint(int charId) {
         return getCharBlueprint(""+charId);
-    }
-    public static CharacterCreator[] getAllCharBP() {
-        // DOES NOTHING RIGHT NOW I GUESS
-        UnityEngine.Debug.Log("Knowledge.getAllCharBP() does nothing");
-        CharacterCreator[] cca = new CharacterCreator[5];
-        return cca;
     }
     public static Texture2D getEquipTexture(string s) {
         try {
@@ -294,6 +338,19 @@ public static class Knowledge {
             UnityEngine.Debug.Log("Multi-Texture \"" + ".png\" not found.");
         }
         return null;
+    }
+    public static string[] getAllBodyTextureNames() { // load any gameOBjects in a certain folder
+        string[] theNames = {};
+        try {
+            Texture2D[] tex = Resources.LoadAll<Texture2D>(bodyTexturePath);
+            theNames = new string[tex.Length];
+            for (int i = 0; i < tex.Length; i++) {
+                theNames[i] = tex[i].name;
+            }
+        } catch {
+            UnityEngine.Debug.Log("Folder at \"" + bodyTexturePath + "\" does not contain any body textures.");
+        }
+        return theNames;
     }
     public static GameObject[] getAllObjectsInFolder(string path) { // load any gameOBjects in a certain folder
         try {
@@ -364,7 +421,18 @@ public static class Knowledge {
         
     }
 
-
+    public static void loadFolderStruct() {
+        folderStruct = new FolderStructure();
+        #if UNITY_EDITOR
+        folderStruct.save(); // if its the unity editor go into the folder system and update/save all the paths to this structure object
+        #endif
+        if (File.Exists(Application.persistentDataPath + "/folderStructure.json")) { // see if it exists within saved files. if not load the default one
+            JsonUtility.FromJsonOverwrite(File.ReadAllText(Application.persistentDataPath + "/folderStructure.json"), folderStruct);
+            UnityEngine.Debug.Log(Application.persistentDataPath + "/folderStructure.json loaded");
+        } else {
+            UnityEngine.Debug.Log(Application.persistentDataPath + "/folderStructure.json does not exist");
+        }
+    }
     // Functions to change Knowledge variables
     public static void setSaveNumber (int saveNum) {
         currentSave = saveNum;
