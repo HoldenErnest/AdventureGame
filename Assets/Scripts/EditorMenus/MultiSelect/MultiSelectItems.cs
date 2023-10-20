@@ -109,6 +109,27 @@ public class MultiSelectItems : MonoBehaviour {
             Destroy(g);
         }
     }
+
+    public string[] getAllStrings() { // returns all objects that are of type T
+        string[] final = new string[items.Count];
+        for (int i = 0; i < items.Count; i++) {
+            ItemForMulti ifm = items[i].GetComponent<ItemForMulti>();
+            if (!System.Object.ReferenceEquals(ifm.skillValue, null)) final[i] = ifm.skillValue.getPath();
+            else if (!System.Object.ReferenceEquals(ifm.itemValue, null)) final[i] = ifm.itemValue.getPath();
+            else final[i] = ifm.otherValue;
+        }
+        return final;
+    }
+    public ItemSave[] getAllItemSaves() { // returns all objects that are of type T
+        ItemSave[] itemSaves = new ItemSave[items.Count];
+        for (int i = 0; i < items.Count; i++) {
+            ItemForMulti ifm = items[i].GetComponent<ItemForMulti>();
+            if (!System.Object.ReferenceEquals(ifm.itemValue, null)) {
+                itemSaves[i] = ifm.itemValue.toItemSave();
+            }
+        }
+        return itemSaves;
+    }
 }
 
 #if UNITY_EDITOR

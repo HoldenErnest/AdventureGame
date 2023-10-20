@@ -188,6 +188,7 @@ public static class Knowledge {
             for (int i = 0; i < fileArray.Length; i++) {
                 string json = fileArray[i].text;
                 Item itm = new Item();
+                itm.setPath(fileArray[i].name);
                 JsonUtility.FromJsonOverwrite(json, itm);
                 allItems[i] = itm;
             }
@@ -206,6 +207,7 @@ public static class Knowledge {
             for (int i = 0; i < fileArray.Length; i++) {
                 string json = fileArray[i].text;
                 Equipable eq = new Equipable();
+                eq.setPath(fileArray[i].name);
                 JsonUtility.FromJsonOverwrite(json, eq);
                 allEquips[i] = eq;
             }
@@ -224,6 +226,7 @@ public static class Knowledge {
             for (int i = 0; i < fileArray.Length; i++) {
                 string json = fileArray[i].text;
                 Skill skl = new Skill();
+                skl.setPath(fileArray[i].name);
                 JsonUtility.FromJsonOverwrite(json, skl);
                 allSkills[i] = skl;
             }
@@ -233,6 +236,7 @@ public static class Knowledge {
         return allSkills;
     }
     public static string[] getAllQuestFolderNames() {
+        loadFolderStruct(); // NOT NEEDED IN ACTUAL GAME, used for testing 
         return folderStruct.allQuests;
     }
     // Returns a generic list of strings with methods

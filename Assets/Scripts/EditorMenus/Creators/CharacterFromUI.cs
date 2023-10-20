@@ -30,8 +30,14 @@ public class CharacterFromUI : MonoBehaviour {
             description = descUI.text,
             baseHealth = Int32.Parse(hpUI.text),
             team = Int32.Parse(teamUI.text),
-            id = Int32.Parse(idUI.text)
-            // TODO : include the rest of the properties, including the MultiSelects info
+            id = Int32.Parse(idUI.text),
+            items = invUI.getAllItemSaves(),
+            equipment = equipsUI.getAllStrings(),
+            startingSkills = skillsUI.getAllStrings(),
+            questsToGive = questsUI.getAllStrings(),
+            bodyTexture = bodyTexUI.options[bodyTexUI.value].text,
+            important = importantUI.isOn
+            // TODO : STATS
         };
         return JsonUtility.ToJson(cc);
     }
@@ -39,7 +45,7 @@ public class CharacterFromUI : MonoBehaviour {
     //on button press update everything and save it to whatever filename and whereever it needs to go
     public void onCreate() {
         string json = createJson();
-        Debug.Log("save the bro");
+        Debug.Log("save the bro" + json);
         // TODO: save it to streaming assets
     }
 
