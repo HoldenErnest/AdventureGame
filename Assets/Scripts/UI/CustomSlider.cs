@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class CustomSlider : MonoBehaviour {
 
@@ -22,6 +23,12 @@ public class CustomSlider : MonoBehaviour {
         s.value = currentValue;
         if(showText)
             text.text = currentValue + "/" + maxValue;
+        s.fillRect.GetComponentInChildren<Image>().color = Color.Lerp(low, high, s.normalizedValue);
+    }
+
+    public void updateSliderFromValues() {
+        if(showText)
+            text.text = Math.Round(s.value,2) + "/" + s.maxValue;
         s.fillRect.GetComponentInChildren<Image>().color = Color.Lerp(low, high, s.normalizedValue);
     }
 
