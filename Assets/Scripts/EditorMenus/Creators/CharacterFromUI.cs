@@ -21,6 +21,7 @@ public class CharacterFromUI : MonoBehaviour {
     public TMP_Dropdown bodyTexUI;
     public TMP_InputField idUI;
     public Toggle importantUI;
+    public StatUIController statsUI;
 
     public ErrorMenu error;
 
@@ -38,7 +39,8 @@ public class CharacterFromUI : MonoBehaviour {
             startingSkills = skillsUI.getAllStrings(),
             questsToGive = questsUI.getAllStrings(),
             bodyTexture = bodyTexUI.options[bodyTexUI.value].text,
-            important = importantUI.isOn
+            important = importantUI.isOn,
+            stats = statsUI.getFullStats()
             // TODO : STATS
         };
         return cc;

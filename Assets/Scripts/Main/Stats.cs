@@ -41,7 +41,7 @@ public class Stats {
     private int carriedWeight = 0;
 
     public Stats() {
-
+        setLevel(1);
     }
 
     public int getMaxHp(int baseMax) {
@@ -58,6 +58,7 @@ public class Stats {
     public void setLevel(int l) { // set current xp based on a specified wanted level.
         xp = (int)Math.Pow(l - 1, 3);
         level = l;
+        fitAllStats();
     }
     public int updateLevel() { // returns how many levels were added: (-) if lost levels somehow
         int oldLevel = level;
@@ -91,11 +92,14 @@ public class Stats {
         int addRandom = (int)rand.Next((int)Mathf.Floor(-specifiedXp / 5), (int)Mathf.Ceil(specifiedXp / 5));
         return specifiedXp + addRandom;
     }
-    private int getTotalAttr() {// Hypothetical ammount to available if playing by the rules
+    public int getTotalAttr() {// Hypothetical ammount to available if playing by the rules
         return getLevel()*2;
     }
-    private int getTotalAttrUsed() {
+    public int getTotalAttrUsed() {
         return constitution+strength+dexterity+intelligence+evasion+speed;
+    }
+    public bool maxedStats() { // return if youve maxed out the tree
+        return getAvailableAttr() <= 0;
     }
     public int getAvailableAttr() {
         return (getTotalAttr() - getTotalAttrUsed());
@@ -116,6 +120,34 @@ public class Stats {
         speed = 0;
 
         attrPoints = getTotalAttr();
+    }
+    private void fitAllStats() { // change some levels to make sure that you arent using over your allotted points
+        // overflow will be 0 when youve used up all points (- when you are over)
+        int overflow = getAvailableAttr();
+        if (overflow < 0) {
+            for (int i = 0; overflow < 0; i++) { // loop through every stat and dec until you are 0
+                ref int n = ref getStatFromIndex(i);
+                overflow += n;
+                n = 0;
+            }
+        }
+    }
+    public ref int getStatFromIndex(int index) {
+        switch (index) {
+            case 0:
+                return ref constitution;
+            case 1:
+                return ref strength;
+            case 2:
+                return ref dexterity;
+            case 3:
+                return ref intelligence;
+            case 4:
+                return ref evasion;
+            case 5:
+                return ref speed;
+        }
+        throw new Exception("invalid index for a stat");
     }
 
     // Calculates and returns damage based on the type of attack and the users armor
