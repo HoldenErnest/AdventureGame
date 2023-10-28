@@ -24,6 +24,8 @@ public class Skill : MonoBehaviour {
     public string[] setEffects; // effects tied to each hit
     public string prefabName = "Unknown Prefab";
 
+
+    // these are not saved
     public GameObject user;
     public GameObject animPrefab; // animation / turret / effectcloud / ect.
     

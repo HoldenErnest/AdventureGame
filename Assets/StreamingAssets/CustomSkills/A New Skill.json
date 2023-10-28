@@ -1,0 +1,1 @@
+{"skillName":"A New Skill","damageType":"physical","baseDamage":23,"manaCost":11,"reloadTime":0.20000000298023225,"maxRange":1.100000023841858,"minRange":0.0,"attackArea":3.0,"levelReq":5,"setEffects":["poison1","bleed1"],"prefabName":"magic","user":{"instanceID":0},"animPrefab":{"instanceID":0},"projectileSpeed":1.2000000476837159,"pierce":3}

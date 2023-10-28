@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System;
+using System.Data.Common;
+
 
 
 #if UNITY_EDITOR
@@ -23,6 +25,9 @@ public class MultiSelectItems : MonoBehaviour {
     [SerializeField]
     private TMP_Text titleText;
 
+    [SerializeField]
+    private bool allowDuplicates = true;
+
     [HideInInspector]
     public bool transferItems; // everytime you click an item it is transfered to the other list
 
@@ -37,6 +42,8 @@ public class MultiSelectItems : MonoBehaviour {
     public bool loadSkills = false;
     [HideInInspector]
     public bool loadQuests = false;
+    [HideInInspector]
+    public bool loadEffects = false;
 
     private List<GameObject> items = new List<GameObject>(); // the base list of items
 
@@ -71,6 +78,12 @@ public class MultiSelectItems : MonoBehaviour {
                 addItem(qst);
             }
         }
+        if (loadEffects) {
+            string[] tempEffects = Knowledge.getAllEffectNames();
+            foreach (string ee in tempEffects) {
+                addItem(ee);
+            }
+        }
     }
 
     private void updateTitle() {
@@ -78,18 +91,33 @@ public class MultiSelectItems : MonoBehaviour {
     }
 
     private void addItem(Item i) {
+        if (!allowDuplicates) {
+            for (int j = 0; j < items.Count; j++) {
+                if (items[j].GetComponent<ItemForMulti>().itemValue.Equals(i)) return;
+            }
+        }
         GameObject g = Instantiate(genericItemBP, content.transform);
         items.Add(g);
         g.GetComponent<ItemForMulti>().set(this, i);
         g.GetComponent<ItemForMulti>().setButtonTransfer(transferItems);
     }
     private void addItem(Skill i) {
+        if (!allowDuplicates) {
+            for (int j = 0; j < items.Count; j++) {
+                if (items[j].GetComponent<ItemForMulti>().skillValue.Equals(i)) return;
+            }
+        }
         GameObject g = Instantiate(genericItemBP, content.transform);
         items.Add(g);
         g.GetComponent<ItemForMulti>().set(this, i);
         g.GetComponent<ItemForMulti>().setButtonTransfer(transferItems);
     }
     private void addItem(string i) {
+        if (!allowDuplicates) {
+            for (int j = 0; j < items.Count; j++) {
+                if (items[j].GetComponent<ItemForMulti>().otherValue.Equals(i)) return;
+            }
+        }
         GameObject g = Instantiate(genericItemBP, content.transform);
         items.Add(g);
         g.GetComponent<ItemForMulti>().set(this, i);
@@ -99,7 +127,7 @@ public class MultiSelectItems : MonoBehaviour {
         if (transferItems) {
             if (loadSkills)
                 otherList.addItem(g.GetComponent<ItemForMulti>().skillValue);
-            else if (!loadQuests) { 
+            else if (!loadQuests && !loadEffects) { 
                 otherList.addItem(g.GetComponent<ItemForMulti>().itemValue);
             } else { // load a generic string type instead (quests use these)
                 otherList.addItem(g.GetComponent<ItemForMulti>().otherValue);
@@ -147,22 +175,27 @@ public class RandomScript_Editor : Editor
 		if (script.transferItems) // if bool is true, show other fields
 		{
 			script.otherList = EditorGUILayout.ObjectField("Other Multi-Select", script.otherList, typeof(MultiSelectItems), true) as MultiSelectItems;
-            if (!script.loadSkills && !script.loadQuests) {
+            if (!script.loadSkills && !script.loadQuests && !script.loadEffects) {
                 script.loadItems = EditorGUILayout.Toggle("Load Items", script.loadItems);
                 script.loadEquips = EditorGUILayout.Toggle("Load Equips", script.loadEquips);
             } else {
                 script.loadItems = false;
                 script.loadEquips = false;
             }
-            if (!script.loadQuests && !script.loadItems && !script.loadEquips) {
+            if (!script.loadQuests && !script.loadItems && !script.loadEquips && !script.loadEffects) {
                 script.loadSkills = EditorGUILayout.Toggle("Load Skills", script.loadSkills);
             } else {
                 script.loadSkills = false;
             }
-            if (!script.loadSkills && !script.loadItems && !script.loadEquips) {
+            if (!script.loadSkills && !script.loadItems && !script.loadEquips && !script.loadEffects) {
                 script.loadQuests = EditorGUILayout.Toggle("Load Quests", script.loadQuests);
             } else {
                 script.loadQuests = false;
+            }
+            if (!script.loadSkills && !script.loadItems && !script.loadEquips && !script.loadQuests) {
+                script.loadEffects = EditorGUILayout.Toggle("Load Effects", script.loadEffects);
+            } else {
+                script.loadEffects = false;
             }
 		}
 	}

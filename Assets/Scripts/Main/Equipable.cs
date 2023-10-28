@@ -54,7 +54,7 @@ public class Equipable : Item
 
     public void updateSkill() {
         grantSkill = Knowledge.getSkill(skillName);
-        grantSkill.baseDamage = damage;
+        updateDamage();
     }
     public void updateDamage() {
         grantSkill.setDamage(damage);

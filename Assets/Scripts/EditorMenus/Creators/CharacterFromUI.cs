@@ -41,7 +41,6 @@ public class CharacterFromUI : MonoBehaviour {
             bodyTexture = bodyTexUI.options[bodyTexUI.value].text,
             important = importantUI.isOn,
             stats = statsUI.getFullStats()
-            // TODO : STATS
         };
         return cc;
     }

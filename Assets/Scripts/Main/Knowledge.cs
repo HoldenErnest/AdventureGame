@@ -364,6 +364,27 @@ public static class Knowledge {
         }
         return null;
     }
+    public static GameObject[] getAllSkillPrefabs() {
+        try {
+            return Resources.LoadAll<GameObject>(skillsPrefabPath);
+        } catch {
+            UnityEngine.Debug.Log("Folder at \"" + skillsPrefabPath + "\" does not contain any objects.");
+        }
+        return null;
+    }
+    public static string[] getAllEffectNames() {
+        string[] theNames = {};
+        try {
+            TextAsset[] effects = Resources.LoadAll<TextAsset>(effectsPath);
+            theNames = new string[effects.Length];
+            for (int i = 0; i < effects.Length; i++) {
+                theNames[i] = effects[i].name;
+            }
+        } catch {
+            UnityEngine.Debug.Log("Folder at \"" + effectsPath + "\" does not contain any effects.");
+        }
+        return theNames;
+    }
     public static CharacterCreator[] getAllCharacters() {
         CharacterCreator[] allChars = null;
         try {
