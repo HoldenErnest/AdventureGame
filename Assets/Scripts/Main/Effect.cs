@@ -1,3 +1,6 @@
+// Holden Ernest - sometime early in the project, a few weeks after the Character script id imagine
+// Effects are ongoing status' they dont have to do damage, most effects are recieved via a cast Skill or a consumed item
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
