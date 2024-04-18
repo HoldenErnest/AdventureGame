@@ -10,14 +10,18 @@ Updating in progress..
 ## Some images of progress:
 
 New Game Menu:
+
 <img src="/ProgressMedia/menu.png" alt="Menu" width="800"/>
 
 Ingame Map Editor:
+
 <img src="/ProgressMedia/lake.png" alt="Map" width="800"/>
 
 Character Pathing (A*):
+
 <img src="/ProgressMedia/pathing.png" alt="Pathing" width="800"/>
 
 Very basic AI dodging projectiles:
+
 https://github.com/HoldenErnest/AdventureGame/assets/90526269/209638d3-8db5-4c30-b70d-3794a2c933a3
 
