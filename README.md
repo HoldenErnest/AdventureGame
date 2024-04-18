@@ -7,7 +7,7 @@ This is a 2D Adventureing RPG made in Unity, no great game title just yet
 
 Updating in progress..
 
-## Some images of progress:
+## Some images of progress(custom sprites/text/maps are temporary for testing purposes):
 
 New Game Menu:
 
