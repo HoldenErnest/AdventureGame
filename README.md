@@ -17,6 +17,10 @@ Ingame Map Editor:
 
 <img src="/ProgressMedia/lake.png" alt="Map" width="800"/>
 
+Working Inventory and Item Saving/Loading:
+
+<img src="/ProgressMedia/adventureInv.png" alt="Pathing" width="800"/>
+
 Character Pathing (A*):
 
 <img src="/ProgressMedia/pathing.png" alt="Pathing" width="800"/>
