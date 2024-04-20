@@ -17,7 +17,7 @@ Ingame Map Editor:
 
 <img src="/ProgressMedia/lake.png" alt="Map" width="800"/>
 
-Working Inventory and Item Saving/Loading:
+Working Inventory & Equipping with Item Saving/Loading:
 
 <img src="/ProgressMedia/AdventureInv2.png" alt="Pathing" width="800"/>
 
