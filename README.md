@@ -19,7 +19,7 @@ Ingame Map Editor:
 
 Working Inventory and Item Saving/Loading:
 
-<img src="/ProgressMedia/AdventureInv.png" alt="Pathing" width="800"/>
+<img src="/ProgressMedia/AdventureInv2.png" alt="Pathing" width="800"/>
 
 Character Pathing (A*):
 
